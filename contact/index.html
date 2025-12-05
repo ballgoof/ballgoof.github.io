@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - TopCap Construction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #000;
+            background: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        nav {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo-container {
+            position: relative;
+        }
+
+        .logo-container a {
+            text-decoration: none;
+            display: block;
+        }
+
+        .logo {
+            height: 120px;
+            width: auto;
+            display: block;
+        }
+
+        /* Navigation */
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav ul li {
+            position: relative;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 500;
+            font-size: 0.966rem;
+            transition: color 0.3s;
+            display: block;
+            padding: 0.5rem 0;
+        }
+
+        nav ul li a:hover {
+            color: #FFD700;
+        }
+
+        /* Header Social Media Icons */
+        .header-social-media {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: 1rem;
+        }
+        
+        /* Debug: Make sure icons are visible */
+        .header-social-media {
+            visibility: visible !important;
+        }
+
+        .header-social-icon {
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            text-decoration: none;
+            cursor: pointer;
+            overflow: visible;
+            opacity: 1 !important;
+            vertical-align: middle;
+        }
+        
+        .header-social-icon img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            filter: brightness(0) invert(0);
+            -webkit-filter: brightness(0) invert(0);
+            mix-blend-mode: multiply;
+        }
+        
+        /* Alternative: Use CSS to force black */
+        .header-social-icon {
+            color: #000;
+        }
+
+        .header-social-icon:hover {
+            transform: translateY(-2px);
+            opacity: 0.7;
+        }
+
+        /* Hide header social media on mobile */
+        @media (max-width: 768px) {
+            .header-social-media {
+                display: none;
+            }
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            min-width: 200px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            list-style: none;
+            padding: 0;
+            margin: 0.25rem 0 0 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .dropdown:hover .dropdown-menu,
+        .dropdown.active .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            display: block;
+            position: relative;
+        }
+
+        .dropdown-menu li a {
+            padding: 0.5rem 0.75rem;
+            margin: 0;
+            color: #000;
+            font-size: 0.966rem;
+            display: block;
+            width: 100%;
+            transition: background 0.3s, color 0.3s;
+            white-space: nowrap;
+            line-height: 1.3;
+        }
+
+        .dropdown-menu li a:hover {
+            background: #f8f9fa;
+            color: #FFD700;
+        }
+
+        /* Submenu for Projects dropdown items (desktop only) */
+        .dropdown-item-with-submenu {
+            position: relative;
+        }
+
+        .dropdown-item-with-submenu .submenu {
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background: #fff;
+            min-width: 180px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            z-index: 1000;
+        }
+
+        .dropdown-item-with-submenu:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .submenu li {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            display: block;
+        }
+
+        .submenu li a {
+            padding: 0.5rem 0.75rem;
+            margin: 0;
+            color: #000;
+            font-size: 0.966rem;
+            display: block;
+            width: 100%;
+            transition: background 0.3s, color 0.3s;
+            white-space: nowrap;
+            line-height: 1.3;
+        }
+
+        .submenu li a:hover {
+            background: #f8f9fa;
+            color: #FFD700;
+        }
+
+        /* Hide submenus on mobile */
+        @media (max-width: 768px) {
+            .dropdown-item-with-submenu .submenu {
+                display: none;
+            }
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .dropdown-toggle::after {
+            content: '▼';
+            font-size: 0.7rem;
+            transition: transform 0.3s;
+            margin-left: 0.5rem;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* Mobile: triangles point right */
+        @media (max-width: 768px) {
+            .dropdown-toggle::after {
+                content: '▶';
+            }
+        }
+
+        .dropdown.active .dropdown-toggle::after {
+            transform: rotate(180deg);
+        }
+
+        /* Hamburger Menu */
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            margin-right: 1rem;
+            position: relative;
+            width: 30px;
+            height: 24px;
+            padding: 8px;
+            margin: -8px 1rem -8px 0;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #000;
+            transition: all 0.3s;
+            display: block;
+            position: absolute;
+        }
+
+        .hamburger span:nth-child(1) {
+            top: 8px;
+        }
+
+        .hamburger span:nth-child(2) {
+            top: 16px;
+        }
+
+        .hamburger span:nth-child(3) {
+            top: 24px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg);
+            top: 16px;
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 16px;
+        }
+
+        /* Contact Section */
+        .contact-page {
+            margin-top: 120px;
+            padding: 0;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .contact-page > .container:not(.contact-intro .container) {
+            background: #f8f9fa;
+            padding: 2rem;
+        }
+
+        .contact-intro {
+            background: #f8f9fa;
+            padding: 2rem 0;
+            border-top: 1px solid #ddd;
+            width: 100%;
+            margin-bottom: 0;
+        }
+        
+        .contact-intro .container {
+            text-align: center;
+            max-width: 1000px;
+        }
+
+        .contact-intro h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #000;
+        }
+
+        .contact-intro p {
+            font-size: 1.1rem;
+            line-height: 1.4;
+            color: #000;
+            margin-bottom: 0.25rem;
+        }
+        
+        .contact-intro p:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            color: #fff;
+            padding: 2rem 2rem 1.5rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-left {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-left h3 {
+            color: #fff;
+            font-size: 0.966rem;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        .footer-left p {
+            color: #fff;
+            margin: 0.3rem 0;
+            font-size: 0.725rem;
+            line-height: 1.5;
+        }
+
+        .footer-left .copyright {
+            margin-top: 1rem;
+            font-size: 0.684rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-right h4 {
+            color: #fff;
+            font-size: 0.966rem;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        .social-media {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            cursor: pointer;
+            background: transparent;
+            overflow: hidden;
+        }
+
+        .social-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 8px;
+            filter: brightness(0) invert(1);
+            display: block;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-2px);
+            opacity: 0.8;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                padding-right: 2.5rem;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #fff;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+                flex: none;
+                justify-content: flex-start;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+            }
+
+            nav.active {
+                max-height: 100vh;
+                overflow-y: auto;
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 1rem 2rem;
+                gap: 0;
+                align-items: stretch;
+            }
+
+            nav ul li {
+                width: 100%;
+            }
+
+            /* Folder system for mobile - hide main menu when showing submenu */
+            nav.folder-view ul > li:not(.folder-active) {
+                display: none;
+            }
+
+            nav.folder-view ul > li.folder-active {
+                display: block;
+            }
+
+            nav.folder-view ul > li.folder-active .dropdown-menu {
+                display: block !important;
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                max-height: none;
+                padding: 0.5rem 0;
+                margin: 0;
+                background: transparent;
+                box-shadow: none;
+                transform: none;
+            }
+
+            nav.folder-view ul > li.folder-active .dropdown-toggle {
+                display: none;
+            }
+
+            nav.folder-view ul > li.folder-active .dropdown-menu li {
+                display: block;
+            }
+
+            nav.folder-view ul > li.folder-active .dropdown-menu li a {
+                padding: 0.5rem 2.5rem;
+                display: block;
+            }
+
+            nav.folder-view ul {
+                order: 2; /* After back button and title */
+            }
+
+            /* Submenu folder view for mobile */
+            nav.submenu-view .dropdown-menu {
+                display: none !important;
+            }
+
+            nav.submenu-view .dropdown-item-with-submenu:not(.submenu-active) {
+                display: none !important;
+            }
+
+            nav.submenu-view .dropdown-item-with-submenu.submenu-active {
+                display: block;
+            }
+
+            nav.submenu-view .dropdown-item-with-submenu.submenu-active .submenu {
+                display: block !important;
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                max-height: none;
+                padding: 0.5rem 0;
+                margin: 0;
+                background: transparent;
+                box-shadow: none;
+                transform: none;
+            }
+
+            nav.submenu-view .dropdown-item-with-submenu.submenu-active > a {
+                display: none !important; /* Hide the link, title is shown in folder-title */
+            }
+
+            nav.submenu-view .dropdown-item-with-submenu.submenu-active .submenu li {
+                display: block;
+            }
+
+            nav.submenu-view .dropdown-item-with-submenu.submenu-active .submenu li a {
+                padding: 0.5rem 2.5rem;
+                display: block;
+            }
+
+            /* About dropdown items should be regular links, not titles */
+            nav.folder-view .about-dropdown .dropdown-menu > li > a {
+                padding: 0.5rem 2.5rem;
+                display: block;
+                text-decoration: none;
+                color: #000;
+            }
+
+            nav.folder-view .about-dropdown .dropdown-menu > li > a:hover {
+                background: #f8f9fa;
+                color: #FFD700;
+            }
+
+            /* Back button in folder view */
+            .back-button {
+                display: none;
+            }
+
+            nav.folder-view .back-button {
+                display: block;
+                padding: 1rem 2rem;
+                background: #f8f9fa;
+                border-bottom: 1px solid #ddd;
+                cursor: pointer;
+                font-weight: 500;
+                color: #000;
+                margin: 0;
+                width: 100%;
+                box-sizing: border-box;
+                order: 0; /* First */
+            }
+
+            nav.folder-view .back-button:hover {
+                background: #e9ecef;
+            }
+
+            /* Title for folder view */
+            nav.folder-view .folder-title {
+                display: block;
+                padding: 0.75rem 2rem;
+                background: #f8f9fa;
+                border-bottom: 1px solid #ddd;
+                font-size: 1.3rem;
+                font-weight: 600;
+                color: #000;
+                pointer-events: none;
+                cursor: default;
+                text-decoration: none;
+                margin: 0;
+                width: 100%;
+                box-sizing: border-box;
+                order: 1; /* After back button */
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 0;
+                visibility: hidden;
+                max-height: 0;
+                overflow: hidden;
+                transform: none;
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+                transition: max-height 0.3s ease, opacity 0.3s ease;
+            }
+
+
+            .dropdown-menu li a {
+                padding-left: 2.5rem;
+                white-space: normal;
+                word-wrap: break-word;
+            }
+
+            .logo {
+                height: 90px;
+            }
+
+            .contact-intro h1 {
+                font-size: 2rem;
+            }
+
+            .footer-container {
+                flex-direction: column-reverse;
+                text-align: left;
+            }
+
+            .footer-right {
+                margin-bottom: 1.5rem;
+                align-items: flex-start;
+            }
+        }
+    </style>
+    <style>.jtwf .mx-auto{margin-left:auto;margin-right:auto}.jtwf .block{display:block}.jtwf .flex{display:flex}.jtwf .max-h-24{max-height:6rem}.jtwf .w-full{width:100%}.jtwf .min-w-0{min-width:0}.jtwf .max-w-full{max-width:100%}.jtwf .max-w-sm{max-width:24rem}.jtwf .shrink-0{flex-shrink:0}.jtwf .grow{flex-grow:1}.jtwf .cursor-pointer{cursor:pointer}.jtwf .appearance-none{-webkit-appearance:none;-moz-appearance:none;appearance:none}.jtwf .items-center{align-items:center}.jtwf .gap-2{gap:.5rem}.jtwf .space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-bottom:calc(.5rem*var(--tw-space-y-reverse));margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)))}.jtwf .divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-bottom-width:calc(1px*var(--tw-divide-y-reverse));border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)))}.jtwf .overflow-hidden{overflow:hidden}.jtwf .rounded{border-radius:.25rem}.jtwf .border{border-width:1px}.jtwf .bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity))}.jtwf .p-2{padding:.5rem}.jtwf .p-4{padding:1rem}.jtwf .px-4{padding-left:1rem;padding-right:1rem}.jtwf .py-2{padding-bottom:.5rem;padding-top:.5rem}.jtwf .text-center{text-align:center}.jtwf .text-right{text-align:right}.jtwf .text-xl{font-size:1.25rem;line-height:1.75rem}.jtwf .font-bold{font-weight:700}.jtwf .font-normal{font-weight:400}.jtwf .text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128/var(--tw-text-opacity))}.jtwf .text-red-500{--tw-text-opacity:1;color:rgb(239 68 68/var(--tw-text-opacity))}.jtwf .shadow{--tw-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color),0 1px 2px -1px var(--tw-shadow-color)}.jtwf .shadow,.jtwf .shadow-sm{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.jtwf .shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.jtwf .transition{transition-duration:.25s;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1)}.jtwf *{border:0 solid #e5e7eb;box-sizing:border-box}.jtwf button,.jtwf input,.jtwf optgroup,.jtwf select,.jtwf textarea{color:inherit;font-family:inherit;font-size:100%;font-weight:inherit;line-height:inherit;margin:0;padding:0}.jtwf .focus-within\:border-blue-500:focus-within{--tw-border-opacity:1;border-color:rgb(59 130 246/var(--tw-border-opacity))}.jtwf .focus-within\:bg-white:focus-within{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity))}.jtwf .focus-within\:shadow:focus-within{--tw-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color),0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.jtwf .focus-within\:ring:focus-within{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.jtwf .hover\:bg-gray-50:hover{--tw-bg-opacity:1;background-color:rgb(249 250 251/var(--tw-bg-opacity))}.jtwf .hover\:brightness-95:hover{--tw-brightness:brightness(.95);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.jtwf .\[\&\:\:-webkit-date-and-time-value\]\:h-5::-webkit-date-and-time-value{height:1.25rem}.jtwf .hover\:\[\&\:not\(\:focus-within\)\]\:border-gray-300:not(:focus-within):hover{--tw-border-opacity:1;border-color:rgb(209 213 219/var(--tw-border-opacity))}.jtwf .hover\:\[\&\:not\(\:focus-within\)\]\:bg-gray-50:not(:focus-within):hover{--tw-bg-opacity:1;background-color:rgb(249 250 251/var(--tw-bg-opacity))}</style>
+</head>
+<body>
+    <!-- Header will be loaded here -->
+    <div id="header-placeholder"></div>
+
+    <!-- Contact Page Content -->
+    <section class="contact-page">
+        <div class="contact-intro">
+            <div class="container">
+                <h1>TopCap Construction project inquiry form</h1>
+                <p>One of the fastest ways to get back to you efficiently is to obtain specific details about your project.</p>
+                <p>Please complete the Web Form below. We review all forms received.</p>
+                <p>We do not follow up with SPAM/Vendor submissions.</p>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="form-container">
+                <form class="jtwf" data-jobtread-web-form="true" data-key="22SKtxjj9wN3NHVWikUcd942FvNSs9ESGM" data-success-message="Thank you for submitting your customer intake form for your project. We will either submit a bid for the project of reach out to get additional information from you or schedule a site visit. Our typical turn around time is 1-3 Days. Thank you, TopCap Construction"><div class="mx-auto min-w-0 max-w-sm rounded shadow bg-white"><div class="p-4 shadow-line-bottom"><img class="block max-w-full max-h-24 mx-auto" src="https://cdn.jobtread.com/G28AYBwHuWnlOo6V9iSk3Xn9u2k1a9nxOpTXyQOlRDmkDktfisS86eT0oPgf35IAMcDYAo9hORy3aI_lKxiXO_sHqSTqRZmcCHtjoh4LdjtIFDOH9nSnLguJhOMv07iFrRFgYA.RUrlnf157BB5sC4Niiw9CPrAihH9YhJRpDdkmUZhBkQ"/></div><div class="p-4 space-y-2"><label class="cursor-pointer block"><div class="font-bold">Name<span class="font-normal text-red-500">*</span></div><input class="rounded border p-2 w-full bg-white appearance-none transition hover:[&amp;:not(:focus-within)]:bg-gray-50 hover:[&amp;:not(:focus-within)]:border-gray-300 focus-within:bg-white focus-within:shadow focus-within:border-blue-500 focus-within:ring [&amp;::-webkit-date-and-time-value]:h-5" name="contact.name" type="text" required=""/></label><label class="cursor-pointer block"><div class="font-bold">Mobile<span class="font-normal text-red-500">*</span></div><input class="rounded border p-2 w-full bg-white appearance-none transition hover:[&amp;:not(:focus-within)]:bg-gray-50 hover:[&amp;:not(:focus-within)]:border-gray-300 focus-within:bg-white focus-within:shadow focus-within:border-blue-500 focus-within:ring [&amp;::-webkit-date-and-time-value]:h-5" name="contact.custom.22NZ5kPZiWig" type="tel" required=""/></label><label class="cursor-pointer block"><div class="font-bold">Email<span class="font-normal text-red-500">*</span></div><input class="rounded border p-2 w-full bg-white appearance-none transition hover:[&amp;:not(:focus-within)]:bg-gray-50 hover:[&amp;:not(:focus-within)]:border-gray-300 focus-within:bg-white focus-within:shadow focus-within:border-blue-500 focus-within:ring [&amp;::-webkit-date-and-time-value]:h-5" name="contact.custom.22NZ4JinZM3K" type="email" required=""/></label><label class="cursor-pointer block"><div class="font-bold">Address<span class="font-normal text-red-500">*</span></div><textarea class="rounded border p-2 w-full bg-white appearance-none transition hover:[&amp;:not(:focus-within)]:bg-gray-50 hover:[&amp;:not(:focus-within)]:border-gray-300 focus-within:bg-white focus-within:shadow focus-within:border-blue-500 focus-within:ring [&amp;::-webkit-date-and-time-value]:h-5" name="location.address" required=""></textarea></label><label class="cursor-pointer block"><div class="font-bold">Files &amp; Photos</div><input class="rounded border p-2 w-full bg-white appearance-none transition hover:[&amp;:not(:focus-within)]:bg-gray-50 hover:[&amp;:not(:focus-within)]:border-gray-300 focus-within:bg-white focus-within:shadow focus-within:border-blue-500 focus-within:ring [&amp;::-webkit-date-and-time-value]:h-5" name="account.files" type="file" multiple=""/></label><div class="block"><div class="font-bold">Project Type<span class="font-normal text-red-500">*</span></div><div class="rounded border divide-y overflow-hidden"><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="New Build"/><div class="grow min-w-0">New Build</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Full Remodel"/><div class="grow min-w-0">Full Remodel</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Kitchen Remodel"/><div class="grow min-w-0">Kitchen Remodel</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Bathroom Remodel"/><div class="grow min-w-0">Bathroom Remodel</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Addition"/><div class="grow min-w-0">Addition</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Exterior"/><div class="grow min-w-0">Exterior</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Interior"/><div class="grow min-w-0">Interior</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Roof"/><div class="grow min-w-0">Roof</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Deck"/><div class="grow min-w-0">Deck</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Fencing"/><div class="grow min-w-0">Fencing</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Shed"/><div class="grow min-w-0">Shed</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Patio Cover/Gazebo"/><div class="grow min-w-0">Patio Cover/Gazebo</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Plumbing"/><div class="grow min-w-0">Plumbing</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Concrete"/><div class="grow min-w-0">Concrete</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Flooring"/><div class="grow min-w-0">Flooring</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Painting"/><div class="grow min-w-0">Painting</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Cabinet Order"/><div class="grow min-w-0">Cabinet Order</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Electrical"/><div class="grow min-w-0">Electrical</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="HVAC"/><div class="grow min-w-0">HVAC</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Drywall"/><div class="grow min-w-0">Drywall</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Demolition"/><div class="grow min-w-0">Demolition</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Landscaping"/><div class="grow min-w-0">Landscaping</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Drainage"/><div class="grow min-w-0">Drainage</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Tile"/><div class="grow min-w-0">Tile</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Countertops"/><div class="grow min-w-0">Countertops</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Home Repairs"/><div class="grow min-w-0">Home Repairs</div></label></div></div><label class="cursor-pointer block"><div class="font-bold">Scope/Description of Work - include any Make/Model/SKUs<span class="font-normal text-red-500">*</span></div><textarea class="rounded border p-2 w-full bg-white appearance-none transition hover:[&amp;:not(:focus-within)]:bg-gray-50 hover:[&amp;:not(:focus-within)]:border-gray-300 focus-within:bg-white focus-within:shadow focus-within:border-blue-500 focus-within:ring [&amp;::-webkit-date-and-time-value]:h-5" name="account.custom.22NazydVis29" required=""></textarea></label><label class="cursor-pointer block"><div class="font-bold">Estimated Project Dimensions Length/Width/Square Feet</div><textarea class="rounded border p-2 w-full bg-white appearance-none transition hover:[&amp;:not(:focus-within)]:bg-gray-50 hover:[&amp;:not(:focus-within)]:border-gray-300 focus-within:bg-white focus-within:shadow focus-within:border-blue-500 focus-within:ring [&amp;::-webkit-date-and-time-value]:h-5" name="account.custom.22NazyhtYdmU"></textarea></label><label class="cursor-pointer block"><div class="font-bold">Notes</div><textarea class="rounded border p-2 w-full bg-white appearance-none transition hover:[&amp;:not(:focus-within)]:bg-gray-50 hover:[&amp;:not(:focus-within)]:border-gray-300 focus-within:bg-white focus-within:shadow focus-within:border-blue-500 focus-within:ring [&amp;::-webkit-date-and-time-value]:h-5" name="contact.custom.22NZ5kPzN8rp"></textarea></label><div class="block"><div class="font-bold">Contact with Information Via:<span class="font-normal text-red-500">*</span></div><div class="rounded border divide-y overflow-hidden"><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NazzLfFu2A" value="Text Message (fastest)"/><div class="grow min-w-0">Text Message (fastest)</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NazzLfFu2A" value="Email"/><div class="grow min-w-0">Email</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NazzLfFu2A" value="Phone Call"/><div class="grow min-w-0">Phone Call</div></label></div></div><div class="text-right"><button class="text-right px-4 py-2 rounded shadow-sm cursor-pointer hover:brightness-95" data-submit-button="true" style="background-color:#ff5600;color:#ffeee6">Submit</button></div></div></div></form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer will be loaded here -->
+    <div id="footer-placeholder"></div>
+
+    <script async src='https://app.jobtread.com/web-form.js'></script>
+    <!-- Load Header and Footer -->
+    <script src="../header-footer.js"></script>
+</body>
+</html>
+
