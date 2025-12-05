@@ -262,6 +262,22 @@
             .dropdown-item-with-submenu .submenu {
                 display: none;
             }
+            
+            /* Disable hover effects on mobile */
+            .dropdown-item-with-submenu:hover .submenu {
+                opacity: 0;
+                visibility: hidden;
+                transform: translateX(-10px);
+            }
+        }
+        
+        /* Only enable hover on devices that support it */
+        @media (hover: none) {
+            .dropdown-item-with-submenu:hover .submenu {
+                opacity: 0;
+                visibility: hidden;
+                transform: translateX(-10px);
+            }
         }
 
         .dropdown-toggle {
@@ -270,18 +286,25 @@
         }
 
         .dropdown-toggle::after {
-            content: '▼';
-            font-size: 0.7rem;
-            transition: transform 0.3s;
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 5px solid #000;
             margin-left: 0.5rem;
             display: inline-block;
             vertical-align: middle;
+            transition: transform 0.3s;
         }
 
         /* Mobile: triangles point right */
         @media (max-width: 768px) {
             .dropdown-toggle::after {
-                content: '▶';
+                border-top: 4px solid transparent;
+                border-bottom: 4px solid transparent;
+                border-left: 5px solid #000;
+                border-right: none;
             }
         }
 
@@ -704,6 +727,31 @@
         #play-pause-btn {
             font-size: 0.85rem;
             text-align: center;
+            position: relative;
+        }
+        
+        #play-pause-btn::before {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-left: 8px solid #000;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            margin-left: 1px; /* Slight offset for visual centering */
+        }
+        
+        #play-pause-btn.playing::before {
+            width: 10px;
+            height: 12px;
+            border: none;
+            background: #000;
+            clip-path: polygon(0 0, 40% 0, 40% 100%, 0 100%, 0 0, 60% 0, 60% 100%, 100% 100%, 100% 0);
+            margin-left: 0;
         }
 
         #volume-btn {
@@ -870,10 +918,49 @@
             color: #000;
             transition: background 0.2s ease;
             flex-shrink: 0;
+            position: relative;
+        }
+        
+        #fullscreen-btn::before {
+            content: '';
+            display: block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid #000;
+            position: absolute;
+        }
+        
+        #fullscreen-btn::after {
+            content: '';
+            display: block;
+            width: 6px;
+            height: 6px;
+            border-top: 2px solid #000;
+            border-right: 2px solid #000;
+            position: absolute;
+            top: 2px;
+            right: 2px;
         }
 
         #fullscreen-btn:hover {
             background: rgba(255, 255, 255, 1);
+        }
+        
+        #fullscreen-btn.fullscreen::before {
+            border: 2px solid #000;
+        }
+        
+        #fullscreen-btn.fullscreen::after {
+            border-top: 2px solid #000;
+            border-right: 2px solid #000;
+            border-bottom: 2px solid #000;
+            border-left: 2px solid #000;
+            top: 2px;
+            right: 2px;
+            bottom: 2px;
+            left: 2px;
+            width: auto;
+            height: auto;
         }
 
 
@@ -1109,6 +1196,17 @@
             .back-button {
                 display: none;
             }
+            
+            .back-button .back-arrow {
+                display: inline-block;
+                width: 0;
+                height: 0;
+                border-right: 6px solid #000;
+                border-top: 4px solid transparent;
+                border-bottom: 4px solid transparent;
+                margin-right: 0.5rem;
+                vertical-align: middle;
+            }
 
             nav.folder-view .back-button {
                 display: block;
@@ -1272,7 +1370,7 @@
                 <span>Click for sound</span>
             </button>
             <div class="video-controls">
-                <button id="play-pause-btn" aria-label="Play/Pause">▶</button>
+                <button id="play-pause-btn" aria-label="Play/Pause"></button>
                 <div class="video-progress" id="progress-bar">
                     <div class="video-progress-bar" id="progress-fill"></div>
                 </div>
@@ -1283,7 +1381,7 @@
                         <div class="volume-slider-bar" id="volume-fill"></div>
                     </div>
                 </div>
-                <button id="fullscreen-btn" aria-label="Fullscreen">⛶</button>
+                <button id="fullscreen-btn" aria-label="Fullscreen"></button>
             </div>
         </div>
     </section>
@@ -1337,10 +1435,10 @@
                 
                 if (video.paused) {
                     video.play();
-                    playPauseBtn.textContent = '⏸';
+                    playPauseBtn.classList.add('playing');
                 } else {
                     video.pause();
-                    playPauseBtn.textContent = '▶';
+                    playPauseBtn.classList.remove('playing');
                 }
                 
                 // Show controls on mobile after tap
@@ -1380,10 +1478,10 @@
                 e.stopPropagation();
                 if (video.paused) {
                     video.play();
-                    playPauseBtn.textContent = '⏸';
+                    playPauseBtn.classList.add('playing');
                 } else {
                     video.pause();
-                    playPauseBtn.textContent = '▶';
+                    playPauseBtn.classList.remove('playing');
                 }
                 
                 // Show controls on mobile after tap
@@ -1398,11 +1496,11 @@
 
             // Update play/pause button when video state changes
             video.addEventListener('play', () => {
-                playPauseBtn.textContent = '⏸';
+                playPauseBtn.classList.add('playing');
             });
 
             video.addEventListener('pause', () => {
-                playPauseBtn.textContent = '▶';
+                playPauseBtn.classList.remove('playing');
             });
 
             // Progress bar drag functionality
@@ -1601,11 +1699,17 @@
                     const doc = document;
                     const docEl = doc.documentElement;
                     
-                    const requestFullscreen = docEl.requestFullscreen || 
-                                            docEl.webkitRequestFullscreen || 
-                                            docEl.mozRequestFullScreen || 
-                                            docEl.msRequestFullscreen ||
-                                            videoWrapper.webkitEnterFullscreen; // iOS Safari
+                    // Try video element first (better for mobile)
+                    const videoRequestFullscreen = video.requestFullscreen || 
+                                                   video.webkitEnterFullscreen || 
+                                                   video.webkitRequestFullscreen ||
+                                                   video.mozRequestFullScreen || 
+                                                   video.msRequestFullscreen;
+                    
+                    const docRequestFullscreen = docEl.requestFullscreen || 
+                                                docEl.webkitRequestFullscreen || 
+                                                docEl.mozRequestFullScreen || 
+                                                docEl.msRequestFullscreen;
                     
                     const exitFullscreen = doc.exitFullscreen || 
                                          doc.webkitExitFullscreen || 
@@ -1618,21 +1722,48 @@
                                        doc.msFullscreenElement;
                     
                     if (!isFullscreen) {
-                        if (requestFullscreen) {
-                            if (typeof requestFullscreen === 'function') {
-                                requestFullscreen.call(docEl === videoWrapper ? docEl : videoWrapper).catch(err => {
-                                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                        // Try video element first (works better on mobile)
+                        if (videoRequestFullscreen) {
+                            if (typeof videoRequestFullscreen === 'function') {
+                                videoRequestFullscreen.call(video).catch(err => {
+                                    console.log(`Video fullscreen error: ${err.message}`);
+                                    // Fallback to document fullscreen
+                                    if (docRequestFullscreen) {
+                                        docRequestFullscreen.call(docEl).catch(err2 => {
+                                            console.log(`Document fullscreen error: ${err2.message}`);
+                                        });
+                                    }
                                 });
                             } else {
                                 // For iOS Safari
-                                videoWrapper.webkitEnterFullscreen();
+                                video.webkitEnterFullscreen();
                             }
+                        } else if (docRequestFullscreen) {
+                            docRequestFullscreen.call(docEl).catch(err => {
+                                console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                            });
                         }
                     } else {
                         if (exitFullscreen) {
                             exitFullscreen.call(doc);
                         }
                     }
+                });
+                
+                // Listen for fullscreen changes to update button state
+                const fullscreenChangeEvents = ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'];
+                fullscreenChangeEvents.forEach(event => {
+                    document.addEventListener(event, () => {
+                        const isFullscreen = document.fullscreenElement || 
+                                           document.webkitFullscreenElement || 
+                                           document.mozFullScreenElement || 
+                                           document.msFullscreenElement;
+                        if (isFullscreen) {
+                            fullscreenBtn.classList.add('fullscreen');
+                        } else {
+                            fullscreenBtn.classList.remove('fullscreen');
+                        }
+                    });
                 });
             }
 
@@ -1649,7 +1780,7 @@
                 if (isVisible && !videoPlayed) {
                     video.play().then(() => {
                         videoPlayed = true;
-                        playPauseBtn.textContent = '⏸';
+                        playPauseBtn.classList.add('playing');
                     }).catch(err => {
                         console.log('Autoplay prevented:', err);
                     });
@@ -1670,7 +1801,7 @@
                             
                             video.play().then(() => {
                                 videoPlayed = true;
-                                playPauseBtn.textContent = '⏸';
+                                playPauseBtn.classList.add('playing');
                             }).catch(err => {
                                 console.log('Autoplay prevented:', err);
                             });

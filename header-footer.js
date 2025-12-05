@@ -13,7 +13,7 @@ const headerHTML = `<!-- Header -->
             <span></span>
         </div>
         <nav id="nav">
-            <div class="back-button" id="backButton" style="display: none;">← Back</div>
+            <div class="back-button" id="backButton" style="display: none;"><span class="back-arrow"></span> Back</div>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li class="dropdown about-dropdown">
