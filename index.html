@@ -269,6 +269,16 @@
                 visibility: hidden;
                 transform: translateX(-10px);
             }
+            
+            /* Disable all hover effects on mobile */
+            nav ul li a:hover,
+            .dropdown-menu li a:hover,
+            .submenu li a:hover,
+            nav.folder-view .about-dropdown .dropdown-menu > li > a:hover,
+            nav.folder-view .back-button:hover {
+                background: transparent !important;
+                color: inherit !important;
+            }
         }
         
         /* Only enable hover on devices that support it */
@@ -277,6 +287,16 @@
                 opacity: 0;
                 visibility: hidden;
                 transform: translateX(-10px);
+            }
+            
+            /* Disable all hover effects on touch devices */
+            nav ul li a:hover,
+            .dropdown-menu li a:hover,
+            .submenu li a:hover,
+            nav.folder-view .about-dropdown .dropdown-menu > li > a:hover,
+            nav.folder-view .back-button:hover {
+                background: transparent !important;
+                color: inherit !important;
             }
         }
 
@@ -497,6 +517,14 @@
             text-decoration: none;
             transition: transform 0.3s ease;
         }
+        
+        .quick-link-card.testimonial-card {
+            background: #000;
+        }
+        
+        .quick-link-card.testimonial-card img {
+            display: none;
+        }
 
         .quick-link-card:hover {
             transform: translateY(-5px);
@@ -515,18 +543,57 @@
 
         .quick-link-overlay {
             position: absolute;
-            bottom: 0;
+            top: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
             padding: 2rem;
             color: #fff;
+        }
+        
+        .quick-link-overlay.testimonial-overlay {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+            top: 0;
+            bottom: 0;
+            background: transparent;
+            padding: 1.5rem;
+            gap: 0.5rem;
         }
 
         .quick-link-overlay h3 {
             font-size: 1.8rem;
             margin: 0;
             color: #fff;
+        }
+        
+        .quick-link-overlay .testimonial-quote {
+            color: #fff;
+            font-size: 0.95rem;
+            font-style: italic;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            margin: 0 0 0.5rem 0;
+            line-height: 1.4;
+            max-width: 90%;
+        }
+        
+        .quick-link-overlay .testimonial-rating {
+            color: #FFD700;
+            font-size: 1rem;
+            margin: 0.5rem 0;
+            letter-spacing: 2px;
+        }
+        
+        .quick-link-overlay .testimonial-reviewer {
+            color: #fff;
+            font-size: 0.85rem;
+            margin: 0.25rem 0 0.75rem 0;
+            opacity: 0.9;
+            text-align: right;
+            width: 90%;
         }
 
         /* Sections */
@@ -919,48 +986,27 @@
             transition: background 0.2s ease;
             flex-shrink: 0;
             position: relative;
+            padding: 0;
         }
         
         #fullscreen-btn::before {
             content: '';
             display: block;
-            width: 12px;
-            height: 12px;
-            border: 2px solid #000;
-            position: absolute;
+            width: 18px;
+            height: 18px;
+            background-image: url('assets/fullscreen.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: brightness(0);
         }
         
-        #fullscreen-btn::after {
-            content: '';
-            display: block;
-            width: 6px;
-            height: 6px;
-            border-top: 2px solid #000;
-            border-right: 2px solid #000;
-            position: absolute;
-            top: 2px;
-            right: 2px;
+        #fullscreen-btn.fullscreen::before {
+            background-image: url('assets/exit-fullscreen.png');
         }
 
         #fullscreen-btn:hover {
             background: rgba(255, 255, 255, 1);
-        }
-        
-        #fullscreen-btn.fullscreen::before {
-            border: 2px solid #000;
-        }
-        
-        #fullscreen-btn.fullscreen::after {
-            border-top: 2px solid #000;
-            border-right: 2px solid #000;
-            border-bottom: 2px solid #000;
-            border-left: 2px solid #000;
-            top: 2px;
-            right: 2px;
-            bottom: 2px;
-            left: 2px;
-            width: auto;
-            height: auto;
         }
 
 
@@ -1191,6 +1237,26 @@
                 background: #f8f9fa;
                 color: #FFD700;
             }
+            
+            /* Disable hover effects on mobile - prevent sticky hover states */
+            nav ul li a:hover,
+            .dropdown-menu li a:hover,
+            .submenu li a:hover,
+            nav.folder-view .about-dropdown .dropdown-menu > li > a:hover,
+            nav.folder-view .back-button:hover {
+                background: transparent !important;
+                color: inherit !important;
+            }
+            
+            /* Additional fix: prevent hover states from persisting */
+            body.mobile-nav-active nav ul li a:hover,
+            body.mobile-nav-active .dropdown-menu li a:hover,
+            body.mobile-nav-active .submenu li a:hover,
+            body.mobile-nav-active nav.folder-view .about-dropdown .dropdown-menu > li > a:hover,
+            body.mobile-nav-active nav.folder-view .back-button:hover {
+                background: transparent !important;
+                color: inherit !important;
+            }
 
             /* Back button in folder view */
             .back-button {
@@ -1337,10 +1403,10 @@
     <!-- Quick Links Section -->
     <section class="quick-links">
         <div class="quick-links-grid">
-            <a href="about.html" class="quick-link-card">
-                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="About Us">
+            <a href="contact/index.html" class="quick-link-card">
+                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Getting Started">
                 <div class="quick-link-overlay">
-                    <h3>About Us</h3>
+                    <h3>Getting Started</h3>
                 </div>
             </a>
             <a href="about.html" class="quick-link-card">
@@ -1349,10 +1415,12 @@
                     <h3>Our Story</h3>
                 </div>
             </a>
-            <a href="about.html#testimonials" class="quick-link-card">
-                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Testimonials">
-                <div class="quick-link-overlay">
+            <a href="about/testimonials.html" class="quick-link-card testimonial-card">
+                <div class="quick-link-overlay testimonial-overlay">
                     <h3>Testimonials</h3>
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p class="testimonial-quote">"TopCap Construction exceeded all our expectations. From the initial consultation to the final walkthrough, their team was professional, communicative, and detail-oriented. Our kitchen remodel turned out absolutely beautiful, and we couldn't be happier with the quality of work."</p>
+                    <p class="testimonial-reviewer">- Reviewer T</p>
                 </div>
             </a>
         </div>

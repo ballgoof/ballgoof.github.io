@@ -122,7 +122,7 @@ const headerHTML = `<!-- Header -->
                 <li><a href="press-awards/index.html">Press & Awards</a></li>
                 <li><a href="contact/index.html">Contact</a></li>
                 <li class="header-social-media">
-                    <a href="#" class="header-social-icon" aria-label="Nextdoor"><img src="assets/nextdoor.png" alt="Nextdoor"></a>
+                    <a href="https://nextdoor.com/pages/sacdev-inc-el-dorado-hills-ca/" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Nextdoor"><img src="assets/nextdoor.png" alt="Nextdoor"></a>
                     <a href="https://www.facebook.com/TopCapConstructionCA" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Facebook"><img src="assets/facebook-logo.png" alt="Facebook"></a>
                     <a href="https://www.instagram.com/topcapremodels" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Instagram"><img src="assets/instagram.png" alt="Instagram"></a>
                     <a href="https://www.yelp.com/biz/topcap-construction-el-dorado-hills-3?osq=topcap+construction" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Yelp"><img src="assets/yelp.png" alt="Yelp"></a>
@@ -148,7 +148,7 @@ const footerHTML = `<!-- Footer -->
         <div class="footer-right">
             <h4>Social Media</h4>
             <div class="social-media">
-                <a href="#" class="social-icon" aria-label="Nextdoor"><img src="assets/nextdoor.png" alt="Nextdoor"></a>
+                <a href="https://nextdoor.com/pages/sacdev-inc-el-dorado-hills-ca/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Nextdoor"><img src="assets/nextdoor.png" alt="Nextdoor"></a>
                 <a href="https://www.facebook.com/TopCapConstructionCA" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook"><img src="assets/facebook-logo.png" alt="Facebook"></a>
                 <a href="https://www.instagram.com/topcapremodels" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram"><img src="assets/instagram.png" alt="Instagram"></a>
                 <a href="https://www.yelp.com/biz/topcap-construction-el-dorado-hills-3?osq=topcap+construction" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Yelp"><img src="assets/yelp.png" alt="Yelp"></a>
@@ -269,6 +269,15 @@ function initHeaderScripts() {
 
     function enterFolderView(dropdown) {
         if (window.innerWidth <= 768) {
+            // Clear any hover states on mobile by removing focus and adding a class
+            document.body.classList.add('mobile-nav-active');
+            setTimeout(() => {
+                document.querySelectorAll('a').forEach(link => {
+                    link.blur();
+                    link.style.pointerEvents = 'auto';
+                });
+            }, 10);
+            
             nav.classList.add('folder-view');
             dropdown.classList.add('folder-active');
             if (backButton) backButton.style.display = 'block';
@@ -299,6 +308,18 @@ function initHeaderScripts() {
     }
 
     function exitFolderView() {
+        // Clear any hover states on mobile
+        if (window.innerWidth <= 768) {
+            document.body.classList.add('mobile-nav-active');
+            setTimeout(() => {
+                document.querySelectorAll('a').forEach(link => {
+                    link.blur();
+                    link.style.pointerEvents = 'auto';
+                });
+                document.body.classList.remove('mobile-nav-active');
+            }, 100);
+        }
+        
         nav.classList.remove('folder-view');
         nav.classList.remove('submenu-view');
         document.querySelectorAll('.dropdown').forEach(dropdown => {
@@ -316,6 +337,15 @@ function initHeaderScripts() {
 
     function enterSubmenuView(submenuItem) {
         if (window.innerWidth <= 768) {
+            // Clear any hover states on mobile
+            document.body.classList.add('mobile-nav-active');
+            setTimeout(() => {
+                document.querySelectorAll('a').forEach(link => {
+                    link.blur();
+                    link.style.pointerEvents = 'auto';
+                });
+            }, 10);
+            
             // Update the folder title text instead of hiding it
             const folderTitle = nav.querySelector('.folder-title');
             const submenuLink = submenuItem.querySelector('a');
