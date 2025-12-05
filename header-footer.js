@@ -27,7 +27,7 @@ const headerHTML = `<!-- Header -->
                     <a href="projects/index.html" class="dropdown-toggle projects-toggle">Our Projects</a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-item-with-submenu">
-                            <a href="projects/index.html#current-projects">Current Projects</a>
+                            <a href="currentprojects/index.html">Current Projects</a>
                             <ul class="submenu">
                                 <li><a href="currentprojects/1/index.html">Current Projects 1</a></li>
                                 <li><a href="currentprojects/2/index.html">Current Projects 2</a></li>
@@ -37,17 +37,16 @@ const headerHTML = `<!-- Header -->
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="projects/index.html#custom-homes">Custom Homes</a>
+                            <a href="customhomes/index.html">Custom Homes</a>
                             <ul class="submenu">
                                 <li><a href="customhomes/1/index.html">Custom Homes 1</a></li>
                                 <li><a href="customhomes/2/index.html">Custom Homes 2</a></li>
                                 <li><a href="customhomes/3/index.html">Custom Homes 3</a></li>
                                 <li><a href="customhomes/4/index.html">Custom Homes 4</a></li>
-                                <li><a href="customhomes/5/index.html">Custom Homes 5</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="projects/index.html#multi-unit">Multi Unit</a>
+                            <a href="multiunit/index.html">Multi Unit</a>
                             <ul class="submenu">
                                 <li><a href="multiunit/1/index.html">Multi Unit 1</a></li>
                                 <li><a href="multiunit/2/index.html">Multi Unit 2</a></li>
@@ -57,7 +56,7 @@ const headerHTML = `<!-- Header -->
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="projects/index.html#whole-house-remodel">Whole House Remodel</a>
+                            <a href="wholehouseremodel/index.html">Whole House Remodel</a>
                             <ul class="submenu">
                                 <li><a href="wholehouseremodel/1/index.html">Whole House Remodel 1</a></li>
                                 <li><a href="wholehouseremodel/2/index.html">Whole House Remodel 2</a></li>
@@ -67,7 +66,7 @@ const headerHTML = `<!-- Header -->
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="projects/index.html#kitchen-remodel">Kitchen Remodel</a>
+                            <a href="kitchenremodel/index.html">Kitchen Remodel</a>
                             <ul class="submenu">
                                 <li><a href="kitchenremodel/1/index.html">Kitchen Remodel 1</a></li>
                                 <li><a href="kitchenremodel/2/index.html">Kitchen Remodel 2</a></li>
@@ -77,7 +76,7 @@ const headerHTML = `<!-- Header -->
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="projects/index.html#bathroom-remodel">Bathroom Remodel</a>
+                            <a href="bathroomremodel/index.html">Bathroom Remodel</a>
                             <ul class="submenu">
                                 <li><a href="bathroomremodel/1/index.html">Bathroom Remodel 1</a></li>
                                 <li><a href="bathroomremodel/2/index.html">Bathroom Remodel 2</a></li>
@@ -87,7 +86,7 @@ const headerHTML = `<!-- Header -->
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="projects/index.html#commercial">Commercial</a>
+                            <a href="commercial/index.html">Commercial</a>
                             <ul class="submenu">
                                 <li><a href="commercial/1/index.html">Commercial 1</a></li>
                                 <li><a href="commercial/2/index.html">Commercial 2</a></li>
@@ -97,7 +96,7 @@ const headerHTML = `<!-- Header -->
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="projects/index.html#living-spaces">Living Spaces</a>
+                            <a href="livingspaces/index.html">Living Spaces</a>
                             <ul class="submenu">
                                 <li><a href="livingspaces/1/index.html">Living Spaces 1</a></li>
                                 <li><a href="livingspaces/2/index.html">Living Spaces 2</a></li>
@@ -107,7 +106,7 @@ const headerHTML = `<!-- Header -->
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="projects/index.html#adus">ADUS (Accessory Dwelling Units)</a>
+                            <a href="adus/index.html">ADUS (Accessory Dwelling Units)</a>
                             <ul class="submenu">
                                 <li><a href="adus/1/index.html">ADUS 1</a></li>
                                 <li><a href="adus/2/index.html">ADUS 2</a></li>
@@ -219,14 +218,23 @@ function loadHeader() {
         header = header.replace(/href="projects\/index\.html/g, 'href="' + basePath + 'projects/index.html');
         
         // Replace submenu links - make sure we catch all variations
+        header = header.replace(/href="currentprojects\/index\.html/g, 'href="' + basePath + 'currentprojects/index.html');
         header = header.replace(/href="currentprojects\//g, 'href="' + basePath + 'currentprojects/');
+        header = header.replace(/href="customhomes\/index\.html/g, 'href="' + basePath + 'customhomes/index.html');
         header = header.replace(/href="customhomes\//g, 'href="' + basePath + 'customhomes/');
+        header = header.replace(/href="multiunit\/index\.html/g, 'href="' + basePath + 'multiunit/index.html');
         header = header.replace(/href="multiunit\//g, 'href="' + basePath + 'multiunit/');
+        header = header.replace(/href="wholehouseremodel\/index\.html/g, 'href="' + basePath + 'wholehouseremodel/index.html');
         header = header.replace(/href="wholehouseremodel\//g, 'href="' + basePath + 'wholehouseremodel/');
+        header = header.replace(/href="kitchenremodel\/index\.html/g, 'href="' + basePath + 'kitchenremodel/index.html');
         header = header.replace(/href="kitchenremodel\//g, 'href="' + basePath + 'kitchenremodel/');
+        header = header.replace(/href="bathroomremodel\/index\.html/g, 'href="' + basePath + 'bathroomremodel/index.html');
         header = header.replace(/href="bathroomremodel\//g, 'href="' + basePath + 'bathroomremodel/');
+        header = header.replace(/href="commercial\/index\.html/g, 'href="' + basePath + 'commercial/index.html');
         header = header.replace(/href="commercial\//g, 'href="' + basePath + 'commercial/');
+        header = header.replace(/href="livingspaces\/index\.html/g, 'href="' + basePath + 'livingspaces/index.html');
         header = header.replace(/href="livingspaces\//g, 'href="' + basePath + 'livingspaces/');
+        header = header.replace(/href="adus\/index\.html/g, 'href="' + basePath + 'adus/index.html');
         header = header.replace(/href="adus\//g, 'href="' + basePath + 'adus/');
         
         headerPlaceholder.innerHTML = header;
@@ -431,44 +439,8 @@ function initHeaderScripts() {
         });
     }
 
-    // Handle clicks on project items with submenus (mobile only)
-    // Use event delegation to handle dynamically loaded content
-    // This handler must run first (use capture phase)
-    if (nav) {
-        nav.addEventListener('click', (e) => {
-            // Check if clicking on a project item with submenu
-            const clickedLink = e.target.closest('a');
-            if (!clickedLink) return;
-            
-            // Check if this link is inside a dropdown-item-with-submenu
-            let submenuItem = clickedLink.closest('.dropdown-item-with-submenu');
-            // If not found, check if the link's parent is the submenu item
-            if (!submenuItem && clickedLink.parentElement && clickedLink.parentElement.classList.contains('dropdown-item-with-submenu')) {
-                submenuItem = clickedLink.parentElement;
-            }
-            
-            const projectsDropdown = clickedLink.closest('.projects-dropdown');
-            
-            // Check all conditions
-            const isMobile = window.innerWidth <= 768;
-            const isFolderView = nav.classList.contains('folder-view');
-            const isNotSubmenuView = !nav.classList.contains('submenu-view');
-            const hasSubmenuItem = submenuItem !== null;
-            const isInProjectsDropdown = projectsDropdown !== null;
-            
-            if (hasSubmenuItem && 
-                isInProjectsDropdown && 
-                isMobile && 
-                isFolderView &&
-                isNotSubmenuView) {
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-                enterSubmenuView(submenuItem);
-                return false;
-            }
-        }, true); // Use capture phase to run before other handlers
-    }
+    // On mobile, project items with submenus should just navigate to their category pages
+    // No submenu functionality on mobile - removed
 
     // Handle window resize to close all dropdowns and folder view if switching to desktop
     window.addEventListener('resize', () => {
@@ -487,13 +459,8 @@ function initHeaderScripts() {
             const link = e.target.closest('a');
             if (!link) return;
             
-            // Don't close menu if clicking a project item with submenu on mobile
-            if (window.innerWidth <= 768 && link.closest('.projects-dropdown .dropdown-item-with-submenu > a') && nav.classList.contains('folder-view')) {
-                // This is handled by the earlier handler, just return
-                return;
-            }
-            
-            // Close submenu view if clicking a submenu link (actual option)
+            // On mobile, project items with submenus should just navigate (no submenu shown)
+            // Close submenu view if clicking a submenu link (actual option) - desktop only
             if (link.closest('.submenu')) {
                 // Don't prevent default - allow navigation, but close menus
                 exitSubmenuView();
@@ -501,8 +468,8 @@ function initHeaderScripts() {
                 if (hamburger) hamburger.classList.remove('active');
                 if (nav) nav.classList.remove('active');
             }
-            // Close folder view if clicking a dropdown menu link (but not submenu items or project items)
-            else if (link.closest('.dropdown .dropdown-menu') && !link.closest('.submenu') && !link.closest('.dropdown-item-with-submenu')) {
+            // Close folder view if clicking any dropdown menu link (including project items with submenus on mobile)
+            else if (link.closest('.dropdown .dropdown-menu') && !link.closest('.submenu')) {
                 exitFolderView();
                 if (hamburger) hamburger.classList.remove('active');
                 if (nav) nav.classList.remove('active');
