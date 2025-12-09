@@ -124,6 +124,14 @@
             filter: brightness(0) invert(0);
             -webkit-filter: brightness(0) invert(0);
             mix-blend-mode: multiply;
+            transition: none !important;
+        }
+        
+        /* Prevent flash on Houzz icon specifically */
+        .header-social-icon[aria-label="Houzz"] img {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transition: none !important;
         }
         
         /* Alternative: Use CSS to force black */
@@ -546,6 +554,14 @@
             padding: 8px;
             filter: brightness(0) invert(1);
             display: block;
+            transition: none !important;
+        }
+        
+        /* Prevent flash on Houzz icon specifically */
+        .social-icon[aria-label="Houzz"] img {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transition: none !important;
         }
 
         .social-icon:hover {

@@ -123,6 +123,14 @@
             filter: brightness(0) invert(0);
             -webkit-filter: brightness(0) invert(0);
             mix-blend-mode: multiply;
+            transition: none !important;
+        }
+        
+        /* Prevent flash on Houzz icon specifically */
+        .header-social-icon[aria-label="Houzz"] img {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transition: none !important;
         }
         
         /* Alternative: Use CSS to force black */
@@ -393,6 +401,13 @@
             font-weight: 600;
         }
 
+        /* Hide "Our Team" heading on mobile */
+        @media (max-width: 768px) {
+            .team-section h1 {
+                display: none;
+            }
+        }
+
         .team-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -433,6 +448,8 @@
             padding: 1.5rem 1rem 1rem;
             text-align: center;
             transition: opacity 0.3s ease, visibility 0.3s ease;
+            opacity: 1;
+            visibility: visible;
         }
 
         .team-member-name {
@@ -441,29 +458,59 @@
             margin-bottom: 0.5rem;
         }
 
-        .team-member-title {
-            font-size: 0.9rem;
-            font-weight: 400;
-            opacity: 0.85;
+        .team-member-title-wrapper {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .team-member-title-line {
+            display: none; /* Hide the line element */
+        }
+
+        .team-member-title {
+            font-size: 0.81rem; /* 10% smaller than 0.9rem */
+            font-weight: 400;
+            opacity: 1; /* Fully opaque */
+            position: relative;
+            padding: 0.3rem 0.8rem;
+            display: inline-block;
+            color: #000;
+            z-index: 1;
         }
 
         .team-member-title::before {
             content: '';
-            width: 2px;
-            height: 20px;
-            background: #FFD700;
-            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #FFD700;
+            transform: skewX(-15deg);
+            z-index: -1;
         }
 
-        /* Hide original text when hovering or active */
-        .team-member:hover .team-member-info,
-        .team-member.active .team-member-info {
+        /* Hide original text when hovering (desktop only) */
+        .team-member:hover .team-member-info {
             opacity: 0;
             visibility: hidden;
+        }
+        
+        /* On mobile, only hide when actively clicked */
+        @media (max-width: 768px) {
+            .team-member.active .team-member-info {
+                opacity: 0;
+                visibility: hidden;
+            }
+            
+            /* Ensure info is visible when not active on mobile */
+            .team-member:not(.active) .team-member-info {
+                opacity: 1;
+                visibility: visible;
+            }
         }
 
         /* Overlay for mobile click and desktop hover */
@@ -477,7 +524,7 @@
             color: #fff;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: space-between;
             align-items: center;
             padding: 2rem 1.5rem;
             opacity: 0;
@@ -486,10 +533,18 @@
             z-index: 10;
         }
 
-        .team-member:hover .team-overlay,
+        /* Desktop: show overlay on hover */
+        @media (min-width: 769px) {
+            .team-member:hover .team-overlay {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+        
+        /* Mobile and desktop: show overlay when active */
         .team-member.active .team-overlay {
-            opacity: 1;
-            visibility: visible;
+            opacity: 1 !important;
+            visibility: visible !important;
         }
 
         .team-overlay-name {
@@ -497,25 +552,42 @@
             font-weight: 600;
             margin-bottom: 0.5rem;
             text-align: center;
+            order: 1; /* Keep name at top */
         }
 
-        .team-overlay-title {
-            font-size: 1rem;
-            font-weight: 400;
-            opacity: 0.9;
-            margin-bottom: 1.5rem;
+        .team-overlay-title-wrapper {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            width: 100%;
+            margin: 1.5rem auto 0;
+            order: 3; /* Move to bottom */
+        }
+
+        .team-overlay-title-line {
+            display: none; /* Hide the line element */
+        }
+
+        .team-overlay-title {
+            font-size: 0.9rem; /* 10% smaller than 1rem */
+            font-weight: 400;
+            opacity: 1; /* Fully opaque */
+            position: relative;
+            padding: 0.3rem 0.8rem;
+            display: inline-block;
+            color: #000;
         }
 
         .team-overlay-title::before {
             content: '';
-            width: 2px;
-            height: 25px;
-            background: #FFD700;
-            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #FFD700;
+            transform: skewX(-15deg);
+            z-index: -1;
         }
 
         .team-overlay-bio {
@@ -523,6 +595,8 @@
             line-height: 1.6;
             text-align: center;
             max-width: 90%;
+            order: 2; /* Bio in middle */
+            flex: 1; /* Take up remaining space */
         }
 
         /* Mobile: show overlay on click */
@@ -640,6 +714,14 @@
             padding: 8px;
             filter: brightness(0) invert(1);
             display: block;
+            transition: none !important;
+        }
+        
+        /* Prevent flash on Houzz icon specifically */
+        .social-icon[aria-label="Houzz"] img {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transition: none !important;
         }
 
         .social-icon:hover {
@@ -883,31 +965,64 @@
         <h1>Our Team</h1>
         <div class="team-grid">
             <div class="team-member">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=500&q=80" alt="John Smith" class="team-member-image">
+                <img src="../assets/1.jpg" alt="Cody Mavis" class="team-member-image">
                 <div class="team-member-info">
-                    <div class="team-member-name">John Smith</div>
-                    <div class="team-member-title">Project Manager</div>
+                    <div class="team-member-name">Cody Mavis</div>
+                    <div class="team-member-title-wrapper">
+                        <span class="team-member-title-line"></span>
+                        <span class="team-member-title">Co-Founder</span>
+                    </div>
                 </div>
                 <div class="team-overlay">
-                    <div class="team-overlay-name">John Smith</div>
-                    <div class="team-overlay-title">Project Manager</div>
+                    <div class="team-overlay-title-wrapper">
+                        <span class="team-overlay-title-line"></span>
+                        <span class="team-overlay-title">Co-Founder</span>
+                    </div>
+                    <div class="team-overlay-name">Cody Mavis</div>
                     <div class="team-overlay-bio">
-                        John brings over 15 years of construction experience to TopCap Construction. As our lead project manager, he ensures every project is completed on time and within budget while maintaining the highest quality standards.
+                        Cody brings construction experience to TopCap Construction. As the co-founder, she ensures every project is completed on time and within budget while maintaining the highest quality standards.
                     </div>
                 </div>
             </div>
 
             <div class="team-member">
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=500&q=80" alt="Sarah Johnson" class="team-member-image">
+                <img src="../assets/2.jpg" alt="Adam Throne" class="team-member-image">
                 <div class="team-member-info">
-                    <div class="team-member-name">Sarah Johnson</div>
-                    <div class="team-member-title">Design Specialist</div>
+                    <div class="team-member-name">Adam Throne</div>
+                    <div class="team-member-title-wrapper">
+                        <span class="team-member-title-line"></span>
+                        <span class="team-member-title">Founder</span>
+                    </div>
                 </div>
                 <div class="team-overlay">
-                    <div class="team-overlay-name">Sarah Johnson</div>
-                    <div class="team-overlay-title">Design Specialist</div>
+                    <div class="team-overlay-title-wrapper">
+                        <span class="team-overlay-title-line"></span>
+                        <span class="team-overlay-title">Founder</span>
+                    </div>
+                    <div class="team-overlay-name">Adam Throne</div>
                     <div class="team-overlay-bio">
-                        Sarah is our design specialist with a keen eye for detail and a passion for creating beautiful, functional spaces. She works closely with clients to bring their vision to life.
+                        Adam brings construction experience to TopCap Construction. As the founder, he ensures every project is completed on time and within budget while maintaining the highest quality standards.
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-member">
+                <div class="team-member-image" style="background: #e0e0e0; display: flex; align-items: center; justify-content: center; color: #999; font-size: 1.2rem;">No Image</div>
+                <div class="team-member-info">
+                    <div class="team-member-name">Steve</div>
+                    <div class="team-member-title-wrapper">
+                        <span class="team-member-title-line"></span>
+                        <span class="team-member-title">Team Member</span>
+                    </div>
+                </div>
+                <div class="team-overlay">
+                    <div class="team-overlay-title-wrapper">
+                        <span class="team-overlay-title-line"></span>
+                        <span class="team-overlay-title">Team Member</span>
+                    </div>
+                    <div class="team-overlay-name">Steve</div>
+                    <div class="team-overlay-bio">
+                        Steve is a valued member of our team, bringing expertise and dedication to every project.
                     </div>
                 </div>
             </div>
@@ -916,11 +1031,17 @@
                 <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=500&q=80" alt="Mike Davis" class="team-member-image">
                 <div class="team-member-info">
                     <div class="team-member-name">Mike Davis</div>
-                    <div class="team-member-title">Master Craftsman</div>
+                    <div class="team-member-title-wrapper">
+                        <span class="team-member-title-line"></span>
+                        <span class="team-member-title">Master Craftsman</span>
+                    </div>
                 </div>
                 <div class="team-overlay">
+                    <div class="team-overlay-title-wrapper">
+                        <span class="team-overlay-title-line"></span>
+                        <span class="team-overlay-title">Master Craftsman</span>
+                    </div>
                     <div class="team-overlay-name">Mike Davis</div>
-                    <div class="team-overlay-title">Master Craftsman</div>
                     <div class="team-overlay-bio">
                         Mike is our master craftsman with expertise in custom carpentry and fine finishing work. His attention to detail and craftsmanship sets the standard for all our projects.
                     </div>
@@ -931,31 +1052,23 @@
                 <img src="../assets/4.jpg" alt="Billy Bones" class="team-member-image">
                 <div class="team-member-info">
                     <div class="team-member-name">Billy Bones</div>
-                    <div class="team-member-title">Customer Experience Supervisor</div>
+                    <div class="team-member-title-wrapper">
+                        <span class="team-member-title-line"></span>
+                        <span class="team-member-title">Customer Experience Supervisor</span>
+                    </div>
                 </div>
                 <div class="team-overlay">
+                    <div class="team-overlay-title-wrapper">
+                        <span class="team-overlay-title-line"></span>
+                        <span class="team-overlay-title">Customer Experience Supervisor</span>
+                    </div>
                     <div class="team-overlay-name">Billy Bones</div>
-                    <div class="team-overlay-title">Customer Experience Supervisor</div>
                     <div class="team-overlay-bio">
                         Billy handles client relations and ensures smooth communication throughout every project. His dedication to customer satisfaction makes him an invaluable part of our team.
                     </div>
                 </div>
             </div>
 
-            <div class="team-member">
-                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=500&q=80" alt="David Martinez" class="team-member-image">
-                <div class="team-member-info">
-                    <div class="team-member-name">David Martinez</div>
-                    <div class="team-member-title">Site Supervisor</div>
-                </div>
-                <div class="team-overlay">
-                    <div class="team-overlay-name">David Martinez</div>
-                    <div class="team-overlay-title">Site Supervisor</div>
-                    <div class="team-overlay-bio">
-                        David is our site supervisor with extensive knowledge in construction safety and quality control. He ensures all work meets our rigorous standards and building codes.
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -978,10 +1091,11 @@
             }
             
             teamMembers.forEach(member => {
+                // Simple click handler for mobile
                 member.addEventListener('click', (e) => {
-                    // Only handle clicks on mobile
                     if (window.innerWidth <= 768) {
                         e.preventDefault();
+                        e.stopPropagation();
                         
                         // Close other open overlays
                         teamMembers.forEach(other => {
@@ -994,10 +1108,58 @@
                         member.classList.toggle('active');
                     }
                 });
+                
+                // Track touch to prevent scroll from triggering clicks
+                let touchStartY = 0;
+                let touchStartX = 0;
+                let hasScrolled = false;
+                
+                member.addEventListener('touchstart', (e) => {
+                    if (window.innerWidth <= 768) {
+                        touchStartY = e.touches[0].clientY;
+                        touchStartX = e.touches[0].clientX;
+                        hasScrolled = false;
+                    }
+                }, { passive: true });
+                
+                member.addEventListener('touchmove', (e) => {
+                    if (window.innerWidth <= 768 && touchStartY !== 0) {
+                        const deltaY = Math.abs(e.touches[0].clientY - touchStartY);
+                        const deltaX = Math.abs(e.touches[0].clientX - touchStartX);
+                        if (deltaY > 5 || deltaX > 5) {
+                            hasScrolled = true;
+                        }
+                    }
+                }, { passive: true });
+                
+                // Prevent click if user scrolled
+                member.addEventListener('touchend', (e) => {
+                    if (window.innerWidth <= 768) {
+                        if (hasScrolled) {
+                            // Temporarily disable click if scrolling
+                            member.style.pointerEvents = 'none';
+                            setTimeout(() => {
+                                member.style.pointerEvents = '';
+                            }, 100);
+                        }
+                        touchStartY = 0;
+                        touchStartX = 0;
+                        hasScrolled = false;
+                    }
+                }, { passive: true });
             });
 
             // Close overlay when clicking outside on mobile
             document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    if (!e.target.closest('.team-member')) {
+                        clearActiveStates();
+                    }
+                }
+            });
+            
+            // Also close on touch outside
+            document.addEventListener('touchend', (e) => {
                 if (window.innerWidth <= 768) {
                     if (!e.target.closest('.team-member')) {
                         clearActiveStates();
