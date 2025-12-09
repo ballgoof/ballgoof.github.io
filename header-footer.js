@@ -27,92 +27,38 @@ const headerHTML = `<!-- Header -->
                     <a href="projects/index.html" class="dropdown-toggle projects-toggle">Our Projects</a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-item-with-submenu">
-                            <a href="currentprojects/index.html">Current Projects</a>
-                            <ul class="submenu">
-                                <li><a href="currentprojects/1/index.html">Current Projects 1</a></li>
-                                <li><a href="currentprojects/2/index.html">Current Projects 2</a></li>
-                                <li><a href="currentprojects/3/index.html">Current Projects 3</a></li>
-                                <li><a href="currentprojects/4/index.html">Current Projects 4</a></li>
-                                <li><a href="currentprojects/5/index.html">Current Projects 5</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-item-with-submenu">
                             <a href="customhomes/index.html">Custom Homes</a>
                             <ul class="submenu">
-                                <li><a href="customhomes/1/index.html">Custom Homes 1</a></li>
-                                <li><a href="customhomes/2/index.html">Custom Homes 2</a></li>
-                                <li><a href="customhomes/3/index.html">Custom Homes 3</a></li>
-                                <li><a href="customhomes/4/index.html">Custom Homes 4</a></li>
+                                <li><a href="customhomes/ashbury-st/index.html">Ashbury St</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
                             <a href="multiunit/index.html">Multi Unit</a>
                             <ul class="submenu">
-                                <li><a href="multiunit/1/index.html">Multi Unit 1</a></li>
-                                <li><a href="multiunit/2/index.html">Multi Unit 2</a></li>
-                                <li><a href="multiunit/3/index.html">Multi Unit 3</a></li>
-                                <li><a href="multiunit/4/index.html">Multi Unit 4</a></li>
-                                <li><a href="multiunit/5/index.html">Multi Unit 5</a></li>
+                                <li><a href="multiunit/22nd-street/index.html">22nd Street</a></li>
+                                <li><a href="multiunit/bartlett-6/index.html">Bartlett 6</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
                             <a href="wholehouseremodel/index.html">Whole House Remodel</a>
                             <ul class="submenu">
-                                <li><a href="wholehouseremodel/1/index.html">Whole House Remodel 1</a></li>
-                                <li><a href="wholehouseremodel/2/index.html">Whole House Remodel 2</a></li>
-                                <li><a href="wholehouseremodel/3/index.html">Whole House Remodel 3</a></li>
-                                <li><a href="wholehouseremodel/4/index.html">Whole House Remodel 4</a></li>
-                                <li><a href="wholehouseremodel/5/index.html">Whole House Remodel 5</a></li>
+                                <li><a href="wholehouseremodel/18th-ave-peter-parker/index.html">18th Ave - Peter Parker</a></li>
+                                <li><a href="wholehouseremodel/21st-street/index.html">21st Street</a></li>
+                                <li><a href="wholehouseremodel/coldwater-drive/index.html">Coldwater Drive</a></li>
+                                <li><a href="wholehouseremodel/lincoln/index.html">Lincoln</a></li>
+                                <li><a href="wholehouseremodel/stone-canyon/index.html">Stone Canyon</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
                             <a href="kitchenremodel/index.html">Kitchen Remodel</a>
                             <ul class="submenu">
-                                <li><a href="kitchenremodel/1/index.html">Kitchen Remodel 1</a></li>
-                                <li><a href="kitchenremodel/2/index.html">Kitchen Remodel 2</a></li>
-                                <li><a href="kitchenremodel/3/index.html">Kitchen Remodel 3</a></li>
-                                <li><a href="kitchenremodel/4/index.html">Kitchen Remodel 4</a></li>
-                                <li><a href="kitchenremodel/5/index.html">Kitchen Remodel 5</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-item-with-submenu">
-                            <a href="bathroomremodel/index.html">Bathroom Remodel</a>
-                            <ul class="submenu">
-                                <li><a href="bathroomremodel/1/index.html">Bathroom Remodel 1</a></li>
-                                <li><a href="bathroomremodel/2/index.html">Bathroom Remodel 2</a></li>
-                                <li><a href="bathroomremodel/3/index.html">Bathroom Remodel 3</a></li>
-                                <li><a href="bathroomremodel/4/index.html">Bathroom Remodel 4</a></li>
-                                <li><a href="bathroomremodel/5/index.html">Bathroom Remodel 5</a></li>
+                                <li><a href="kitchenremodel/castro-st/index.html">Castro St</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
                             <a href="commercial/index.html">Commercial</a>
                             <ul class="submenu">
-                                <li><a href="commercial/1/index.html">Commercial 1</a></li>
-                                <li><a href="commercial/2/index.html">Commercial 2</a></li>
-                                <li><a href="commercial/3/index.html">Commercial 3</a></li>
-                                <li><a href="commercial/4/index.html">Commercial 4</a></li>
-                                <li><a href="commercial/5/index.html">Commercial 5</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-item-with-submenu">
-                            <a href="livingspaces/index.html">Living Spaces</a>
-                            <ul class="submenu">
-                                <li><a href="livingspaces/1/index.html">Living Spaces 1</a></li>
-                                <li><a href="livingspaces/2/index.html">Living Spaces 2</a></li>
-                                <li><a href="livingspaces/3/index.html">Living Spaces 3</a></li>
-                                <li><a href="livingspaces/4/index.html">Living Spaces 4</a></li>
-                                <li><a href="livingspaces/5/index.html">Living Spaces 5</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-item-with-submenu">
-                            <a href="adus/index.html">ADUS (Accessory Dwelling Units)</a>
-                            <ul class="submenu">
-                                <li><a href="adus/1/index.html">ADUS 1</a></li>
-                                <li><a href="adus/2/index.html">ADUS 2</a></li>
-                                <li><a href="adus/3/index.html">ADUS 3</a></li>
-                                <li><a href="adus/4/index.html">ADUS 4</a></li>
-                                <li><a href="adus/5/index.html">ADUS 5</a></li>
+                                <li><a href="commercial/davids-tea/index.html">David's Tea</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -196,9 +142,15 @@ function getBasePath() {
 }
 
 // Load Header and Footer
-function loadHeader() {
+function loadHeader(forceReload = false) {
     const headerPlaceholder = document.getElementById('header-placeholder');
     if (headerPlaceholder) {
+        // If header already exists and we're not forcing reload, skip
+        if (!forceReload && headerElement && headerPlaceholder.querySelector('header')) {
+            // Just update paths if needed, but don't reload
+            return;
+        }
+        
         const basePath = getBasePath();
         let header = headerHTML;
         
@@ -237,7 +189,13 @@ function loadHeader() {
         header = header.replace(/href="adus\/index\.html/g, 'href="' + basePath + 'adus/index.html');
         header = header.replace(/href="adus\//g, 'href="' + basePath + 'adus/');
         
-        headerPlaceholder.innerHTML = header;
+        // Only update if content has changed to prevent unnecessary reloads
+        const currentHeader = headerPlaceholder.innerHTML.trim();
+        const newHeader = header.trim();
+        if (forceReload || currentHeader !== newHeader) {
+            headerPlaceholder.innerHTML = header;
+            headerElement = document.querySelector('header');
+        }
         initHeaderScripts();
     }
 }
@@ -483,8 +441,200 @@ function initHeaderScripts() {
     }
 }
 
+// Cache header element to prevent unnecessary reloads
+let headerElement = null;
+let isNavigating = false;
+
+// SPA Navigation - prevent header reload on internal navigation
+function setupSPANavigation() {
+    // Only enable SPA navigation on desktop (PC)
+    const isDesktop = window.innerWidth > 768;
+    if (!isDesktop) return;
+    
+    // Intercept clicks on internal links
+    document.addEventListener('click', function(e) {
+        const link = e.target.closest('a');
+        if (!link) return;
+        
+        const href = link.getAttribute('href');
+        if (!href) return;
+        
+        // Skip external links, anchors, and special links
+        if (href.startsWith('http') || href.startsWith('//') || 
+            href.startsWith('#') || href.startsWith('mailto:') || 
+            href.startsWith('tel:') || link.hasAttribute('target') ||
+            link.hasAttribute('download') || link.hasAttribute('data-no-spa')) {
+            return;
+        }
+        
+        // Skip if already navigating
+        if (isNavigating) {
+            e.preventDefault();
+            return;
+        }
+        
+        try {
+            const currentPath = window.location.pathname;
+            const linkUrl = new URL(href, window.location.href);
+            const linkPath = linkUrl.pathname;
+            
+            // Handle hash links (same page anchors)
+            if (currentPath === linkPath && linkUrl.hash) {
+                // Allow normal anchor navigation
+                return;
+            }
+            
+            // Skip if it's the same page without hash
+            if (currentPath === linkPath && !linkUrl.hash) {
+                e.preventDefault();
+                return;
+            }
+            
+            // Intercept internal navigation
+            e.preventDefault();
+            navigateToPage(href);
+        } catch (err) {
+            // If URL parsing fails, allow normal navigation
+            return;
+        }
+    });
+    
+    // Handle browser back/forward buttons
+    window.addEventListener('popstate', function(e) {
+        if (e.state && e.state.url) {
+            loadPageContent(e.state.url, false);
+        }
+    });
+}
+
+// Navigate to a new page without reloading header
+async function navigateToPage(url) {
+    if (isNavigating) return;
+    isNavigating = true;
+    
+    try {
+        // Update URL without reload
+        window.history.pushState({ url: url }, '', url);
+        
+        // Load the page content
+        await loadPageContent(url, true);
+    } catch (error) {
+        console.error('Navigation error:', error);
+        // Fallback to normal navigation
+        window.location.href = url;
+    } finally {
+        isNavigating = false;
+    }
+}
+
+// Load page content via AJAX
+async function loadPageContent(url, scrollToTop = true) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Failed to load page');
+        }
+        
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        
+        // Find the content area (everything between header and footer)
+        const headerPlaceholder = document.getElementById('header-placeholder');
+        const footerPlaceholder = document.getElementById('footer-placeholder');
+        
+        if (!headerPlaceholder || !footerPlaceholder) {
+            // Fallback: reload the page
+            window.location.href = url;
+            return;
+        }
+        
+        // Get new page's content (everything between header and footer placeholders)
+        const newHeaderPlaceholder = doc.getElementById('header-placeholder');
+        const newFooterPlaceholder = doc.getElementById('footer-placeholder');
+        
+        if (!newHeaderPlaceholder || !newFooterPlaceholder) {
+            // Fallback: reload the page
+            window.location.href = url;
+            return;
+        }
+        
+        // Extract content between header and footer from new page
+        const tempDiv = document.createElement('div');
+        let current = newHeaderPlaceholder.nextSibling;
+        while (current && current !== newFooterPlaceholder) {
+            const clone = current.cloneNode(true);
+            tempDiv.appendChild(clone);
+            current = current.nextSibling;
+        }
+        
+        // Remove old content (between header and footer)
+        const oldContentNodes = [];
+        let oldContent = headerPlaceholder.nextSibling;
+        while (oldContent && oldContent !== footerPlaceholder) {
+            oldContentNodes.push(oldContent);
+            oldContent = oldContent.nextSibling;
+        }
+        oldContentNodes.forEach(node => node.remove());
+        
+        // Insert new content before footer
+        while (tempDiv.firstChild) {
+            footerPlaceholder.parentNode.insertBefore(tempDiv.firstChild, footerPlaceholder);
+        }
+        
+        // Update page title
+        const newTitle = doc.querySelector('title');
+        if (newTitle) {
+            document.title = newTitle.textContent;
+        }
+        
+        // Re-initialize scripts from the new content
+        const newScripts = Array.from(document.querySelectorAll('script')).filter(script => {
+            // Only process scripts that are between header and footer
+            return script.compareDocumentPosition(headerPlaceholder) & Node.DOCUMENT_POSITION_FOLLOWING &&
+                   script.compareDocumentPosition(footerPlaceholder) & Node.DOCUMENT_POSITION_PRECEDING;
+        });
+        
+        newScripts.forEach(script => {
+            // Skip header-footer.js scripts
+            if (script.src && script.src.includes('header-footer.js')) {
+                return;
+            }
+            
+            const newScript = document.createElement('script');
+            if (script.src) {
+                newScript.src = script.src;
+                newScript.async = script.async;
+                newScript.defer = script.defer;
+            } else {
+                newScript.textContent = script.textContent;
+            }
+            script.parentNode.replaceChild(newScript, script);
+        });
+        
+        // Scroll to top
+        if (scrollToTop) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Re-initialize header scripts (dropdowns, etc.) - but don't reload header
+        initHeaderScripts();
+        
+        // Dispatch custom event for page-specific initialization
+        window.dispatchEvent(new CustomEvent('pageContentLoaded', { detail: { url } }));
+        
+    } catch (error) {
+        console.error('Error loading page content:', error);
+        // Fallback to normal navigation
+        window.location.href = url;
+    }
+}
+
 // Load header and footer when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     loadHeader();
+    headerElement = document.querySelector('header');
     loadFooter();
+    // Setup SPA navigation after header is loaded
+    setupSPANavigation();
 });
