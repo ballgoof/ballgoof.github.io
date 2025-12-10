@@ -1,4 +1,4 @@
-// Header HTML Template
+// Header HTML Template - All paths are root-relative (start with /)
 const headerHTML = `<!-- Header -->
 <header>
     <div class="header-container">
@@ -159,20 +159,11 @@ function loadHeader(forceReload = false) {
         const basePath = getBasePath();
         let header = headerHTML;
         
-        // Replace ONLY asset paths (images, etc.) - navigation links are already root-relative
+        // ONLY replace asset paths (images) - DON'T TOUCH navigation links at all
         header = header.replace(/src="assets\//g, 'src="' + basePath + 'assets/');
         header = header.replace(/href="assets\//g, 'href="' + basePath + 'assets/');
         
-        // For local file system, convert root-relative navigation links to relative paths
-        if (isLocalFile()) {
-            // Convert root-relative paths to relative paths for local file system
-            header = header.replace(/href="\/([^"]+)"/g, (match, path) => {
-                // Skip external links
-                if (path.startsWith('http')) return match;
-                return 'href="' + basePath + path + '"';
-            });
-        }
-        // On server, root-relative paths (starting with /) work as-is, so no conversion needed
+        // Navigation links stay exactly as they are - no processing
         
         // Only update if content has changed to prevent unnecessary reloads
         const currentHeader = headerPlaceholder.innerHTML.trim();
@@ -459,84 +450,21 @@ function setupSPANavigation() {
         }
         
         try {
-            const currentPath = window.location.pathname;
-            
-            // Resolve URLs properly - handle both local and server environments
-            let resolvedUrl;
+            // Skip external links
             if (href.startsWith('http') || href.startsWith('//')) {
-                // External URL - allow normal navigation
-                return;
-            } else if (href.startsWith('/')) {
-                // Root-relative path
-                if (isLocalFile()) {
-                    // On local file system, convert root-relative to relative
-                    // Count current depth
-                    const currentDepth = currentPath.split('/').filter(p => p && p !== 'index.html').length;
-                    if (currentDepth > 0) {
-                        resolvedUrl = '../'.repeat(currentDepth) + href.substring(1);
-                    } else {
-                        resolvedUrl = href.substring(1);
-                    }
-                } else {
-                    // On server, use root-relative as-is
-                    resolvedUrl = href;
-                }
-            } else if (href.startsWith('./')) {
-                // Relative to current directory
-                const currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
-                resolvedUrl = currentDir + href.substring(2);
-            } else if (href.startsWith('../')) {
-                // Relative path with parent directory - resolve normally
-                const baseUrl = new URL(window.location.href);
-                resolvedUrl = new URL(href, baseUrl).pathname;
-            } else {
-                // Relative path without ./ or ../
-                if (isLocalFile()) {
-                    // Local: resolve relative to current directory
-                    const currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
-                    resolvedUrl = currentDir + href;
-                } else {
-                    // Server: treat as root-relative
-                    resolvedUrl = '/' + href;
-                }
-            }
-            
-            // Normalize the path (remove double slashes, etc.)
-            resolvedUrl = resolvedUrl.replace(/\/+/g, '/');
-            
-            // For local file system, handle file:// protocol paths
-            if (isLocalFile()) {
-                // Remove leading slash for file:// protocol
-                if (resolvedUrl.startsWith('/')) {
-                    resolvedUrl = resolvedUrl.substring(1);
-                }
-            }
-            
-            // Normalize current path for comparison
-            let normalizedCurrentPath = currentPath;
-            if (isLocalFile() && normalizedCurrentPath.startsWith('/')) {
-                normalizedCurrentPath = normalizedCurrentPath.substring(1);
-            }
-            
-            // Handle hash links (same page anchors)
-            if (normalizedCurrentPath === resolvedUrl && href.includes('#')) {
-                // Allow normal anchor navigation
                 return;
             }
             
-            // Skip if it's the same page without hash
-            if (normalizedCurrentPath === resolvedUrl && !href.includes('#')) {
-                e.preventDefault();
+            // Skip hash-only links
+            if (href.startsWith('#')) {
                 return;
             }
             
-            // Intercept internal navigation
-            // Use the href as-is - it's already root-relative on server
+            // Use href exactly as-is - no processing
             e.preventDefault();
             navigateToPage(href);
         } catch (err) {
-            // If URL parsing fails, allow normal navigation
-            console.error('URL parsing error:', err);
+            console.error('Navigation error:', err);
             return;
         }
     });
@@ -555,41 +483,54 @@ async function navigateToPage(url) {
     isNavigating = true;
     
     try {
-        let resolvedPath = url;
         let fetchUrl = url;
+        let historyUrl = url;
         
-        if (url.startsWith('http') || url.startsWith('//')) {
-            // External URL
-            window.location.href = url;
-            return;
-        } else if (url.startsWith('/')) {
-            // Root-relative path - use as-is on server
+        // If root-relative path (starts with /), convert to proper path for local file system
+        if (url.startsWith('/') && !url.startsWith('//') && !url.startsWith('http')) {
             if (isLocalFile()) {
-                // Convert to relative for local file system
-                const currentPath = window.location.pathname;
-                const currentDepth = currentPath.split('/').filter(p => p && p !== '' && p !== 'index.html').length;
-                resolvedPath = currentDepth > 0 ? '../'.repeat(currentDepth) + url.substring(1) : url.substring(1);
-                fetchUrl = new URL(resolvedPath, window.location.href).href;
+                // For local file system, convert root-relative to relative based on current depth
+                // Get the current file path
+                const currentHref = window.location.href;
+                const currentUrl = new URL(currentHref);
+                const currentPath = currentUrl.pathname;
+                
+                // Remove drive letter prefix if present (Windows: /C:/Users/...)
+                let cleanPath = currentPath.replace(/^\/[a-zA-Z]:/, '');
+                // Remove leading slash
+                cleanPath = cleanPath.replace(/^\//, '');
+                
+                // Count depth (how many folders deep we are from root)
+                const pathParts = cleanPath.split('/').filter(p => p && p !== 'index.html');
+                const depth = pathParts.length;
+                
+                // Convert /customhomes/index.html to ../../customhomes/index.html (if depth is 2)
+                // Or to customhomes/index.html if depth is 0 (at root)
+                if (depth > 0) {
+                    historyUrl = '../'.repeat(depth) + url.substring(1);
+                } else {
+                    historyUrl = url.substring(1);
+                }
+                
+                // Resolve the fetch URL relative to current location
+                fetchUrl = new URL(historyUrl, window.location.href).href;
             } else {
-                // On server: use root-relative as-is - NO PROCESSING
-                resolvedPath = url;
+                // On server, use root-relative as-is
                 fetchUrl = window.location.origin + url;
+                historyUrl = url;
             }
+        } else if (!url.startsWith('http') && !url.startsWith('//') && !url.startsWith('file://')) {
+            // Relative path - resolve it
+            fetchUrl = new URL(url, window.location.href).href;
+            historyUrl = url;
         } else {
-            // Relative path
-            if (isLocalFile()) {
-                fetchUrl = new URL(url, window.location.href).href;
-                resolvedPath = url;
-            } else {
-                // On server, resolve relative to current location
-                const baseUrl = new URL(window.location.href);
-                resolvedPath = new URL(url, baseUrl).pathname;
-                fetchUrl = window.location.origin + resolvedPath;
-            }
+            // Already absolute
+            fetchUrl = url;
+            historyUrl = url;
         }
         
-        // Update URL in browser
-        window.history.pushState({ url: resolvedPath }, '', resolvedPath);
+        // Update browser URL
+        window.history.pushState({ url: historyUrl }, '', historyUrl);
         
         // Load the page content
         await loadPageContent(fetchUrl, true);
@@ -604,33 +545,8 @@ async function navigateToPage(url) {
 // Load page content via AJAX
 async function loadPageContent(url, scrollToTop = true) {
     try {
-        // Ensure URL is absolute for fetch
-        let fetchUrl = url;
-        if (url.startsWith('http') || url.startsWith('//') || url.startsWith('file://')) {
-            // Already absolute
-            fetchUrl = url;
-        } else if (url.startsWith('/')) {
-            // Root-relative path
-            if (isLocalFile()) {
-                // Convert to relative for local file system
-                const currentPath = window.location.pathname;
-                const currentDepth = currentPath.split('/').filter(p => p && p !== '' && p !== 'index.html').length;
-                const relativePath = currentDepth > 0 ? '../'.repeat(currentDepth) + url.substring(1) : url.substring(1);
-                fetchUrl = new URL(relativePath, window.location.href).href;
-            } else {
-                // On server: origin + root-relative path (NO PROCESSING)
-                fetchUrl = window.location.origin + url;
-            }
-        } else {
-            // Relative path
-            if (isLocalFile()) {
-                fetchUrl = new URL(url, window.location.href).href;
-            } else {
-                // On server, resolve relative to current location
-                const baseUrl = new URL(window.location.href);
-                fetchUrl = new URL(url, baseUrl).href;
-            }
-        }
+        // URL is already absolute from navigateToPage - use as-is
+        const fetchUrl = url;
         
         const response = await fetch(fetchUrl);
         if (!response.ok) {
