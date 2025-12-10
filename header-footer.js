@@ -559,7 +559,7 @@ async function loadPageContent(url, scrollToTop = true) {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
         
-        // Find the content area (everything between header and footer)
+        // Find the header placeholder - we'll keep it untouched
         const headerPlaceholder = document.getElementById('header-placeholder');
         const footerPlaceholder = document.getElementById('footer-placeholder');
         
@@ -569,7 +569,7 @@ async function loadPageContent(url, scrollToTop = true) {
             return;
         }
         
-        // Get new page's content (everything between header and footer placeholders)
+        // Get new page's content
         const newHeaderPlaceholder = doc.getElementById('header-placeholder');
         const newFooterPlaceholder = doc.getElementById('footer-placeholder');
         
@@ -578,6 +578,50 @@ async function loadPageContent(url, scrollToTop = true) {
             window.location.href = url;
             return;
         }
+        
+        // STEP 1: Replace ALL styles in <head> (keep header-footer styles, replace everything else)
+        const newStyles = doc.querySelectorAll('head style');
+        const existingStyles = Array.from(document.querySelectorAll('head style'));
+        
+        // Identify which existing styles are header-footer related
+        const headerFooterStyles = existingStyles.filter(style => {
+            const styleText = style.textContent || '';
+            return styleText.includes('header') || styleText.includes('footer') || 
+                   styleText.includes('Header') || styleText.includes('Footer') ||
+                   styleText.includes('.header') || styleText.includes('.footer') ||
+                   styleText.includes('#header') || styleText.includes('#footer');
+        });
+        
+        // Remove all non-header-footer styles
+        existingStyles.forEach(style => {
+            if (!headerFooterStyles.includes(style)) {
+                style.remove();
+            }
+        });
+        
+        // Add all new styles from the loaded page (except header-footer ones)
+        newStyles.forEach(newStyle => {
+            const styleText = newStyle.textContent || '';
+            // Skip header-footer styles (we keep the existing ones)
+            if (!styleText.includes('header') && !styleText.includes('footer') && 
+                !styleText.includes('Header') && !styleText.includes('Footer') &&
+                !styleText.includes('.header') && !styleText.includes('.footer') &&
+                !styleText.includes('#header') && !styleText.includes('#footer')) {
+                const styleElement = document.createElement('style');
+                styleElement.textContent = styleText;
+                document.head.appendChild(styleElement);
+            }
+        });
+        
+        // STEP 2: Update page title
+        const newTitle = doc.querySelector('title');
+        if (newTitle) {
+            document.title = newTitle.textContent;
+        }
+        
+        // STEP 3: Extract and replace body content (everything except header)
+        // Get all content from new page's body
+        const newBodyContent = doc.body;
         
         // Extract content between header and footer from new page
         const tempDiv = document.createElement('div');
@@ -588,7 +632,7 @@ async function loadPageContent(url, scrollToTop = true) {
             current = current.nextSibling;
         }
         
-        // Remove old content (between header and footer)
+        // Remove ALL old content between header and footer
         const oldContentNodes = [];
         let oldContent = headerPlaceholder.nextSibling;
         while (oldContent && oldContent !== footerPlaceholder) {
@@ -602,62 +646,57 @@ async function loadPageContent(url, scrollToTop = true) {
             footerPlaceholder.parentNode.insertBefore(tempDiv.firstChild, footerPlaceholder);
         }
         
-        // Update page title
-        const newTitle = doc.querySelector('title');
-        if (newTitle) {
-            document.title = newTitle.textContent;
-        }
-        
-        // Update hero image background from new page's styles
-        const newStyles = doc.querySelectorAll('style');
-        let newHeroImage = null;
-        
-        // Extract hero image URL from new page's styles
-        newStyles.forEach(style => {
-            const styleText = style.textContent;
-            const heroMatch = styleText.match(/\.project-hero\s*\{[^}]*background-image:\s*url\(['"]?([^'")]+)['"]?\)/);
-            if (heroMatch) {
-                newHeroImage = heroMatch[1];
-            }
-        });
-        
-        // Update the hero image if found
-        if (newHeroImage) {
-            const heroElement = document.querySelector('.project-hero');
-            if (heroElement) {
-                // Resolve relative URLs in the background-image
-                let resolvedImageUrl = newHeroImage;
-                if (!newHeroImage.startsWith('http') && !newHeroImage.startsWith('//') && !newHeroImage.startsWith('/')) {
-                    // Relative URL - resolve from the new page's location
-                    const newPageBase = url.substring(0, url.lastIndexOf('/') + 1);
-                    resolvedImageUrl = new URL(newHeroImage, window.location.origin + newPageBase).pathname;
+        // STEP 3.5: Force update hero image by finding it in new styles and applying directly
+        const heroElement = document.querySelector('.project-hero');
+        if (heroElement) {
+            // Find the hero image URL from the new page's styles
+            newStyles.forEach(newStyle => {
+                const styleText = newStyle.textContent || '';
+                // Look for .project-hero background-image
+                const heroMatch = styleText.match(/\.project-hero\s*\{[^}]*background-image:\s*url\(['"]?([^'")]+)['"]?\)/);
+                if (heroMatch) {
+                    let imageUrl = heroMatch[1];
+                    // Resolve relative URLs
+                    if (!imageUrl.startsWith('http') && !imageUrl.startsWith('//') && !imageUrl.startsWith('/')) {
+                        const newPageBase = url.substring(0, url.lastIndexOf('/') + 1);
+                        try {
+                            imageUrl = new URL(imageUrl, window.location.origin + newPageBase).pathname;
+                        } catch (e) {
+                            // If URL parsing fails, use as-is
+                        }
+                    }
+                    // Apply directly to element
+                    heroElement.style.backgroundImage = `url('${imageUrl}')`;
                 }
-                heroElement.style.backgroundImage = `url('${resolvedImageUrl}')`;
-            }
+            });
         }
         
-        // Re-initialize scripts from the new content
-        const newScripts = Array.from(document.querySelectorAll('script')).filter(script => {
-            // Only process scripts that are between header and footer
-            return script.compareDocumentPosition(headerPlaceholder) & Node.DOCUMENT_POSITION_FOLLOWING &&
-                   script.compareDocumentPosition(footerPlaceholder) & Node.DOCUMENT_POSITION_PRECEDING;
+        // STEP 4: Re-initialize all scripts from the new content
+        // Remove old scripts (except header-footer.js)
+        const oldScripts = Array.from(document.querySelectorAll('script')).filter(script => {
+            const isBetweenContent = script.compareDocumentPosition(headerPlaceholder) & Node.DOCUMENT_POSITION_FOLLOWING &&
+                                   script.compareDocumentPosition(footerPlaceholder) & Node.DOCUMENT_POSITION_PRECEDING;
+            return isBetweenContent && (!script.src || !script.src.includes('header-footer.js'));
         });
+        oldScripts.forEach(script => script.remove());
         
-        newScripts.forEach(script => {
-            // Skip header-footer.js scripts
-            if (script.src && script.src.includes('header-footer.js')) {
+        // Add new scripts from the loaded page
+        const newScripts = doc.querySelectorAll('script');
+        newScripts.forEach(oldScript => {
+            // Skip header-footer.js
+            if (oldScript.src && oldScript.src.includes('header-footer.js')) {
                 return;
             }
             
             const newScript = document.createElement('script');
-            if (script.src) {
-                newScript.src = script.src;
-                newScript.async = script.async;
-                newScript.defer = script.defer;
+            if (oldScript.src) {
+                newScript.src = oldScript.src;
+                newScript.async = oldScript.async;
+                newScript.defer = oldScript.defer;
             } else {
-                newScript.textContent = script.textContent;
+                newScript.textContent = oldScript.textContent;
             }
-            script.parentNode.replaceChild(newScript, script);
+            document.body.appendChild(newScript);
         });
         
         // Scroll to top
