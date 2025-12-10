@@ -621,6 +621,9 @@ async function loadPageContent(url, scrollToTop = true) {
             footerPlaceholder.parentNode.insertBefore(tempDiv.firstChild, footerPlaceholder);
         }
         
+        // Force a reflow to ensure DOM is updated before scripts run
+        void footerPlaceholder.offsetHeight;
+        
         // STEP 3.5: Force update hero image by finding it in new styles and applying directly
         const heroElement = document.querySelector('.project-hero');
         if (heroElement) {
@@ -657,22 +660,32 @@ async function loadPageContent(url, scrollToTop = true) {
         oldScripts.forEach(script => script.remove());
         
         // Add new scripts from the loaded page
-        const newScripts = doc.querySelectorAll('script');
-        newScripts.forEach(oldScript => {
-            // Skip header-footer.js
-            if (oldScript.src && oldScript.src.includes('header-footer.js')) {
-                return;
-            }
-            
-            const newScript = document.createElement('script');
-            if (oldScript.src) {
-                newScript.src = oldScript.src;
-                newScript.async = oldScript.async;
-                newScript.defer = oldScript.defer;
-            } else {
-                newScript.textContent = oldScript.textContent;
-            }
-            document.body.appendChild(newScript);
+        // Use requestAnimationFrame to ensure DOM is fully updated before scripts run
+        requestAnimationFrame(() => {
+            const newScripts = doc.querySelectorAll('script');
+            newScripts.forEach(oldScript => {
+                // Skip header-footer.js
+                if (oldScript.src && oldScript.src.includes('header-footer.js')) {
+                    return;
+                }
+                
+                const newScript = document.createElement('script');
+                if (oldScript.src) {
+                    newScript.src = oldScript.src;
+                    newScript.async = oldScript.async;
+                    newScript.defer = oldScript.defer;
+                } else {
+                    // For inline scripts, wrap in a function that runs after DOM is ready
+                    const scriptContent = oldScript.textContent || '';
+                    // Execute the script content in a way that ensures DOM is ready
+                    newScript.textContent = `
+                        (function() {
+                            ${scriptContent}
+                        })();
+                    `;
+                }
+                document.body.appendChild(newScript);
+            });
         });
         
         // Scroll to top
