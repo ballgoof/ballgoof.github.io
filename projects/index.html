@@ -11,6 +11,10 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            height: 100%;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -18,6 +22,9 @@
             background: #f8f9fa;
             overflow-x: hidden;
             padding-top: 120px; /* Account for fixed header */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* Header Styles - Same as other pages */
@@ -386,31 +393,19 @@
             top: 16px;
         }
 
-        /* Hero Section */
-        .project-hero {
-            width: 100%;
-            height: 60vh;
-            min-height: 400px;
-            background-image: url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            margin-bottom: 0;
-        }
-
         /* Project Info */
         .project-info {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 3rem 2rem;
+            padding: 3rem 2rem 1rem;
             text-align: center;
         }
 
         .project-info h1 {
             font-size: 2.5rem;
-            font-weight: 600;
+            font-weight: 700;
             color: #000;
-            margin-bottom: 3rem;
+            margin-bottom: 1rem;
         }
 
         /* Projects Grid */
@@ -419,8 +414,9 @@
             margin: 0 auto;
             padding: 0 2rem 4rem;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
+            flex: 1;
         }
 
         .project-card {
@@ -474,6 +470,7 @@
             background: #000;
             color: #fff;
             padding: 2rem 2rem 1.5rem;
+            margin-top: auto;
         }
 
         .footer-container {
@@ -800,11 +797,6 @@
                 height: 90px;
             }
 
-            .project-hero {
-                height: 40vh;
-                min-height: 300px;
-            }
-
             .project-info h1 {
                 font-size: 2rem;
             }
@@ -834,9 +826,6 @@
     <!-- Header will be loaded here -->
     <div id="header-placeholder"></div>
 
-    <!-- Hero Section -->
-    <div class="project-hero"></div>
-
     <!-- Project Info -->
     <div class="project-info">
         <h1>Our Projects</h1>
@@ -844,66 +833,43 @@
 
     <!-- Projects Grid -->
     <div class="projects-grid">
-        <a href="projects/index.html#current-projects" class="project-card">
-            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Current Projects">
-            <div class="project-card-overlay">
-                <h2>Current Projects</h2>
-            </div>
-        </a>
-
-        <a href="../customhomes/index.html" class="project-card">
-            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Custom Homes">
+        <!-- Custom Homes -->
+        <a href="/customhomes/index.html" class="project-card">
+            <img src="../assets/Custom Homes/Ashbury St/1.jpg" alt="Custom Homes">
             <div class="project-card-overlay">
                 <h2>Custom Homes</h2>
             </div>
         </a>
 
-        <a href="projects/index.html#multi-unit" class="project-card">
-            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Multi Unit">
+        <!-- Multi Unit -->
+        <a href="/multiunit/index.html" class="project-card">
+            <img src="../assets/Multi Unit/22nd Street/1.jpg" alt="Multi Unit">
             <div class="project-card-overlay">
                 <h2>Multi Unit</h2>
             </div>
         </a>
 
-        <a href="projects/index.html#whole-house-remodel" class="project-card">
-            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Whole House Remodel">
+        <!-- Whole House Remodel -->
+        <a href="/wholehouseremodel/index.html" class="project-card">
+            <img src="../assets/Whole House Remodel/21st Street/1.jpg" alt="Whole House Remodel">
             <div class="project-card-overlay">
                 <h2>Whole House Remodel</h2>
             </div>
         </a>
 
-        <a href="projects/index.html#kitchen-remodel" class="project-card">
-            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Kitchen Remodel">
+        <!-- Kitchen Remodel -->
+        <a href="/kitchenremodel/index.html" class="project-card">
+            <img src="../assets/Kitchen Remodel/Castro St/1.jpg" alt="Kitchen Remodel">
             <div class="project-card-overlay">
                 <h2>Kitchen Remodel</h2>
             </div>
         </a>
 
-        <a href="projects/index.html#bathroom-remodel" class="project-card">
-            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Bathroom Remodel">
-            <div class="project-card-overlay">
-                <h2>Bathroom Remodel</h2>
-            </div>
-        </a>
-
-        <a href="projects/index.html#commercial" class="project-card">
-            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Commercial">
+        <!-- Commercial -->
+        <a href="/commercial/index.html" class="project-card">
+            <img src="../assets/Commercial/Davids Tea/1.jpg" alt="Commercial">
             <div class="project-card-overlay">
                 <h2>Commercial</h2>
-            </div>
-        </a>
-
-        <a href="projects/index.html#living-spaces" class="project-card">
-            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Living Spaces">
-            <div class="project-card-overlay">
-                <h2>Living Spaces</h2>
-            </div>
-        </a>
-
-        <a href="projects/index.html#adus" class="project-card">
-            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="ADUS (Accessory Dwelling Units)">
-            <div class="project-card-overlay">
-                <h2>ADUS (Accessory Dwelling Units)</h2>
             </div>
         </a>
     </div>
