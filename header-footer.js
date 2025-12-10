@@ -660,8 +660,8 @@ async function loadPageContent(url, scrollToTop = true) {
         oldScripts.forEach(script => script.remove());
         
         // Add new scripts from the loaded page
-        // Use requestAnimationFrame to ensure DOM is fully updated before scripts run
-        requestAnimationFrame(() => {
+        // Use setTimeout to ensure DOM is fully updated and rendered before scripts run
+        setTimeout(() => {
             const newScripts = doc.querySelectorAll('script');
             newScripts.forEach(oldScript => {
                 // Skip header-footer.js
@@ -677,16 +677,18 @@ async function loadPageContent(url, scrollToTop = true) {
                 } else {
                     // For inline scripts, wrap in a function that runs after DOM is ready
                     const scriptContent = oldScript.textContent || '';
-                    // Execute the script content in a way that ensures DOM is ready
+                    // Execute the script content with a small delay to ensure DOM is ready
                     newScript.textContent = `
                         (function() {
-                            ${scriptContent}
+                            setTimeout(function() {
+                                ${scriptContent}
+                            }, 50);
                         })();
                     `;
                 }
                 document.body.appendChild(newScript);
             });
-        });
+        }, 100);
         
         // Scroll to top
         if (scrollToTop) {
