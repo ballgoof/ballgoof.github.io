@@ -158,38 +158,32 @@ function loadHeader(forceReload = false) {
         header = header.replace(/src="assets\//g, 'src="' + basePath + 'assets/');
         header = header.replace(/href="assets\//g, 'href="' + basePath + 'assets/');
         
-        // Replace index.html links (only if they're relative, not already with basePath)
-        header = header.replace(/href="index\.html"/g, 'href="' + basePath + 'index.html"');
+        // Convert all relative navigation links to root-relative paths
+        // This ensures they work correctly from any page depth
+        // Links that start with a folder name (not ../, not /, not http) need to be made root-relative
         
-        // Replace other page links - use more specific patterns
-        header = header.replace(/href="about\/index\.html/g, 'href="' + basePath + 'about/index.html');
-        header = header.replace(/href="about\/testimonials\.html/g, 'href="' + basePath + 'about/testimonials.html');
-        header = header.replace(/href="contact\/index\.html/g, 'href="' + basePath + 'contact/index.html');
-        header = header.replace(/href="getting-started\/index\.html/g, 'href="' + basePath + 'getting-started/index.html');
-        header = header.replace(/href="press-awards\/index\.html/g, 'href="' + basePath + 'press-awards/index.html');
-        header = header.replace(/href="projects\/index\.html/g, 'href="' + basePath + 'projects/index.html');
+        // First, handle index.html at root
+        header = header.replace(/href="index\.html"/g, 'href="/index.html"');
         
-        // Replace submenu links - only if they don't already have basePath
-        if (!header.includes(basePath + 'customhomes/')) {
-            header = header.replace(/href="customhomes\/index\.html/g, 'href="' + basePath + 'customhomes/index.html');
-            header = header.replace(/href="customhomes\//g, 'href="' + basePath + 'customhomes/');
-        }
-        if (!header.includes(basePath + 'multiunit/')) {
-            header = header.replace(/href="multiunit\/index\.html/g, 'href="' + basePath + 'multiunit/index.html');
-            header = header.replace(/href="multiunit\//g, 'href="' + basePath + 'multiunit/');
-        }
-        if (!header.includes(basePath + 'wholehouseremodel/')) {
-            header = header.replace(/href="wholehouseremodel\/index\.html/g, 'href="' + basePath + 'wholehouseremodel/index.html');
-            header = header.replace(/href="wholehouseremodel\//g, 'href="' + basePath + 'wholehouseremodel/');
-        }
-        if (!header.includes(basePath + 'kitchenremodel/')) {
-            header = header.replace(/href="kitchenremodel\/index\.html/g, 'href="' + basePath + 'kitchenremodel/index.html');
-            header = header.replace(/href="kitchenremodel\//g, 'href="' + basePath + 'kitchenremodel/');
-        }
-        if (!header.includes(basePath + 'commercial/')) {
-            header = header.replace(/href="commercial\/index\.html/g, 'href="' + basePath + 'commercial/index.html');
-            header = header.replace(/href="commercial\//g, 'href="' + basePath + 'commercial/');
-        }
+        // Handle other root-level pages
+        header = header.replace(/href="about\/index\.html/g, 'href="/about/index.html');
+        header = header.replace(/href="about\/testimonials\.html/g, 'href="/about/testimonials.html');
+        header = header.replace(/href="contact\/index\.html/g, 'href="/contact/index.html');
+        header = header.replace(/href="getting-started\/index\.html/g, 'href="/getting-started/index.html');
+        header = header.replace(/href="press-awards\/index\.html/g, 'href="/press-awards/index.html');
+        header = header.replace(/href="projects\/index\.html/g, 'href="/projects/index.html');
+        
+        // Handle project category pages and sub-pages - make them root-relative
+        header = header.replace(/href="customhomes\/index\.html"/g, 'href="/customhomes/index.html"');
+        header = header.replace(/href="customhomes\/([^"]+)"/g, 'href="/customhomes/$1"');
+        header = header.replace(/href="multiunit\/index\.html"/g, 'href="/multiunit/index.html"');
+        header = header.replace(/href="multiunit\/([^"]+)"/g, 'href="/multiunit/$1"');
+        header = header.replace(/href="wholehouseremodel\/index\.html"/g, 'href="/wholehouseremodel/index.html"');
+        header = header.replace(/href="wholehouseremodel\/([^"]+)"/g, 'href="/wholehouseremodel/$1"');
+        header = header.replace(/href="kitchenremodel\/index\.html"/g, 'href="/kitchenremodel/index.html"');
+        header = header.replace(/href="kitchenremodel\/([^"]+)"/g, 'href="/kitchenremodel/$1"');
+        header = header.replace(/href="commercial\/index\.html"/g, 'href="/commercial/index.html"');
+        header = header.replace(/href="commercial\/([^"]+)"/g, 'href="/commercial/$1"');
         
         // Only update if content has changed to prevent unnecessary reloads
         const currentHeader = headerPlaceholder.innerHTML.trim();
@@ -478,20 +472,26 @@ function setupSPANavigation() {
         try {
             const currentPath = window.location.pathname;
             
-            // Resolve relative URLs properly
+            // Resolve URLs properly - handle root-relative paths
             let resolvedUrl;
             if (href.startsWith('/')) {
-                // Absolute path
+                // Root-relative path (absolute from site root) - use as-is
                 resolvedUrl = href;
+            } else if (href.startsWith('http') || href.startsWith('//')) {
+                // External URL - allow normal navigation
+                return;
             } else if (href.startsWith('./')) {
                 // Relative to current directory
                 const currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
                 resolvedUrl = currentDir + href.substring(2);
-            } else {
-                // Relative path - resolve from current location
+            } else if (href.startsWith('../')) {
+                // Relative path with parent directory - resolve normally
                 const baseUrl = new URL(window.location.href);
-                const currentDir = baseUrl.pathname.substring(0, baseUrl.pathname.lastIndexOf('/') + 1);
-                resolvedUrl = new URL(href, baseUrl.origin + currentDir).pathname;
+                resolvedUrl = new URL(href, baseUrl).pathname;
+            } else {
+                // Relative path without ./ or ../ - treat as root-relative
+                // This handles cases where links are like "customhomes/ashbury-st/index.html"
+                resolvedUrl = '/' + href;
             }
             
             // Normalize the path (remove double slashes, etc.)
