@@ -795,12 +795,17 @@ async function loadPageContent(url, scrollToTop = true) {
                 } else {
                     // For inline scripts, wrap in a function that runs after DOM is ready
                     const scriptContent = oldScript.textContent || '';
-                    // Execute the script content with a small delay to ensure DOM is ready
+                    // Execute the script content with requestAnimationFrame to ensure DOM is fully rendered
+                    // This is especially important for gallery/lightbox scripts that need to attach event listeners
                     newScript.textContent = `
                         (function() {
-                            setTimeout(function() {
-                                ${scriptContent}
-                            }, 50);
+                            requestAnimationFrame(function() {
+                                requestAnimationFrame(function() {
+                                    setTimeout(function() {
+                                        ${scriptContent}
+                                    }, 100);
+                                });
+                            });
                         })();
                     `;
                 }
