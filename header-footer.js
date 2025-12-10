@@ -17,42 +17,42 @@ const headerHTML = `<!-- Header -->
             <ul>
                 <li><a href="/">Home</a></li>
                 <li class="dropdown about-dropdown">
-                    <a href="/About" class="dropdown-toggle about-toggle">About</a>
+                    <a href="/about" class="dropdown-toggle about-toggle">About</a>
                     <ul class="dropdown-menu">
-                        <li><a href="/About/OurTeam">Our Team</a></li>
-                        <li><a href="/About/Testimonials/">Testimonials</a></li>
+                        <li><a href="/about/our-team">Our Team</a></li>
+                        <li><a href="/about/testimonials/">Testimonials</a></li>
                     </ul>
                 </li>
                 <li class="dropdown projects-dropdown">
                     <a href="/projects/" class="dropdown-toggle projects-toggle">Our Projects</a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-item-with-submenu">
-                            <a href="/customhomes/">Custom Homes</a>
+                            <a href="/custom-homes/">Custom Homes</a>
                             <ul class="submenu">
-                                <li><a href="/customhomes/ashbury-st/">Ashbury St</a></li>
+                                <li><a href="/custom-homes/ashbury-st/">Ashbury St</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="/multiunit/">Multi Unit</a>
+                            <a href="/multi-unit/">Multi Unit</a>
                             <ul class="submenu">
-                                <li><a href="/multiunit/22nd-street/">22nd Street</a></li>
-                                <li><a href="/multiunit/bartlett-6/">Bartlett 6</a></li>
+                                <li><a href="/multi-unit/22nd-street/">22nd Street</a></li>
+                                <li><a href="/multi-unit/bartlett-6/">Bartlett 6</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="/wholehouseremodel/">Whole House Remodel</a>
+                            <a href="/whole-house-remodel/">Whole House Remodel</a>
                             <ul class="submenu">
-                                <li><a href="/wholehouseremodel/18th-ave-peter-parker/">18th Ave - Peter Parker</a></li>
-                                <li><a href="/wholehouseremodel/21st-street/">21st Street</a></li>
-                                <li><a href="/wholehouseremodel/coldwater-drive/">Coldwater Drive</a></li>
-                                <li><a href="/wholehouseremodel/lincoln/">Lincoln</a></li>
-                                <li><a href="/wholehouseremodel/stone-canyon/">Stone Canyon</a></li>
+                                <li><a href="/whole-house-remodel/18th-ave-peter-parker/">18th Ave - Peter Parker</a></li>
+                                <li><a href="/whole-house-remodel/21st-street/">21st Street</a></li>
+                                <li><a href="/whole-house-remodel/coldwater-drive/">Coldwater Drive</a></li>
+                                <li><a href="/whole-house-remodel/lincoln/">Lincoln</a></li>
+                                <li><a href="/whole-house-remodel/stone-canyon/">Stone Canyon</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="/kitchenremodel/">Kitchen Remodel</a>
+                            <a href="/kitchen-remodel/">Kitchen Remodel</a>
                             <ul class="submenu">
-                                <li><a href="/kitchenremodel/castro-st/">Castro St</a></li>
+                                <li><a href="/kitchen-remodel/castro-st/">Castro St</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">

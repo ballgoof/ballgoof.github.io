@@ -3,16 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Homes - TopCap Construction</title>
+    <title>Stone Canyon - TopCap Construction</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        html, body {
-            height: 100%;
         }
 
         body {
@@ -22,12 +18,100 @@
             background: #f8f9fa;
             overflow-x: hidden;
             padding-top: 120px; /* Account for fixed header */
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
         }
 
-        /* Header Styles - Same as other pages */
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            z-index: 10001;
+            transition: background 0.3s;
+        }
+
+        .lightbox-close:hover {
+            background: #fff;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            z-index: 10001;
+            transition: background 0.3s;
+        }
+
+        .lightbox-nav:hover {
+            background: #fff;
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .gallery-item {
+            cursor: pointer;
+        }
+
+        /* Header Styles */
         header {
             background: #fff;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -101,11 +185,6 @@
             gap: 0.5rem;
             margin-left: 1rem;
         }
-        
-        /* Debug: Make sure icons are visible */
-        .header-social-media {
-            visibility: visible !important;
-        }
 
         .header-social-icon {
             width: 24px;
@@ -116,34 +195,14 @@
             transition: all 0.3s;
             text-decoration: none;
             cursor: pointer;
-            overflow: visible;
-            opacity: 1 !important;
-            vertical-align: middle;
         }
-        
+
         .header-social-icon img {
             width: 20px;
             height: 20px;
             object-fit: contain;
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            filter: brightness(0) invert(0);
-            -webkit-filter: brightness(0) invert(0);
-            mix-blend-mode: multiply;
-            transition: none !important;
-        }
-        
-        /* Prevent flash on Houzz icon specifically */
-        .header-social-icon[aria-label="Houzz"] img {
-            opacity: 1 !important;
-            visibility: visible !important;
-            transition: none !important;
-        }
-        
-        /* Alternative: Use CSS to force black */
-        .header-social-icon {
-            color: #000;
+            display: block;
+            filter: brightness(0);
         }
 
         .header-social-icon:hover {
@@ -270,7 +329,6 @@
             color: #FFD700;
         }
 
-        /* Hide submenus on mobile */
         @media (max-width: 768px) {
             .dropdown-item-with-submenu .submenu {
                 display: none;
@@ -283,14 +341,9 @@
                 transform: translateX(-10px);
             }
             
-            /* Disable all hover effects on mobile */
-            nav ul li a:hover,
-            .dropdown-menu li a:hover,
-            .submenu li a:hover,
-            nav.folder-view .about-dropdown .dropdown-menu > li > a:hover,
-            nav.folder-view .back-button:hover {
-                background: transparent !important;
-                color: inherit !important;
+            .dropdown:hover .dropdown-menu,
+            .dropdown.active .dropdown-menu {
+                /* Hover only works with active class on mobile */
             }
         }
         
@@ -300,16 +353,6 @@
                 opacity: 0;
                 visibility: hidden;
                 transform: translateX(-10px);
-            }
-            
-            /* Disable all hover effects on touch devices */
-            nav ul li a:hover,
-            .dropdown-menu li a:hover,
-            .submenu li a:hover,
-            nav.folder-view .about-dropdown .dropdown-menu > li > a:hover,
-            nav.folder-view .back-button:hover {
-                background: transparent !important;
-                color: inherit !important;
             }
         }
 
@@ -393,180 +436,7 @@
             top: 16px;
         }
 
-        /* Project Info */
-        .project-info {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 2rem 1rem;
-            text-align: center;
-        }
-
-        .project-info h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #000;
-            margin-bottom: 1rem;
-        }
-
-        /* Projects Grid */
-        .projects-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem 4rem;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            flex: 1;
-        }
-
-        .project-card {
-            position: relative;
-            height: 400px;
-            overflow: hidden;
-            border-radius: 10px;
-            text-decoration: none;
-            display: block;
-            transition: transform 0.3s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .project-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .project-card:hover img {
-            transform: scale(1.05);
-        }
-
-        .project-card-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            padding: 2rem;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .project-card-overlay h2 {
-            font-size: 1.8rem;
-            margin: 0;
-            color: #fff;
-            font-weight: 600;
-        }
-
-        /* Footer */
-        footer {
-            background: #000;
-            color: #fff;
-            padding: 2rem 2rem 1.5rem;
-            margin-top: auto;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-
-        .footer-left {
-            flex: 1;
-            min-width: 250px;
-        }
-
-        .footer-left h3 {
-            color: #fff;
-            font-size: 0.966rem;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            font-style: italic;
-        }
-
-        .footer-left p {
-            color: #fff;
-            margin: 0.3rem 0;
-            font-size: 0.725rem;
-            line-height: 1.5;
-        }
-
-        .footer-left .copyright {
-            margin-top: 1rem;
-            font-size: 0.684rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .footer-right {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .footer-right h4 {
-            color: #fff;
-            font-size: 0.966rem;
-            margin-bottom: 0.75rem;
-            font-weight: 500;
-            font-style: italic;
-        }
-
-        .social-media {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .social-icon {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 1.2rem;
-            transition: all 0.3s;
-            text-decoration: none;
-            cursor: pointer;
-            background: transparent;
-            overflow: hidden;
-        }
-
-        .social-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            padding: 8px;
-            filter: brightness(0) invert(1);
-            display: block;
-            transition: none !important;
-        }
-        
-        /* Prevent flash on Houzz icon specifically */
-        .social-icon[aria-label="Houzz"] img {
-            opacity: 1 !important;
-            visibility: visible !important;
-            transition: none !important;
-        }
-
-        .social-icon:hover {
-            transform: translateY(-2px);
-            opacity: 0.8;
-        }
-
-        /* Mobile Responsive */
+        /* Mobile Navigation */
         @media (max-width: 768px) {
             .header-container {
                 padding-right: 2.5rem;
@@ -650,7 +520,32 @@
                 order: 2; /* After back button and title */
             }
 
-            /* Submenu folder view for mobile */
+            nav.folder-view .back-button {
+                display: block;
+                padding: 1rem 2rem;
+                background: #f8f9fa;
+                border-bottom: 1px solid #ddd;
+                cursor: pointer;
+                font-weight: 500;
+                color: #000;
+                order: 0;
+            }
+
+            nav.folder-view .folder-title {
+                display: block;
+                padding: 0.75rem 2rem;
+                background: #f8f9fa;
+                border-bottom: 1px solid #ddd;
+                font-size: 1.3rem;
+                font-weight: 600;
+                color: #000;
+                order: 1;
+            }
+
+            nav.folder-view ul {
+                order: 2;
+            }
+
             nav.submenu-view .dropdown-menu {
                 display: none !important;
             }
@@ -677,7 +572,7 @@
             }
 
             nav.submenu-view .dropdown-item-with-submenu.submenu-active > a {
-                display: none !important; /* Hide the link, title is shown in folder-title */
+                display: none !important;
             }
 
             nav.submenu-view .dropdown-item-with-submenu.submenu-active .submenu li {
@@ -689,7 +584,6 @@
                 display: block;
             }
 
-            /* About dropdown items should be regular links, not titles */
             nav.folder-view .about-dropdown .dropdown-menu > li > a {
                 padding: 0.5rem 2.5rem;
                 display: block;
@@ -701,28 +595,7 @@
                 background: #f8f9fa;
                 color: #FFD700;
             }
-            
-            /* Disable hover effects on mobile - prevent sticky hover states */
-            nav ul li a:hover,
-            .dropdown-menu li a:hover,
-            .submenu li a:hover,
-            nav.folder-view .about-dropdown .dropdown-menu > li > a:hover,
-            nav.folder-view .back-button:hover {
-                background: transparent !important;
-                color: inherit !important;
-            }
-            
-            /* Additional fix: prevent hover states from persisting */
-            body.mobile-nav-active nav ul li a:hover,
-            body.mobile-nav-active .dropdown-menu li a:hover,
-            body.mobile-nav-active .submenu li a:hover,
-            body.mobile-nav-active nav.folder-view .about-dropdown .dropdown-menu > li > a:hover,
-            body.mobile-nav-active nav.folder-view .back-button:hover {
-                background: transparent !important;
-                color: inherit !important;
-            }
 
-            /* Back button in folder view */
             .back-button {
                 display: none;
             }
@@ -749,14 +622,13 @@
                 margin: 0;
                 width: 100%;
                 box-sizing: border-box;
-                order: 0; /* First */
+                order: 0;
             }
 
             nav.folder-view .back-button:hover {
                 background: #e9ecef;
             }
 
-            /* Title for folder view */
             nav.folder-view .folder-title {
                 display: block;
                 padding: 0.75rem 2rem;
@@ -797,19 +669,123 @@
                 height: 90px;
             }
 
-            .project-info h1 {
-                font-size: 2rem;
+            .dropdown-menu {
+                position: static;
+                opacity: 0;
+                visibility: hidden;
+                max-height: 0;
+                overflow: hidden;
+                transform: none;
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+                transition: max-height 0.3s ease, opacity 0.3s ease;
             }
 
-            .projects-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+            .dropdown-menu li a {
+                padding-left: 2.5rem;
+                white-space: normal;
+                word-wrap: break-word;
             }
 
-            .project-card {
-                height: 300px;
+            .logo {
+                height: 90px;
             }
+        }
 
+        /* Footer */
+        footer {
+            background: #000;
+            color: #fff;
+            padding: 2rem 2rem 1.5rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-left {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-left h3 {
+            color: #fff;
+            font-size: 0.966rem;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        .footer-left p {
+            color: #fff;
+            margin: 0.3rem 0;
+            font-size: 0.725rem;
+            line-height: 1.5;
+        }
+
+        .footer-left .copyright {
+            margin-top: 1rem;
+            font-size: 0.684rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-right h4 {
+            color: #fff;
+            font-size: 0.966rem;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        .social-media {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            cursor: pointer;
+            background: transparent;
+            overflow: hidden;
+        }
+
+        .social-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 8px;
+            filter: brightness(0) invert(1);
+            display: block;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-2px);
+            opacity: 0.8;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
             .footer-container {
                 flex-direction: column-reverse;
                 text-align: left;
@@ -820,32 +796,241 @@
                 align-items: flex-start;
             }
         }
+
+        /* Hero Image Section */
+        .project-hero {
+            width: 100%;
+            height: 60vh;
+            min-height: 400px;
+            background-image: url('../../assets/Whole House Remodel/Stone Canyon/1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Project Info Section */
+        .project-info {
+            padding: 3rem 2rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .project-category {
+            font-size: 1.2rem;
+            color: #FFD700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .project-name {
+            font-size: 3.5rem;
+            font-weight: 600;
+            font-style: italic;
+            color: #000;
+            margin-bottom: 1rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Image Grid */
+        .project-gallery {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .gallery-item {
+            width: 100%;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .project-hero {
+                height: 40vh;
+                min-height: 300px;
+            }
+
+            .project-name {
+                font-size: 2.5rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Header will be loaded here -->
     <div id="header-placeholder"></div>
 
-    <!-- Project Info -->
-    <div class="project-info">
-        <h1>Custom Homes</h1>
-    </div>
+    <!-- Hero Image -->
+    <section class="project-hero"></section>
 
-    <!-- Projects Grid -->
-    <div class="projects-grid">
-        <a href="/customhomes/ashbury-st/" class="project-card">
-            <img src="../assets/Custom Homes/Ashbury St/1.jpg" alt="Ashbury St">
-            <div class="project-card-overlay">
-                <h2>Ashbury St</h2>
+    <!-- Project Info -->
+    <section class="project-info">
+        <h2 class="project-category">Whole House Remodel</h2>
+        <h1 class="project-name">Stone Canyon</h1>
+    </section>
+
+    <!-- Image Gallery -->
+    <section class="project-gallery">
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="../../assets/Whole House Remodel/Stone Canyon/2.jpg" alt="Stone Canyon">
             </div>
-        </a>
-    </div>
+            <div class="gallery-item">
+                <img src="../../assets/Whole House Remodel/Stone Canyon/3.jpg" alt="Stone Canyon">
+            </div>
+            <div class="gallery-item">
+                <img src="../../assets/Whole House Remodel/Stone Canyon/4.jpg" alt="Stone Canyon">
+            </div>
+            <div class="gallery-item">
+                <img src="../../assets/Whole House Remodel/Stone Canyon/5.jpg" alt="Stone Canyon">
+            </div>
+            <div class="gallery-item">
+                <img src="../../assets/Whole House Remodel/Stone Canyon/6.jpg" alt="Stone Canyon">
+            </div>
+            <div class="gallery-item">
+                <img src="../../assets/Whole House Remodel/Stone Canyon/7.jpg" alt="Stone Canyon">
+            </div>
+            <div class="gallery-item">
+                <img src="../../assets/Whole House Remodel/Stone Canyon/8.jpg" alt="Stone Canyon">
+            </div>
+            <div class="gallery-item">
+                <img src="../../assets/Whole House Remodel/Stone Canyon/9.jpg" alt="Stone Canyon">
+            </div>
+            <div class="gallery-item">
+                <img src="../../assets/Whole House Remodel/Stone Canyon/10.jpg" alt="Stone Canyon">
+            </div>
+            <div class="gallery-item">
+                <img src="../../assets/Whole House Remodel/Stone Canyon/11.jpg" alt="Stone Canyon">
+            </div>
+            <div class="gallery-item">
+                <img src="../../assets/Whole House Remodel/Stone Canyon/12.jpg" alt="Stone Canyon">
+            </div>
+            <div class="gallery-item">
+                <img src="../../assets/Whole House Remodel/Stone Canyon/13.jpg" alt="Stone Canyon">
+            </div>
+            <div class="gallery-item">
+                <img src="../../assets/Whole House Remodel/Stone Canyon/14.jpg" alt="Stone Canyon">
+            </div>
+            <div class="gallery-item">
+                <img src="../../assets/Whole House Remodel/Stone Canyon/15.jpg" alt="Stone Canyon">
+            </div>
+        </div>
+    </section>
 
     <!-- Footer will be loaded here -->
     <div id="footer-placeholder"></div>
 
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightbox-close">×</button>
+        <button class="lightbox-nav lightbox-prev" id="lightbox-prev">‹</button>
+        <button class="lightbox-nav lightbox-next" id="lightbox-next">›</button>
+        <div class="lightbox-content">
+            <img class="lightbox-image" id="lightbox-image" src="" alt="">
+        </div>
+    </div>
+
     <!-- Load Header and Footer -->
-    <script src="../header-footer.js"></script>
+    <script src="../../header-footer.js"></script>
+    
+    <script>
+        // Lightbox functionality
+        const galleryItems = document.querySelectorAll('.gallery-item img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const lightboxPrev = document.getElementById('lightbox-prev');
+        const lightboxNext = document.getElementById('lightbox-next');
+        let currentImageIndex = 0;
+
+        // Open lightbox with clicked image
+        galleryItems.forEach((img, index) => {
+            img.addEventListener('click', () => {
+                currentImageIndex = index;
+                updateLightboxImage();
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            });
+        });
+
+        // Close lightbox
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            
+            if (e.key === 'Escape') {
+                closeLightbox();
+            } else if (e.key === 'ArrowLeft') {
+                navigateImage(-1);
+            } else if (e.key === 'ArrowRight') {
+                navigateImage(1);
+            }
+        });
+
+        // Navigation buttons
+        lightboxPrev.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navigateImage(-1);
+        });
+
+        lightboxNext.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navigateImage(1);
+        });
+
+        function updateLightboxImage() {
+            lightboxImage.src = galleryItems[currentImageIndex].src;
+            lightboxImage.alt = galleryItems[currentImageIndex].alt;
+        }
+
+        function navigateImage(direction) {
+            currentImageIndex += direction;
+            if (currentImageIndex < 0) {
+                currentImageIndex = galleryItems.length - 1;
+            } else if (currentImageIndex >= galleryItems.length) {
+                currentImageIndex = 0;
+            }
+            updateLightboxImage();
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+    </script>
 </body>
 </html>
 
