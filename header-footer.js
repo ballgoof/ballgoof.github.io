@@ -483,11 +483,22 @@ async function navigateToPage(url) {
     isNavigating = true;
     
     try {
-        let fetchUrl = url;
-        let historyUrl = url;
+        // Normalize URL - remove any index.html and ensure trailing slash for folders
+        let normalizedUrl = url;
+        if (normalizedUrl.endsWith('/index.html')) {
+            normalizedUrl = normalizedUrl.replace('/index.html', '/');
+        } else if (normalizedUrl.endsWith('index.html')) {
+            normalizedUrl = normalizedUrl.replace('index.html', '');
+            if (!normalizedUrl.endsWith('/')) {
+                normalizedUrl += '/';
+            }
+        }
+        
+        let fetchUrl = normalizedUrl;
+        let historyUrl = normalizedUrl;
         
         // If root-relative path (starts with /), convert to proper path for local file system
-        if (url.startsWith('/') && !url.startsWith('//') && !url.startsWith('http')) {
+        if (normalizedUrl.startsWith('/') && !normalizedUrl.startsWith('//') && !normalizedUrl.startsWith('http')) {
             if (isLocalFile()) {
                 // For local file system, convert root-relative to relative based on current depth
                 const currentPath = window.location.pathname;
@@ -496,29 +507,43 @@ async function navigateToPage(url) {
                 const pathParts = cleanPath.split('/').filter(p => p && p !== '' && p !== 'index.html');
                 const depth = pathParts.length;
                 
-                // Convert /about/index.html to ../../about/index.html (if depth is 2)
+                // Convert /about/ to ../../about/index.html (if depth is 2)
                 if (depth > 0) {
-                    historyUrl = '../'.repeat(depth) + url.substring(1);
+                    // Remove leading slash and add index.html for local file system
+                    let localPath = normalizedUrl.substring(1);
+                    if (localPath && !localPath.endsWith('/')) {
+                        localPath += '/';
+                    }
+                    localPath += 'index.html';
+                    historyUrl = '../'.repeat(depth) + localPath;
                 } else {
-                    historyUrl = url.substring(1);
+                    historyUrl = normalizedUrl.substring(1) + 'index.html';
                 }
                 fetchUrl = new URL(historyUrl, window.location.href).href;
             } else {
-                // On server, use root-relative as-is
-                fetchUrl = window.location.origin + url;
-                historyUrl = url;
+                // On server, append index.html to folder paths for fetch, but keep clean URL in history
+                if (normalizedUrl.endsWith('/')) {
+                    fetchUrl = window.location.origin + normalizedUrl + 'index.html';
+                } else {
+                    fetchUrl = window.location.origin + normalizedUrl;
+                }
+                historyUrl = normalizedUrl;
             }
-        } else if (!url.startsWith('http') && !url.startsWith('//') && !url.startsWith('file://')) {
+        } else if (!normalizedUrl.startsWith('http') && !normalizedUrl.startsWith('//') && !normalizedUrl.startsWith('file://')) {
             // Relative path - resolve it
-            fetchUrl = new URL(url, window.location.href).href;
-            historyUrl = url;
+            if (normalizedUrl.endsWith('/')) {
+                fetchUrl = new URL(normalizedUrl + 'index.html', window.location.href).href;
+            } else {
+                fetchUrl = new URL(normalizedUrl, window.location.href).href;
+            }
+            historyUrl = normalizedUrl;
         } else {
             // Already absolute
-            fetchUrl = url;
-            historyUrl = url;
+            fetchUrl = normalizedUrl;
+            historyUrl = normalizedUrl;
         }
         
-        // Update browser URL
+        // Update browser URL - use clean URL without index.html
         window.history.pushState({ url: historyUrl }, '', historyUrl);
         
         // Load the page content
