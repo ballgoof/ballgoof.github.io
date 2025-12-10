@@ -169,25 +169,27 @@ function loadHeader(forceReload = false) {
         header = header.replace(/href="press-awards\/index\.html/g, 'href="' + basePath + 'press-awards/index.html');
         header = header.replace(/href="projects\/index\.html/g, 'href="' + basePath + 'projects/index.html');
         
-        // Replace submenu links - make sure we catch all variations
-        header = header.replace(/href="currentprojects\/index\.html/g, 'href="' + basePath + 'currentprojects/index.html');
-        header = header.replace(/href="currentprojects\//g, 'href="' + basePath + 'currentprojects/');
-        header = header.replace(/href="customhomes\/index\.html/g, 'href="' + basePath + 'customhomes/index.html');
-        header = header.replace(/href="customhomes\//g, 'href="' + basePath + 'customhomes/');
-        header = header.replace(/href="multiunit\/index\.html/g, 'href="' + basePath + 'multiunit/index.html');
-        header = header.replace(/href="multiunit\//g, 'href="' + basePath + 'multiunit/');
-        header = header.replace(/href="wholehouseremodel\/index\.html/g, 'href="' + basePath + 'wholehouseremodel/index.html');
-        header = header.replace(/href="wholehouseremodel\//g, 'href="' + basePath + 'wholehouseremodel/');
-        header = header.replace(/href="kitchenremodel\/index\.html/g, 'href="' + basePath + 'kitchenremodel/index.html');
-        header = header.replace(/href="kitchenremodel\//g, 'href="' + basePath + 'kitchenremodel/');
-        header = header.replace(/href="bathroomremodel\/index\.html/g, 'href="' + basePath + 'bathroomremodel/index.html');
-        header = header.replace(/href="bathroomremodel\//g, 'href="' + basePath + 'bathroomremodel/');
-        header = header.replace(/href="commercial\/index\.html/g, 'href="' + basePath + 'commercial/index.html');
-        header = header.replace(/href="commercial\//g, 'href="' + basePath + 'commercial/');
-        header = header.replace(/href="livingspaces\/index\.html/g, 'href="' + basePath + 'livingspaces/index.html');
-        header = header.replace(/href="livingspaces\//g, 'href="' + basePath + 'livingspaces/');
-        header = header.replace(/href="adus\/index\.html/g, 'href="' + basePath + 'adus/index.html');
-        header = header.replace(/href="adus\//g, 'href="' + basePath + 'adus/');
+        // Replace submenu links - only if they don't already have basePath
+        if (!header.includes(basePath + 'customhomes/')) {
+            header = header.replace(/href="customhomes\/index\.html/g, 'href="' + basePath + 'customhomes/index.html');
+            header = header.replace(/href="customhomes\//g, 'href="' + basePath + 'customhomes/');
+        }
+        if (!header.includes(basePath + 'multiunit/')) {
+            header = header.replace(/href="multiunit\/index\.html/g, 'href="' + basePath + 'multiunit/index.html');
+            header = header.replace(/href="multiunit\//g, 'href="' + basePath + 'multiunit/');
+        }
+        if (!header.includes(basePath + 'wholehouseremodel/')) {
+            header = header.replace(/href="wholehouseremodel\/index\.html/g, 'href="' + basePath + 'wholehouseremodel/index.html');
+            header = header.replace(/href="wholehouseremodel\//g, 'href="' + basePath + 'wholehouseremodel/');
+        }
+        if (!header.includes(basePath + 'kitchenremodel/')) {
+            header = header.replace(/href="kitchenremodel\/index\.html/g, 'href="' + basePath + 'kitchenremodel/index.html');
+            header = header.replace(/href="kitchenremodel\//g, 'href="' + basePath + 'kitchenremodel/');
+        }
+        if (!header.includes(basePath + 'commercial/')) {
+            header = header.replace(/href="commercial\/index\.html/g, 'href="' + basePath + 'commercial/index.html');
+            header = header.replace(/href="commercial\//g, 'href="' + basePath + 'commercial/');
+        }
         
         // Only update if content has changed to prevent unnecessary reloads
         const currentHeader = headerPlaceholder.innerHTML.trim();
@@ -475,26 +477,44 @@ function setupSPANavigation() {
         
         try {
             const currentPath = window.location.pathname;
-            const linkUrl = new URL(href, window.location.href);
-            const linkPath = linkUrl.pathname;
+            
+            // Resolve relative URLs properly
+            let resolvedUrl;
+            if (href.startsWith('/')) {
+                // Absolute path
+                resolvedUrl = href;
+            } else if (href.startsWith('./')) {
+                // Relative to current directory
+                const currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+                resolvedUrl = currentDir + href.substring(2);
+            } else {
+                // Relative path - resolve from current location
+                const baseUrl = new URL(window.location.href);
+                const currentDir = baseUrl.pathname.substring(0, baseUrl.pathname.lastIndexOf('/') + 1);
+                resolvedUrl = new URL(href, baseUrl.origin + currentDir).pathname;
+            }
+            
+            // Normalize the path (remove double slashes, etc.)
+            resolvedUrl = resolvedUrl.replace(/\/+/g, '/');
             
             // Handle hash links (same page anchors)
-            if (currentPath === linkPath && linkUrl.hash) {
+            if (currentPath === resolvedUrl && href.includes('#')) {
                 // Allow normal anchor navigation
                 return;
             }
             
             // Skip if it's the same page without hash
-            if (currentPath === linkPath && !linkUrl.hash) {
+            if (currentPath === resolvedUrl && !href.includes('#')) {
                 e.preventDefault();
                 return;
             }
             
             // Intercept internal navigation
             e.preventDefault();
-            navigateToPage(href);
+            navigateToPage(resolvedUrl);
         } catch (err) {
             // If URL parsing fails, allow normal navigation
+            console.error('URL parsing error:', err);
             return;
         }
     });
@@ -586,6 +606,34 @@ async function loadPageContent(url, scrollToTop = true) {
         const newTitle = doc.querySelector('title');
         if (newTitle) {
             document.title = newTitle.textContent;
+        }
+        
+        // Update hero image background from new page's styles
+        const newStyles = doc.querySelectorAll('style');
+        let newHeroImage = null;
+        
+        // Extract hero image URL from new page's styles
+        newStyles.forEach(style => {
+            const styleText = style.textContent;
+            const heroMatch = styleText.match(/\.project-hero\s*\{[^}]*background-image:\s*url\(['"]?([^'")]+)['"]?\)/);
+            if (heroMatch) {
+                newHeroImage = heroMatch[1];
+            }
+        });
+        
+        // Update the hero image if found
+        if (newHeroImage) {
+            const heroElement = document.querySelector('.project-hero');
+            if (heroElement) {
+                // Resolve relative URLs in the background-image
+                let resolvedImageUrl = newHeroImage;
+                if (!newHeroImage.startsWith('http') && !newHeroImage.startsWith('//') && !newHeroImage.startsWith('/')) {
+                    // Relative URL - resolve from the new page's location
+                    const newPageBase = url.substring(0, url.lastIndexOf('/') + 1);
+                    resolvedImageUrl = new URL(newHeroImage, window.location.origin + newPageBase).pathname;
+                }
+                heroElement.style.backgroundImage = `url('${resolvedImageUrl}')`;
+            }
         }
         
         // Re-initialize scripts from the new content
