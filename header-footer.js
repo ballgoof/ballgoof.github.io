@@ -569,21 +569,22 @@ async function loadPageContent(url, scrollToTop = true) {
         const fetchUrl = url;
         
         console.log('Fetching URL:', fetchUrl);
-        let response = await fetch(fetchUrl);
+        let actualFetchUrl = fetchUrl;
+        let response = await fetch(actualFetchUrl);
         
         // If 404, try with index.html (some servers need explicit index.html)
-        if (!response.ok && !fetchUrl.endsWith('/index.html')) {
-            const altUrl = fetchUrl.endsWith('/') ? fetchUrl + 'index.html' : fetchUrl + '/index.html';
+        if (!response.ok && !actualFetchUrl.endsWith('/index.html')) {
+            const altUrl = actualFetchUrl.endsWith('/') ? actualFetchUrl + 'index.html' : actualFetchUrl + '/index.html';
             console.log('Trying alternative URL with index.html:', altUrl);
             response = await fetch(altUrl);
             if (response.ok) {
-                // Update fetchUrl for the rest of the function
-                fetchUrl = altUrl;
+                // Update actualFetchUrl for the rest of the function
+                actualFetchUrl = altUrl;
             }
         }
         
         if (!response.ok) {
-            console.error('Fetch failed:', response.status, response.statusText, 'for URL:', fetchUrl);
+            console.error('Fetch failed:', response.status, response.statusText, 'for URL:', actualFetchUrl);
             throw new Error(`Failed to load page: ${response.status} ${response.statusText}`);
         }
         
@@ -736,6 +737,10 @@ async function loadPageContent(url, scrollToTop = true) {
         // Use setTimeout to ensure DOM is fully updated and rendered before scripts run
         setTimeout(() => {
             const newScripts = doc.querySelectorAll('script');
+            // Get the base URL of the fetched page to resolve relative paths
+            const fetchedPageUrl = new URL(actualFetchUrl);
+            const fetchedPageBase = fetchedPageUrl.origin + fetchedPageUrl.pathname.substring(0, fetchedPageUrl.pathname.lastIndexOf('/') + 1);
+            
             newScripts.forEach(oldScript => {
                 // Skip header-footer.js
                 if (oldScript.src && oldScript.src.includes('header-footer.js')) {
@@ -744,7 +749,17 @@ async function loadPageContent(url, scrollToTop = true) {
                 
                 const newScript = document.createElement('script');
                 if (oldScript.src) {
-                    newScript.src = oldScript.src;
+                    // Resolve relative paths to absolute paths based on the fetched page location
+                    let scriptSrc = oldScript.src;
+                    if (scriptSrc.startsWith('../') || scriptSrc.startsWith('./') || (!scriptSrc.startsWith('http') && !scriptSrc.startsWith('/') && !scriptSrc.startsWith('//'))) {
+                        // Relative path - resolve it based on the fetched page's location
+                        const resolvedUrl = new URL(scriptSrc, fetchedPageBase);
+                        scriptSrc = resolvedUrl.href;
+                    } else if (scriptSrc.startsWith('/')) {
+                        // Root-relative path - make it absolute
+                        scriptSrc = window.location.origin + scriptSrc;
+                    }
+                    newScript.src = scriptSrc;
                     newScript.async = oldScript.async;
                     newScript.defer = oldScript.defer;
                 } else {
