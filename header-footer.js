@@ -566,29 +566,38 @@ async function loadPageContent(url, scrollToTop = true) {
             return;
         }
         
-        // STEP 1: Replace ALL styles in <head>
-        // Remove ALL existing <style> tags
-        const existingStyles = Array.from(document.querySelectorAll('head style'));
-        existingStyles.forEach(style => style.remove());
-        
-        // Add ALL new styles from the loaded page
-        const newStyles = doc.querySelectorAll('head style');
-        newStyles.forEach(newStyle => {
-            const styleElement = document.createElement('style');
-            styleElement.textContent = newStyle.textContent || '';
-            document.head.appendChild(styleElement);
+        // STEP 1: Replace ALL content in <head> (except header-footer.js script)
+        // Remove everything from head except header-footer.js
+        const headChildren = Array.from(document.head.children);
+        headChildren.forEach(child => {
+            // Keep header-footer.js script
+            if (child.tagName === 'SCRIPT' && child.src && child.src.includes('header-footer.js')) {
+                return;
+            }
+            // Remove everything else
+            child.remove();
         });
         
-        // STEP 2: Update page title
+        // Add ALL new head content from loaded page (except header-footer.js)
+        const newHeadChildren = Array.from(doc.head.children);
+        newHeadChildren.forEach(newChild => {
+            // Skip header-footer.js script
+            if (newChild.tagName === 'SCRIPT' && newChild.src && newChild.src.includes('header-footer.js')) {
+                return;
+            }
+            
+            // Clone and append
+            const cloned = newChild.cloneNode(true);
+            document.head.appendChild(cloned);
+        });
+        
+        // STEP 2: Update page title (already done above, but ensure it's set)
         const newTitle = doc.querySelector('title');
         if (newTitle) {
             document.title = newTitle.textContent;
         }
         
-        // STEP 3: Extract and replace body content (everything except header)
-        // Get all content from new page's body
-        const newBodyContent = doc.body;
-        
+        // STEP 3: Replace ALL body content (except header and footer placeholders)
         // Extract content between header and footer from new page
         const tempDiv = document.createElement('div');
         let current = newHeaderPlaceholder.nextSibling;
@@ -615,9 +624,10 @@ async function loadPageContent(url, scrollToTop = true) {
         // STEP 3.5: Force update hero image by finding it in new styles and applying directly
         const heroElement = document.querySelector('.project-hero');
         if (heroElement) {
-            // Find the hero image URL from the new page's styles
-            newStyles.forEach(newStyle => {
-                const styleText = newStyle.textContent || '';
+            // Find the hero image URL from the newly added styles
+            const allStyles = document.querySelectorAll('head style');
+            allStyles.forEach(style => {
+                const styleText = style.textContent || '';
                 // Look for .project-hero background-image
                 const heroMatch = styleText.match(/\.project-hero\s*\{[^}]*background-image:\s*url\(['"]?([^'")]+)['"]?\)/);
                 if (heroMatch) {
