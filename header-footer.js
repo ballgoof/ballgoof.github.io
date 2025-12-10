@@ -19,7 +19,7 @@ const headerHTML = `<!-- Header -->
                 <li class="dropdown about-dropdown">
                     <a href="/about" class="dropdown-toggle about-toggle">About</a>
                     <ul class="dropdown-menu">
-                        <li><a href="/about/our-team">Our Team</a></li>
+                        <li><a href="/about/our-team/">Our Team</a></li>
                         <li><a href="/about/testimonials/">Testimonials</a></li>
                     </ul>
                 </li>
@@ -494,6 +494,11 @@ async function navigateToPage(url) {
             }
         }
         
+        // Ensure trailing slash for folder paths (unless it's the root or has a file extension)
+        if (normalizedUrl !== '/' && !normalizedUrl.endsWith('/') && !normalizedUrl.match(/\.[a-zA-Z0-9]+$/)) {
+            normalizedUrl += '/';
+        }
+        
         let fetchUrl = normalizedUrl;
         let historyUrl = normalizedUrl;
         
@@ -525,7 +530,8 @@ async function navigateToPage(url) {
                 if (normalizedUrl.endsWith('/')) {
                     fetchUrl = window.location.origin + normalizedUrl + 'index.html';
                 } else {
-                    fetchUrl = window.location.origin + normalizedUrl;
+                    // For paths without trailing slash, assume it's a folder and append /index.html
+                    fetchUrl = window.location.origin + normalizedUrl + '/index.html';
                 }
                 historyUrl = normalizedUrl;
             }
