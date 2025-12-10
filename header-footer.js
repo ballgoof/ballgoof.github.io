@@ -526,12 +526,12 @@ async function navigateToPage(url) {
                 }
                 fetchUrl = new URL(historyUrl, window.location.href).href;
             } else {
-                // On server, append index.html to folder paths for fetch, but keep clean URL in history
+                // On server, try folder path first (many servers auto-serve index.html)
+                // If that fails, we'll try with index.html in loadPageContent
                 if (normalizedUrl.endsWith('/')) {
-                    fetchUrl = window.location.origin + normalizedUrl + 'index.html';
+                    fetchUrl = window.location.origin + normalizedUrl;
                 } else {
-                    // For paths without trailing slash, assume it's a folder and append /index.html
-                    fetchUrl = window.location.origin + normalizedUrl + '/index.html';
+                    fetchUrl = window.location.origin + normalizedUrl + '/';
                 }
                 historyUrl = normalizedUrl;
             }
@@ -568,9 +568,23 @@ async function loadPageContent(url, scrollToTop = true) {
         // URL is already absolute from navigateToPage - use as-is
         const fetchUrl = url;
         
-        const response = await fetch(fetchUrl);
+        console.log('Fetching URL:', fetchUrl);
+        let response = await fetch(fetchUrl);
+        
+        // If 404, try with index.html (some servers need explicit index.html)
+        if (!response.ok && !fetchUrl.endsWith('/index.html')) {
+            const altUrl = fetchUrl.endsWith('/') ? fetchUrl + 'index.html' : fetchUrl + '/index.html';
+            console.log('Trying alternative URL with index.html:', altUrl);
+            response = await fetch(altUrl);
+            if (response.ok) {
+                // Update fetchUrl for the rest of the function
+                fetchUrl = altUrl;
+            }
+        }
+        
         if (!response.ok) {
-            throw new Error('Failed to load page');
+            console.error('Fetch failed:', response.status, response.statusText, 'for URL:', fetchUrl);
+            throw new Error(`Failed to load page: ${response.status} ${response.statusText}`);
         }
         
         const html = await response.text();
