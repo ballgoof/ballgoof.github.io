@@ -526,12 +526,12 @@ async function navigateToPage(url) {
                 }
                 fetchUrl = new URL(historyUrl, window.location.href).href;
             } else {
-                // On server, try folder path first (many servers auto-serve index.html)
-                // If that fails, we'll try with index.html in loadPageContent
+                // On server, explicitly append index.html for folder paths
+                // GitHub Pages and most servers need explicit index.html
                 if (normalizedUrl.endsWith('/')) {
-                    fetchUrl = window.location.origin + normalizedUrl;
+                    fetchUrl = window.location.origin + normalizedUrl + 'index.html';
                 } else {
-                    fetchUrl = window.location.origin + normalizedUrl + '/';
+                    fetchUrl = window.location.origin + normalizedUrl + '/index.html';
                 }
                 historyUrl = normalizedUrl;
             }
@@ -572,10 +572,10 @@ async function loadPageContent(url, scrollToTop = true) {
         let actualFetchUrl = fetchUrl;
         let response = await fetch(actualFetchUrl);
         
-        // If 404, try with index.html (some servers need explicit index.html)
-        if (!response.ok && !actualFetchUrl.endsWith('/index.html')) {
-            const altUrl = actualFetchUrl.endsWith('/') ? actualFetchUrl + 'index.html' : actualFetchUrl + '/index.html';
-            console.log('Trying alternative URL with index.html:', altUrl);
+        // If 404 and URL doesn't end with index.html, try without index.html (some servers auto-serve it)
+        if (!response.ok && actualFetchUrl.endsWith('/index.html')) {
+            const altUrl = actualFetchUrl.replace('/index.html', '/');
+            console.log('Trying alternative URL without index.html:', altUrl);
             response = await fetch(altUrl);
             if (response.ok) {
                 // Update actualFetchUrl for the rest of the function
