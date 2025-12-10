@@ -490,29 +490,18 @@ async function navigateToPage(url) {
         if (url.startsWith('/') && !url.startsWith('//') && !url.startsWith('http')) {
             if (isLocalFile()) {
                 // For local file system, convert root-relative to relative based on current depth
-                // Get the current file path
-                const currentHref = window.location.href;
-                const currentUrl = new URL(currentHref);
-                const currentPath = currentUrl.pathname;
-                
-                // Remove drive letter prefix if present (Windows: /C:/Users/...)
-                let cleanPath = currentPath.replace(/^\/[a-zA-Z]:/, '');
-                // Remove leading slash
-                cleanPath = cleanPath.replace(/^\//, '');
-                
-                // Count depth (how many folders deep we are from root)
-                const pathParts = cleanPath.split('/').filter(p => p && p !== 'index.html');
+                const currentPath = window.location.pathname;
+                // Remove drive letter for Windows (e.g., /C:/Users/...)
+                const cleanPath = currentPath.replace(/^\/[a-zA-Z]:\//, '/');
+                const pathParts = cleanPath.split('/').filter(p => p && p !== '' && p !== 'index.html');
                 const depth = pathParts.length;
                 
-                // Convert /customhomes/index.html to ../../customhomes/index.html (if depth is 2)
-                // Or to customhomes/index.html if depth is 0 (at root)
+                // Convert /about/index.html to ../../about/index.html (if depth is 2)
                 if (depth > 0) {
                     historyUrl = '../'.repeat(depth) + url.substring(1);
                 } else {
                     historyUrl = url.substring(1);
                 }
-                
-                // Resolve the fetch URL relative to current location
                 fetchUrl = new URL(historyUrl, window.location.href).href;
             } else {
                 // On server, use root-relative as-is
@@ -577,38 +566,17 @@ async function loadPageContent(url, scrollToTop = true) {
             return;
         }
         
-        // STEP 1: Replace ALL styles in <head> (keep header-footer styles, replace everything else)
-        const newStyles = doc.querySelectorAll('head style');
+        // STEP 1: Replace ALL styles in <head>
+        // Remove ALL existing <style> tags
         const existingStyles = Array.from(document.querySelectorAll('head style'));
+        existingStyles.forEach(style => style.remove());
         
-        // Identify which existing styles are header-footer related
-        const headerFooterStyles = existingStyles.filter(style => {
-            const styleText = style.textContent || '';
-            return styleText.includes('header') || styleText.includes('footer') || 
-                   styleText.includes('Header') || styleText.includes('Footer') ||
-                   styleText.includes('.header') || styleText.includes('.footer') ||
-                   styleText.includes('#header') || styleText.includes('#footer');
-        });
-        
-        // Remove all non-header-footer styles
-        existingStyles.forEach(style => {
-            if (!headerFooterStyles.includes(style)) {
-                style.remove();
-            }
-        });
-        
-        // Add all new styles from the loaded page (except header-footer ones)
+        // Add ALL new styles from the loaded page
+        const newStyles = doc.querySelectorAll('head style');
         newStyles.forEach(newStyle => {
-            const styleText = newStyle.textContent || '';
-            // Skip header-footer styles (we keep the existing ones)
-            if (!styleText.includes('header') && !styleText.includes('footer') && 
-                !styleText.includes('Header') && !styleText.includes('Footer') &&
-                !styleText.includes('.header') && !styleText.includes('.footer') &&
-                !styleText.includes('#header') && !styleText.includes('#footer')) {
-                const styleElement = document.createElement('style');
-                styleElement.textContent = styleText;
-                document.head.appendChild(styleElement);
-            }
+            const styleElement = document.createElement('style');
+            styleElement.textContent = newStyle.textContent || '';
+            document.head.appendChild(styleElement);
         });
         
         // STEP 2: Update page title
