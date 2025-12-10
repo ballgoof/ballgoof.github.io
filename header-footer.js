@@ -631,21 +631,49 @@ async function loadPageContent(url, scrollToTop = true) {
             const allStyles = document.querySelectorAll('head style');
             allStyles.forEach(style => {
                 const styleText = style.textContent || '';
-                // Look for .project-hero background-image
-                const heroMatch = styleText.match(/\.project-hero\s*\{[^}]*background-image:\s*url\(['"]?([^'")]+)['"]?\)/);
+                // Look for .project-hero background-image - match across multiple lines
+                const heroMatch = styleText.match(/\.project-hero\s*\{[\s\S]*?background-image:\s*url\(['"]?([^'")]+)['"]?\)/);
                 if (heroMatch) {
                     let imageUrl = heroMatch[1];
                     // Resolve relative URLs
-                    if (!imageUrl.startsWith('http') && !imageUrl.startsWith('//') && !imageUrl.startsWith('/')) {
-                        const newPageBase = url.substring(0, url.lastIndexOf('/') + 1);
+                    if (!imageUrl.startsWith('http') && !imageUrl.startsWith('//')) {
                         try {
-                            imageUrl = new URL(imageUrl, window.location.origin + newPageBase).pathname;
+                            // Use the fetchUrl to resolve relative paths
+                            const baseUrl = new URL(fetchUrl);
+                            const resolvedUrl = new URL(imageUrl, baseUrl);
+                            
+                            if (isLocalFile()) {
+                                // For local files, use the resolved href
+                                heroElement.style.backgroundImage = `url('${resolvedUrl.href}')`;
+                            } else {
+                                // For server, use the pathname
+                                heroElement.style.backgroundImage = `url('${resolvedUrl.pathname}')`;
+                            }
                         } catch (e) {
-                            // If URL parsing fails, use as-is
+                            // If URL parsing fails, try to resolve manually
+                            if (imageUrl.startsWith('../')) {
+                                // Count ../ levels
+                                const upLevels = (imageUrl.match(/\.\.\//g) || []).length;
+                                const cleanPath = imageUrl.replace(/\.\.\//g, '');
+                                const urlObj = new URL(fetchUrl);
+                                const pathParts = urlObj.pathname.split('/').filter(p => p && p !== 'index.html');
+                                const newPathParts = pathParts.slice(0, pathParts.length - upLevels);
+                                const resolvedPath = '/' + newPathParts.join('/') + '/' + cleanPath;
+                                
+                                if (isLocalFile()) {
+                                    heroElement.style.backgroundImage = `url('${resolvedPath}')`;
+                                } else {
+                                    heroElement.style.backgroundImage = `url('${window.location.origin}${resolvedPath}')`;
+                                }
+                            } else {
+                                // Use as-is
+                                heroElement.style.backgroundImage = `url('${imageUrl}')`;
+                            }
                         }
+                    } else {
+                        // Already absolute
+                        heroElement.style.backgroundImage = `url('${imageUrl}')`;
                     }
-                    // Apply directly to element
-                    heroElement.style.backgroundImage = `url('${imageUrl}')`;
                 }
             });
         }
