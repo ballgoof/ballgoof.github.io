@@ -702,5 +702,18 @@
 
     <!-- Load Header and Footer -->
     <script src="header-footer.js"></script>
+    <script>
+        // Fallback: Ensure header and footer load
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                if (typeof loadHeader === 'function' && !document.querySelector('#header-placeholder header')) {
+                    loadHeader();
+                }
+                if (typeof loadFooter === 'function' && !document.querySelector('#footer-placeholder footer')) {
+                    loadFooter();
+                }
+            }, 100);
+        });
+    </script>
 </body>
 </html>
