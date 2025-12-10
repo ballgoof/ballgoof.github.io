@@ -159,9 +159,20 @@ function loadHeader(forceReload = false) {
         const basePath = getBasePath();
         let header = headerHTML;
         
+        // For 404 pages or root pages, always use root-relative paths for assets
+        // Check if we're on a 404 page or at root
+        const is404Page = window.location.pathname.includes('404') || document.title.includes('404');
+        const isRoot = window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname.endsWith('/index.html');
+        
         // ONLY replace asset paths (images) - DON'T TOUCH navigation links at all
-        header = header.replace(/src="assets\//g, 'src="' + basePath + 'assets/');
-        header = header.replace(/href="assets\//g, 'href="' + basePath + 'assets/');
+        if (is404Page || isRoot || !basePath) {
+            // Use root-relative paths
+            header = header.replace(/src="assets\//g, 'src="/assets/');
+            header = header.replace(/href="assets\//g, 'href="/assets/');
+        } else {
+            header = header.replace(/src="assets\//g, 'src="' + basePath + 'assets/');
+            header = header.replace(/href="assets\//g, 'href="' + basePath + 'assets/');
+        }
         
         // Navigation links stay exactly as they are - no processing
         
@@ -182,8 +193,17 @@ function loadFooter() {
         const basePath = getBasePath();
         let footer = footerHTML;
         
+        // For 404 pages or root pages, always use root-relative paths for assets
+        const is404Page = window.location.pathname.includes('404') || document.title.includes('404');
+        const isRoot = window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname.endsWith('/index.html');
+        
         // Replace asset paths
-        footer = footer.replace(/src="assets\//g, 'src="' + basePath + 'assets/');
+        if (is404Page || isRoot || !basePath) {
+            // Use root-relative paths
+            footer = footer.replace(/src="assets\//g, 'src="/assets/');
+        } else {
+            footer = footer.replace(/src="assets\//g, 'src="' + basePath + 'assets/');
+        }
         
         footerPlaceholder.innerHTML = footer;
     }
@@ -572,7 +592,7 @@ async function loadPageContent(url, scrollToTop = true) {
         let actualFetchUrl = fetchUrl;
         let response = await fetch(actualFetchUrl);
         
-        // If 404 and URL doesn't end with index.html, try without index.html (some servers auto-serve it)
+        // If 404 and URL ends with index.html, try without index.html (some servers auto-serve it)
         if (!response.ok && actualFetchUrl.endsWith('/index.html')) {
             const altUrl = actualFetchUrl.replace('/index.html', '/');
             console.log('Trying alternative URL without index.html:', altUrl);
@@ -580,6 +600,16 @@ async function loadPageContent(url, scrollToTop = true) {
             if (response.ok) {
                 // Update actualFetchUrl for the rest of the function
                 actualFetchUrl = altUrl;
+            }
+        }
+        
+        // If still 404, try with lowercase (GitHub Pages is case-sensitive)
+        if (!response.ok && actualFetchUrl.includes('/About/') || actualFetchUrl.includes('/Testimonials/')) {
+            const lowerUrl = actualFetchUrl.replace('/About/', '/about/').replace('/Testimonials/', '/testimonials/');
+            console.log('Trying lowercase URL:', lowerUrl);
+            response = await fetch(lowerUrl);
+            if (response.ok) {
+                actualFetchUrl = lowerUrl;
             }
         }
         
