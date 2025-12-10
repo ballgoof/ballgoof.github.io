@@ -104,6 +104,11 @@ const footerHTML = `<!-- Footer -->
     </div>
 </footer>`;
 
+// Determine if we're running locally (file://) or on a server
+function isLocalFile() {
+    return window.location.protocol === 'file:';
+}
+
 // Determine if we're in a subfolder and get the base path
 function getBasePath() {
     // Check the script src - most reliable method
@@ -158,32 +163,47 @@ function loadHeader(forceReload = false) {
         header = header.replace(/src="assets\//g, 'src="' + basePath + 'assets/');
         header = header.replace(/href="assets\//g, 'href="' + basePath + 'assets/');
         
-        // Convert all relative navigation links to root-relative paths
-        // This ensures they work correctly from any page depth
-        // Links that start with a folder name (not ../, not /, not http) need to be made root-relative
-        
-        // First, handle index.html at root
-        header = header.replace(/href="index\.html"/g, 'href="/index.html"');
-        
-        // Handle other root-level pages
-        header = header.replace(/href="about\/index\.html/g, 'href="/about/index.html');
-        header = header.replace(/href="about\/testimonials\.html/g, 'href="/about/testimonials.html');
-        header = header.replace(/href="contact\/index\.html/g, 'href="/contact/index.html');
-        header = header.replace(/href="getting-started\/index\.html/g, 'href="/getting-started/index.html');
-        header = header.replace(/href="press-awards\/index\.html/g, 'href="/press-awards/index.html');
-        header = header.replace(/href="projects\/index\.html/g, 'href="/projects/index.html');
-        
-        // Handle project category pages and sub-pages - make them root-relative
-        header = header.replace(/href="customhomes\/index\.html"/g, 'href="/customhomes/index.html"');
-        header = header.replace(/href="customhomes\/([^"]+)"/g, 'href="/customhomes/$1"');
-        header = header.replace(/href="multiunit\/index\.html"/g, 'href="/multiunit/index.html"');
-        header = header.replace(/href="multiunit\/([^"]+)"/g, 'href="/multiunit/$1"');
-        header = header.replace(/href="wholehouseremodel\/index\.html"/g, 'href="/wholehouseremodel/index.html"');
-        header = header.replace(/href="wholehouseremodel\/([^"]+)"/g, 'href="/wholehouseremodel/$1"');
-        header = header.replace(/href="kitchenremodel\/index\.html"/g, 'href="/kitchenremodel/index.html"');
-        header = header.replace(/href="kitchenremodel\/([^"]+)"/g, 'href="/kitchenremodel/$1"');
-        header = header.replace(/href="commercial\/index\.html"/g, 'href="/commercial/index.html"');
-        header = header.replace(/href="commercial\/([^"]+)"/g, 'href="/commercial/$1"');
+        // Convert navigation links to work from current page depth
+        // Use basePath for local file://, but use root-relative for server
+        if (isLocalFile()) {
+            // Local file system - use relative paths with basePath
+            header = header.replace(/href="index\.html"/g, 'href="' + basePath + 'index.html"');
+            header = header.replace(/href="about\/index\.html/g, 'href="' + basePath + 'about/index.html');
+            header = header.replace(/href="about\/testimonials\.html/g, 'href="' + basePath + 'about/testimonials.html');
+            header = header.replace(/href="contact\/index\.html/g, 'href="' + basePath + 'contact/index.html');
+            header = header.replace(/href="getting-started\/index\.html/g, 'href="' + basePath + 'getting-started/index.html');
+            header = header.replace(/href="press-awards\/index\.html/g, 'href="' + basePath + 'press-awards/index.html');
+            header = header.replace(/href="projects\/index\.html/g, 'href="' + basePath + 'projects/index.html');
+            header = header.replace(/href="customhomes\/index\.html"/g, 'href="' + basePath + 'customhomes/index.html"');
+            header = header.replace(/href="customhomes\/([^"]+)"/g, 'href="' + basePath + 'customhomes/$1"');
+            header = header.replace(/href="multiunit\/index\.html"/g, 'href="' + basePath + 'multiunit/index.html"');
+            header = header.replace(/href="multiunit\/([^"]+)"/g, 'href="' + basePath + 'multiunit/$1"');
+            header = header.replace(/href="wholehouseremodel\/index\.html"/g, 'href="' + basePath + 'wholehouseremodel/index.html"');
+            header = header.replace(/href="wholehouseremodel\/([^"]+)"/g, 'href="' + basePath + 'wholehouseremodel/$1"');
+            header = header.replace(/href="kitchenremodel\/index\.html"/g, 'href="' + basePath + 'kitchenremodel/index.html"');
+            header = header.replace(/href="kitchenremodel\/([^"]+)"/g, 'href="' + basePath + 'kitchenremodel/$1"');
+            header = header.replace(/href="commercial\/index\.html"/g, 'href="' + basePath + 'commercial/index.html"');
+            header = header.replace(/href="commercial\/([^"]+)"/g, 'href="' + basePath + 'commercial/$1"');
+        } else {
+            // Server (http/https) - use root-relative paths
+            header = header.replace(/href="index\.html"/g, 'href="/index.html"');
+            header = header.replace(/href="about\/index\.html/g, 'href="/about/index.html');
+            header = header.replace(/href="about\/testimonials\.html/g, 'href="/about/testimonials.html');
+            header = header.replace(/href="contact\/index\.html/g, 'href="/contact/index.html');
+            header = header.replace(/href="getting-started\/index\.html/g, 'href="/getting-started/index.html');
+            header = header.replace(/href="press-awards\/index\.html/g, 'href="/press-awards/index.html');
+            header = header.replace(/href="projects\/index\.html/g, 'href="/projects/index.html');
+            header = header.replace(/href="customhomes\/index\.html"/g, 'href="/customhomes/index.html"');
+            header = header.replace(/href="customhomes\/([^"]+)"/g, 'href="/customhomes/$1"');
+            header = header.replace(/href="multiunit\/index\.html"/g, 'href="/multiunit/index.html"');
+            header = header.replace(/href="multiunit\/([^"]+)"/g, 'href="/multiunit/$1"');
+            header = header.replace(/href="wholehouseremodel\/index\.html"/g, 'href="/wholehouseremodel/index.html"');
+            header = header.replace(/href="wholehouseremodel\/([^"]+)"/g, 'href="/wholehouseremodel/$1"');
+            header = header.replace(/href="kitchenremodel\/index\.html"/g, 'href="/kitchenremodel/index.html"');
+            header = header.replace(/href="kitchenremodel\/([^"]+)"/g, 'href="/kitchenremodel/$1"');
+            header = header.replace(/href="commercial\/index\.html"/g, 'href="/commercial/index.html"');
+            header = header.replace(/href="commercial\/([^"]+)"/g, 'href="/commercial/$1"');
+        }
         
         // Only update if content has changed to prevent unnecessary reloads
         const currentHeader = headerPlaceholder.innerHTML.trim();
@@ -472,14 +492,26 @@ function setupSPANavigation() {
         try {
             const currentPath = window.location.pathname;
             
-            // Resolve URLs properly - handle root-relative paths
+            // Resolve URLs properly - handle both local and server environments
             let resolvedUrl;
-            if (href.startsWith('/')) {
-                // Root-relative path (absolute from site root) - use as-is
-                resolvedUrl = href;
-            } else if (href.startsWith('http') || href.startsWith('//')) {
+            if (href.startsWith('http') || href.startsWith('//')) {
                 // External URL - allow normal navigation
                 return;
+            } else if (href.startsWith('/')) {
+                // Root-relative path
+                if (isLocalFile()) {
+                    // On local file system, convert root-relative to relative
+                    // Count current depth
+                    const currentDepth = currentPath.split('/').filter(p => p && p !== 'index.html').length;
+                    if (currentDepth > 0) {
+                        resolvedUrl = '../'.repeat(currentDepth) + href.substring(1);
+                    } else {
+                        resolvedUrl = href.substring(1);
+                    }
+                } else {
+                    // On server, use root-relative as-is
+                    resolvedUrl = href;
+                }
             } else if (href.startsWith('./')) {
                 // Relative to current directory
                 const currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
@@ -489,29 +521,50 @@ function setupSPANavigation() {
                 const baseUrl = new URL(window.location.href);
                 resolvedUrl = new URL(href, baseUrl).pathname;
             } else {
-                // Relative path without ./ or ../ - treat as root-relative
-                // This handles cases where links are like "customhomes/ashbury-st/index.html"
-                resolvedUrl = '/' + href;
+                // Relative path without ./ or ../
+                if (isLocalFile()) {
+                    // Local: resolve relative to current directory
+                    const currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+                    resolvedUrl = currentDir + href;
+                } else {
+                    // Server: treat as root-relative
+                    resolvedUrl = '/' + href;
+                }
             }
             
             // Normalize the path (remove double slashes, etc.)
             resolvedUrl = resolvedUrl.replace(/\/+/g, '/');
             
+            // For local file system, handle file:// protocol paths
+            if (isLocalFile()) {
+                // Remove leading slash for file:// protocol
+                if (resolvedUrl.startsWith('/')) {
+                    resolvedUrl = resolvedUrl.substring(1);
+                }
+            }
+            
+            // Normalize current path for comparison
+            let normalizedCurrentPath = currentPath;
+            if (isLocalFile() && normalizedCurrentPath.startsWith('/')) {
+                normalizedCurrentPath = normalizedCurrentPath.substring(1);
+            }
+            
             // Handle hash links (same page anchors)
-            if (currentPath === resolvedUrl && href.includes('#')) {
+            if (normalizedCurrentPath === resolvedUrl && href.includes('#')) {
                 // Allow normal anchor navigation
                 return;
             }
             
             // Skip if it's the same page without hash
-            if (currentPath === resolvedUrl && !href.includes('#')) {
+            if (normalizedCurrentPath === resolvedUrl && !href.includes('#')) {
                 e.preventDefault();
                 return;
             }
             
-            // Intercept internal navigation
+            // Intercept internal navigation - use the original href, not resolvedUrl
+            // The resolvedUrl is just for comparison, but we want to navigate to the actual link
             e.preventDefault();
-            navigateToPage(resolvedUrl);
+            navigateToPage(href);
         } catch (err) {
             // If URL parsing fails, allow normal navigation
             console.error('URL parsing error:', err);
@@ -533,11 +586,58 @@ async function navigateToPage(url) {
     isNavigating = true;
     
     try {
-        // Update URL without reload
-        window.history.pushState({ url: url }, '', url);
+        // Resolve the URL for both history API and fetch
+        let resolvedPath = url;
+        let fetchUrl = url;
         
-        // Load the page content
-        await loadPageContent(url, true);
+        if (url.startsWith('http') || url.startsWith('//')) {
+            // External URL - shouldn't get here, but handle it
+            window.location.href = url;
+            return;
+        } else if (url.startsWith('/')) {
+            // Root-relative path
+            if (isLocalFile()) {
+                // On local file system, convert to relative
+                const currentPath = window.location.pathname;
+                const currentDepth = currentPath.split('/').filter(p => p && p !== '' && p !== 'index.html').length;
+                if (currentDepth > 0) {
+                    resolvedPath = '../'.repeat(currentDepth) + url.substring(1);
+                } else {
+                    resolvedPath = url.substring(1);
+                }
+                fetchUrl = new URL(resolvedPath, window.location.href).href;
+            } else {
+                // On server, use root-relative as-is
+                resolvedPath = url;
+                fetchUrl = window.location.origin + url;
+            }
+        } else {
+            // Relative path
+            if (isLocalFile()) {
+                // Resolve relative to current location
+                fetchUrl = new URL(url, window.location.href).href;
+                resolvedPath = url;
+            } else {
+                // On server, resolve relative path
+                const currentPath = window.location.pathname;
+                const currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+                if (url.startsWith('../')) {
+                    // Resolve parent directory navigation
+                    const baseUrl = new URL(window.location.href);
+                    resolvedPath = new URL(url, baseUrl).pathname;
+                } else {
+                    // Relative to current directory
+                    resolvedPath = currentDir + url;
+                }
+                fetchUrl = window.location.origin + resolvedPath;
+            }
+        }
+        
+        // Update URL in browser without reload
+        window.history.pushState({ url: resolvedPath }, '', resolvedPath);
+        
+        // Load the page content using the fetch URL
+        await loadPageContent(fetchUrl, true);
     } catch (error) {
         console.error('Navigation error:', error);
         // Fallback to normal navigation
@@ -550,7 +650,22 @@ async function navigateToPage(url) {
 // Load page content via AJAX
 async function loadPageContent(url, scrollToTop = true) {
     try {
-        const response = await fetch(url);
+        // Ensure URL is absolute for fetch
+        let fetchUrl = url;
+        if (!fetchUrl.startsWith('http') && !fetchUrl.startsWith('//') && !fetchUrl.startsWith('file://')) {
+            if (isLocalFile()) {
+                // For local file system, resolve relative to current location
+                fetchUrl = new URL(url, window.location.href).href;
+            } else {
+                // For server, make root-relative
+                if (!fetchUrl.startsWith('/')) {
+                    fetchUrl = '/' + fetchUrl;
+                }
+                fetchUrl = window.location.origin + fetchUrl;
+            }
+        }
+        
+        const response = await fetch(fetchUrl);
         if (!response.ok) {
             throw new Error('Failed to load page');
         }
