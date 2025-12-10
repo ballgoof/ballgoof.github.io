@@ -3,7 +3,7 @@ const headerHTML = `<!-- Header -->
 <header>
     <div class="header-container">
         <div class="logo-container">
-            <a href="/index.html">
+            <a href="/">
                 <img src="assets/logo.webp" alt="TopCap Construction Logo" class="logo">
             </a>
         </div>
@@ -15,57 +15,57 @@ const headerHTML = `<!-- Header -->
         <nav id="nav">
             <div class="back-button" id="backButton" style="display: none;"><span class="back-arrow"></span> Back</div>
             <ul>
-                <li><a href="/index.html">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li class="dropdown about-dropdown">
-                    <a href="/about/index.html" class="dropdown-toggle about-toggle">About</a>
+                    <a href="/about/" class="dropdown-toggle about-toggle">About</a>
                     <ul class="dropdown-menu">
-                        <li><a href="/about/index.html#our-team">Our Team</a></li>
+                        <li><a href="/about/#our-team">Our Team</a></li>
                         <li><a href="/about/testimonials.html">Testimonials</a></li>
                     </ul>
                 </li>
                 <li class="dropdown projects-dropdown">
-                    <a href="/projects/index.html" class="dropdown-toggle projects-toggle">Our Projects</a>
+                    <a href="/projects/" class="dropdown-toggle projects-toggle">Our Projects</a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-item-with-submenu">
-                            <a href="/customhomes/index.html">Custom Homes</a>
+                            <a href="/customhomes/">Custom Homes</a>
                             <ul class="submenu">
-                                <li><a href="/customhomes/ashbury-st/index.html">Ashbury St</a></li>
+                                <li><a href="/customhomes/ashbury-st/">Ashbury St</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="/multiunit/index.html">Multi Unit</a>
+                            <a href="/multiunit/">Multi Unit</a>
                             <ul class="submenu">
-                                <li><a href="/multiunit/22nd-street/index.html">22nd Street</a></li>
-                                <li><a href="/multiunit/bartlett-6/index.html">Bartlett 6</a></li>
+                                <li><a href="/multiunit/22nd-street/">22nd Street</a></li>
+                                <li><a href="/multiunit/bartlett-6/">Bartlett 6</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="/wholehouseremodel/index.html">Whole House Remodel</a>
+                            <a href="/wholehouseremodel/">Whole House Remodel</a>
                             <ul class="submenu">
-                                <li><a href="/wholehouseremodel/18th-ave-peter-parker/index.html">18th Ave - Peter Parker</a></li>
-                                <li><a href="/wholehouseremodel/21st-street/index.html">21st Street</a></li>
-                                <li><a href="/wholehouseremodel/coldwater-drive/index.html">Coldwater Drive</a></li>
-                                <li><a href="/wholehouseremodel/lincoln/index.html">Lincoln</a></li>
-                                <li><a href="/wholehouseremodel/stone-canyon/index.html">Stone Canyon</a></li>
+                                <li><a href="/wholehouseremodel/18th-ave-peter-parker/">18th Ave - Peter Parker</a></li>
+                                <li><a href="/wholehouseremodel/21st-street/">21st Street</a></li>
+                                <li><a href="/wholehouseremodel/coldwater-drive/">Coldwater Drive</a></li>
+                                <li><a href="/wholehouseremodel/lincoln/">Lincoln</a></li>
+                                <li><a href="/wholehouseremodel/stone-canyon/">Stone Canyon</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="/kitchenremodel/index.html">Kitchen Remodel</a>
+                            <a href="/kitchenremodel/">Kitchen Remodel</a>
                             <ul class="submenu">
-                                <li><a href="/kitchenremodel/castro-st/index.html">Castro St</a></li>
+                                <li><a href="/kitchenremodel/castro-st/">Castro St</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="/commercial/index.html">Commercial</a>
+                            <a href="/commercial/">Commercial</a>
                             <ul class="submenu">
-                                <li><a href="/commercial/davids-tea/index.html">David's Tea</a></li>
+                                <li><a href="/commercial/davids-tea/">David's Tea</a></li>
                             </ul>
                         </li>
                     </ul>
                 </li>
-                <li><a href="/getting-started/index.html">Getting Started</a></li>
-                <li><a href="/press-awards/index.html">Press & Awards</a></li>
-                <li><a href="/contact/index.html">Contact</a></li>
+                <li><a href="/getting-started/">Getting Started</a></li>
+                <li><a href="/press-awards/">Press & Awards</a></li>
+                <li><a href="/contact/">Contact</a></li>
                 <li class="header-social-media">
                     <a href="https://nextdoor.com/pages/sacdev-inc-el-dorado-hills-ca/" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Nextdoor"><img src="assets/nextdoor.png" alt="Nextdoor"></a>
                     <a href="https://www.facebook.com/TopCapConstructionCA" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Facebook"><img src="assets/facebook-logo.png" alt="Facebook"></a>
