@@ -17,10 +17,10 @@ const headerHTML = `<!-- Header -->
             <ul>
                 <li><a href="/">Home</a></li>
                 <li class="dropdown about-dropdown">
-                    <a href="/about/" class="dropdown-toggle about-toggle">About</a>
+                    <a href="/About" class="dropdown-toggle about-toggle">About</a>
                     <ul class="dropdown-menu">
-                        <li><a href="/about/#our-team">Our Team</a></li>
-                        <li><a href="/about/testimonials.html">Testimonials</a></li>
+                        <li><a href="/About/OurTeam">Our Team</a></li>
+                        <li><a href="/About/Testimonials/">Testimonials</a></li>
                     </ul>
                 </li>
                 <li class="dropdown projects-dropdown">
