@@ -3,7 +3,7 @@ const headerHTML = `<!-- Header -->
 <header>
     <div class="header-container">
         <div class="logo-container">
-            <a href="index.html">
+            <a href="/index.html">
                 <img src="assets/logo.webp" alt="TopCap Construction Logo" class="logo">
             </a>
         </div>
@@ -15,57 +15,57 @@ const headerHTML = `<!-- Header -->
         <nav id="nav">
             <div class="back-button" id="backButton" style="display: none;"><span class="back-arrow"></span> Back</div>
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a href="/index.html">Home</a></li>
                 <li class="dropdown about-dropdown">
-                    <a href="about/index.html" class="dropdown-toggle about-toggle">About</a>
+                    <a href="/about/index.html" class="dropdown-toggle about-toggle">About</a>
                     <ul class="dropdown-menu">
-                        <li><a href="about/index.html#our-team">Our Team</a></li>
-                        <li><a href="about/testimonials.html">Testimonials</a></li>
+                        <li><a href="/about/index.html#our-team">Our Team</a></li>
+                        <li><a href="/about/testimonials.html">Testimonials</a></li>
                     </ul>
                 </li>
                 <li class="dropdown projects-dropdown">
-                    <a href="projects/index.html" class="dropdown-toggle projects-toggle">Our Projects</a>
+                    <a href="/projects/index.html" class="dropdown-toggle projects-toggle">Our Projects</a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-item-with-submenu">
-                            <a href="customhomes/index.html">Custom Homes</a>
+                            <a href="/customhomes/index.html">Custom Homes</a>
                             <ul class="submenu">
-                                <li><a href="customhomes/ashbury-st/index.html">Ashbury St</a></li>
+                                <li><a href="/customhomes/ashbury-st/index.html">Ashbury St</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="multiunit/index.html">Multi Unit</a>
+                            <a href="/multiunit/index.html">Multi Unit</a>
                             <ul class="submenu">
-                                <li><a href="multiunit/22nd-street/index.html">22nd Street</a></li>
-                                <li><a href="multiunit/bartlett-6/index.html">Bartlett 6</a></li>
+                                <li><a href="/multiunit/22nd-street/index.html">22nd Street</a></li>
+                                <li><a href="/multiunit/bartlett-6/index.html">Bartlett 6</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="wholehouseremodel/index.html">Whole House Remodel</a>
+                            <a href="/wholehouseremodel/index.html">Whole House Remodel</a>
                             <ul class="submenu">
-                                <li><a href="wholehouseremodel/18th-ave-peter-parker/index.html">18th Ave - Peter Parker</a></li>
-                                <li><a href="wholehouseremodel/21st-street/index.html">21st Street</a></li>
-                                <li><a href="wholehouseremodel/coldwater-drive/index.html">Coldwater Drive</a></li>
-                                <li><a href="wholehouseremodel/lincoln/index.html">Lincoln</a></li>
-                                <li><a href="wholehouseremodel/stone-canyon/index.html">Stone Canyon</a></li>
+                                <li><a href="/wholehouseremodel/18th-ave-peter-parker/index.html">18th Ave - Peter Parker</a></li>
+                                <li><a href="/wholehouseremodel/21st-street/index.html">21st Street</a></li>
+                                <li><a href="/wholehouseremodel/coldwater-drive/index.html">Coldwater Drive</a></li>
+                                <li><a href="/wholehouseremodel/lincoln/index.html">Lincoln</a></li>
+                                <li><a href="/wholehouseremodel/stone-canyon/index.html">Stone Canyon</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="kitchenremodel/index.html">Kitchen Remodel</a>
+                            <a href="/kitchenremodel/index.html">Kitchen Remodel</a>
                             <ul class="submenu">
-                                <li><a href="kitchenremodel/castro-st/index.html">Castro St</a></li>
+                                <li><a href="/kitchenremodel/castro-st/index.html">Castro St</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="commercial/index.html">Commercial</a>
+                            <a href="/commercial/index.html">Commercial</a>
                             <ul class="submenu">
-                                <li><a href="commercial/davids-tea/index.html">David's Tea</a></li>
+                                <li><a href="/commercial/davids-tea/index.html">David's Tea</a></li>
                             </ul>
                         </li>
                     </ul>
                 </li>
-                <li><a href="getting-started/index.html">Getting Started</a></li>
-                <li><a href="press-awards/index.html">Press & Awards</a></li>
-                <li><a href="contact/index.html">Contact</a></li>
+                <li><a href="/getting-started/index.html">Getting Started</a></li>
+                <li><a href="/press-awards/index.html">Press & Awards</a></li>
+                <li><a href="/contact/index.html">Contact</a></li>
                 <li class="header-social-media">
                     <a href="https://nextdoor.com/pages/sacdev-inc-el-dorado-hills-ca/" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Nextdoor"><img src="assets/nextdoor.png" alt="Nextdoor"></a>
                     <a href="https://www.facebook.com/TopCapConstructionCA" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Facebook"><img src="assets/facebook-logo.png" alt="Facebook"></a>
@@ -159,51 +159,20 @@ function loadHeader(forceReload = false) {
         const basePath = getBasePath();
         let header = headerHTML;
         
-        // Replace ALL asset paths (both src and href)
+        // Replace ONLY asset paths (images, etc.) - navigation links are already root-relative
         header = header.replace(/src="assets\//g, 'src="' + basePath + 'assets/');
         header = header.replace(/href="assets\//g, 'href="' + basePath + 'assets/');
         
-        // Convert navigation links to work from current page depth
-        // Use basePath for local file://, but use root-relative for server
+        // For local file system, convert root-relative navigation links to relative paths
         if (isLocalFile()) {
-            // Local file system - use relative paths with basePath
-            header = header.replace(/href="index\.html"/g, 'href="' + basePath + 'index.html"');
-            header = header.replace(/href="about\/index\.html/g, 'href="' + basePath + 'about/index.html');
-            header = header.replace(/href="about\/testimonials\.html/g, 'href="' + basePath + 'about/testimonials.html');
-            header = header.replace(/href="contact\/index\.html/g, 'href="' + basePath + 'contact/index.html');
-            header = header.replace(/href="getting-started\/index\.html/g, 'href="' + basePath + 'getting-started/index.html');
-            header = header.replace(/href="press-awards\/index\.html/g, 'href="' + basePath + 'press-awards/index.html');
-            header = header.replace(/href="projects\/index\.html/g, 'href="' + basePath + 'projects/index.html');
-            header = header.replace(/href="customhomes\/index\.html"/g, 'href="' + basePath + 'customhomes/index.html"');
-            header = header.replace(/href="customhomes\/([^"]+)"/g, 'href="' + basePath + 'customhomes/$1"');
-            header = header.replace(/href="multiunit\/index\.html"/g, 'href="' + basePath + 'multiunit/index.html"');
-            header = header.replace(/href="multiunit\/([^"]+)"/g, 'href="' + basePath + 'multiunit/$1"');
-            header = header.replace(/href="wholehouseremodel\/index\.html"/g, 'href="' + basePath + 'wholehouseremodel/index.html"');
-            header = header.replace(/href="wholehouseremodel\/([^"]+)"/g, 'href="' + basePath + 'wholehouseremodel/$1"');
-            header = header.replace(/href="kitchenremodel\/index\.html"/g, 'href="' + basePath + 'kitchenremodel/index.html"');
-            header = header.replace(/href="kitchenremodel\/([^"]+)"/g, 'href="' + basePath + 'kitchenremodel/$1"');
-            header = header.replace(/href="commercial\/index\.html"/g, 'href="' + basePath + 'commercial/index.html"');
-            header = header.replace(/href="commercial\/([^"]+)"/g, 'href="' + basePath + 'commercial/$1"');
-        } else {
-            // Server (http/https) - use root-relative paths
-            header = header.replace(/href="index\.html"/g, 'href="/index.html"');
-            header = header.replace(/href="about\/index\.html/g, 'href="/about/index.html');
-            header = header.replace(/href="about\/testimonials\.html/g, 'href="/about/testimonials.html');
-            header = header.replace(/href="contact\/index\.html/g, 'href="/contact/index.html');
-            header = header.replace(/href="getting-started\/index\.html/g, 'href="/getting-started/index.html');
-            header = header.replace(/href="press-awards\/index\.html/g, 'href="/press-awards/index.html');
-            header = header.replace(/href="projects\/index\.html/g, 'href="/projects/index.html');
-            header = header.replace(/href="customhomes\/index\.html"/g, 'href="/customhomes/index.html"');
-            header = header.replace(/href="customhomes\/([^"]+)"/g, 'href="/customhomes/$1"');
-            header = header.replace(/href="multiunit\/index\.html"/g, 'href="/multiunit/index.html"');
-            header = header.replace(/href="multiunit\/([^"]+)"/g, 'href="/multiunit/$1"');
-            header = header.replace(/href="wholehouseremodel\/index\.html"/g, 'href="/wholehouseremodel/index.html"');
-            header = header.replace(/href="wholehouseremodel\/([^"]+)"/g, 'href="/wholehouseremodel/$1"');
-            header = header.replace(/href="kitchenremodel\/index\.html"/g, 'href="/kitchenremodel/index.html"');
-            header = header.replace(/href="kitchenremodel\/([^"]+)"/g, 'href="/kitchenremodel/$1"');
-            header = header.replace(/href="commercial\/index\.html"/g, 'href="/commercial/index.html"');
-            header = header.replace(/href="commercial\/([^"]+)"/g, 'href="/commercial/$1"');
+            // Convert root-relative paths to relative paths for local file system
+            header = header.replace(/href="\/([^"]+)"/g, (match, path) => {
+                // Skip external links
+                if (path.startsWith('http')) return match;
+                return 'href="' + basePath + path + '"';
+            });
         }
+        // On server, root-relative paths (starting with /) work as-is, so no conversion needed
         
         // Only update if content has changed to prevent unnecessary reloads
         const currentHeader = headerPlaceholder.innerHTML.trim();
@@ -561,8 +530,8 @@ function setupSPANavigation() {
                 return;
             }
             
-            // Intercept internal navigation - use the original href, not resolvedUrl
-            // The resolvedUrl is just for comparison, but we want to navigate to the actual link
+            // Intercept internal navigation
+            // Use the href as-is - it's already root-relative on server
             e.preventDefault();
             navigateToPage(href);
         } catch (err) {
@@ -586,61 +555,46 @@ async function navigateToPage(url) {
     isNavigating = true;
     
     try {
-        // Resolve the URL for both history API and fetch
         let resolvedPath = url;
         let fetchUrl = url;
         
         if (url.startsWith('http') || url.startsWith('//')) {
-            // External URL - shouldn't get here, but handle it
+            // External URL
             window.location.href = url;
             return;
         } else if (url.startsWith('/')) {
-            // Root-relative path
+            // Root-relative path - use as-is on server
             if (isLocalFile()) {
-                // On local file system, convert to relative
+                // Convert to relative for local file system
                 const currentPath = window.location.pathname;
                 const currentDepth = currentPath.split('/').filter(p => p && p !== '' && p !== 'index.html').length;
-                if (currentDepth > 0) {
-                    resolvedPath = '../'.repeat(currentDepth) + url.substring(1);
-                } else {
-                    resolvedPath = url.substring(1);
-                }
+                resolvedPath = currentDepth > 0 ? '../'.repeat(currentDepth) + url.substring(1) : url.substring(1);
                 fetchUrl = new URL(resolvedPath, window.location.href).href;
             } else {
-                // On server, use root-relative as-is
+                // On server: use root-relative as-is - NO PROCESSING
                 resolvedPath = url;
                 fetchUrl = window.location.origin + url;
             }
         } else {
             // Relative path
             if (isLocalFile()) {
-                // Resolve relative to current location
                 fetchUrl = new URL(url, window.location.href).href;
                 resolvedPath = url;
             } else {
-                // On server, resolve relative path
-                const currentPath = window.location.pathname;
-                const currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
-                if (url.startsWith('../')) {
-                    // Resolve parent directory navigation
-                    const baseUrl = new URL(window.location.href);
-                    resolvedPath = new URL(url, baseUrl).pathname;
-                } else {
-                    // Relative to current directory
-                    resolvedPath = currentDir + url;
-                }
+                // On server, resolve relative to current location
+                const baseUrl = new URL(window.location.href);
+                resolvedPath = new URL(url, baseUrl).pathname;
                 fetchUrl = window.location.origin + resolvedPath;
             }
         }
         
-        // Update URL in browser without reload
+        // Update URL in browser
         window.history.pushState({ url: resolvedPath }, '', resolvedPath);
         
-        // Load the page content using the fetch URL
+        // Load the page content
         await loadPageContent(fetchUrl, true);
     } catch (error) {
         console.error('Navigation error:', error);
-        // Fallback to normal navigation
         window.location.href = url;
     } finally {
         isNavigating = false;
@@ -652,16 +606,29 @@ async function loadPageContent(url, scrollToTop = true) {
     try {
         // Ensure URL is absolute for fetch
         let fetchUrl = url;
-        if (!fetchUrl.startsWith('http') && !fetchUrl.startsWith('//') && !fetchUrl.startsWith('file://')) {
+        if (url.startsWith('http') || url.startsWith('//') || url.startsWith('file://')) {
+            // Already absolute
+            fetchUrl = url;
+        } else if (url.startsWith('/')) {
+            // Root-relative path
             if (isLocalFile()) {
-                // For local file system, resolve relative to current location
+                // Convert to relative for local file system
+                const currentPath = window.location.pathname;
+                const currentDepth = currentPath.split('/').filter(p => p && p !== '' && p !== 'index.html').length;
+                const relativePath = currentDepth > 0 ? '../'.repeat(currentDepth) + url.substring(1) : url.substring(1);
+                fetchUrl = new URL(relativePath, window.location.href).href;
+            } else {
+                // On server: origin + root-relative path (NO PROCESSING)
+                fetchUrl = window.location.origin + url;
+            }
+        } else {
+            // Relative path
+            if (isLocalFile()) {
                 fetchUrl = new URL(url, window.location.href).href;
             } else {
-                // For server, make root-relative
-                if (!fetchUrl.startsWith('/')) {
-                    fetchUrl = '/' + fetchUrl;
-                }
-                fetchUrl = window.location.origin + fetchUrl;
+                // On server, resolve relative to current location
+                const baseUrl = new URL(window.location.href);
+                fetchUrl = new URL(url, baseUrl).href;
             }
         }
         
