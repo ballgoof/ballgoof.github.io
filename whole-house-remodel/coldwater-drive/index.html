@@ -933,6 +933,11 @@
         // Dynamic Gallery Image Loader
         async function loadGalleryImages() {
             const galleryGrid = document.getElementById('gallery-grid');
+            if (!galleryGrid) return;
+            
+            // Clear existing gallery items
+            galleryGrid.innerHTML = '';
+            
             const projectCategory = document.querySelector('.project-category')?.textContent.trim() || '';
             const projectName = document.querySelector('.project-name')?.textContent.trim() || '';
             
@@ -978,12 +983,22 @@
                 });
             }
             
-            // Load images sequentially until one fails
-            while (true) {
+            // Load images sequentially, skipping missing ones
+            // Try up to image 100, or stop after 10 consecutive failures
+            let consecutiveFailures = 0;
+            const maxImageNumber = 100;
+            const maxConsecutiveFailures = 10;
+            
+            while (imageNumber <= maxImageNumber && consecutiveFailures < maxConsecutiveFailures) {
                 const result = await tryLoadImage(imageNumber);
                 if (!result) {
-                    break; // Image doesn't exist, stop loading
+                    consecutiveFailures++;
+                    imageNumber++;
+                    continue; // Skip missing image and continue
                 }
+                
+                // Reset consecutive failures counter when we find an image
+                consecutiveFailures = 0;
                 
                 // Create gallery item
                 const galleryItem = document.createElement('div');
@@ -1077,11 +1092,18 @@
         }
         
         // Load gallery images when page is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadGalleryImages);
-        } else {
+        function initializePage() {
             loadGalleryImages();
         }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializePage);
+        } else {
+            initializePage();
+        }
+        
+        // Also load when page content is loaded via SPA navigation
+        window.addEventListener('pageContentLoaded', initializePage);
     </script>
 </body>
 </html>
