@@ -930,13 +930,15 @@
     <script src="../../header-footer.js"></script>
     
     <script>
-        // Prevent concurrent loading
+        // Prevent concurrent loading and track loaded images
         let isLoadingGallery = false;
+        let loadedImageNumbers = new Set();
         
         // Dynamic Gallery Image Loader
         async function loadGalleryImages() {
             // Prevent concurrent executions
             if (isLoadingGallery) {
+                console.log('Gallery already loading, skipping duplicate call');
                 return;
             }
             isLoadingGallery = true;
@@ -947,8 +949,12 @@
                 return;
             }
             
-            // Clear existing gallery items immediately
+            // Aggressively clear existing gallery items - remove all children
+            while (galleryGrid.firstChild) {
+                galleryGrid.removeChild(galleryGrid.firstChild);
+            }
             galleryGrid.innerHTML = '';
+            loadedImageNumbers.clear();
             
             const projectCategory = document.querySelector('.project-category')?.textContent.trim() || '';
             const projectName = document.querySelector('.project-name')?.textContent.trim() || '';
@@ -1011,12 +1017,31 @@
                 // Reset consecutive failures counter when we find an image
                 consecutiveFailures = 0;
                 
+                // Check if we've already loaded this image number (prevent duplicates)
+                if (loadedImageNumbers.has(imageNumber)) {
+                    console.log(`Skipping duplicate image ${imageNumber}`);
+                    imageNumber++;
+                    continue;
+                }
+                
+                // Mark this image number as loaded
+                loadedImageNumbers.add(imageNumber);
+                
+                // Double-check: verify this image isn't already in the DOM
+                const existingImg = galleryGrid.querySelector(`img[data-image-number="${imageNumber}"]`);
+                if (existingImg) {
+                    console.log(`Image ${imageNumber} already exists in DOM, skipping`);
+                    imageNumber++;
+                    continue;
+                }
+                
                 // Create gallery item
                 const galleryItem = document.createElement('div');
                 galleryItem.className = 'gallery-item';
                 const img = document.createElement('img');
                 img.src = result.element.src;
                 img.alt = projectName;
+                img.dataset.imageNumber = imageNumber; // Track image number
                 galleryItem.appendChild(img);
                 galleryGrid.appendChild(galleryItem);
                 
@@ -1104,22 +1129,57 @@
             }
         }
         
-        // Load gallery images when page is ready
+        // Load gallery images when page is ready - with debouncing
+        let initTimeout = null;
+        let isInitializing = false;
+        
         function initializePage() {
-            // Add small delay to ensure DOM is ready, especially for SPA navigation
-            setTimeout(() => {
-                loadGalleryImages();
-            }, 50);
+            // Prevent multiple simultaneous initializations
+            if (isInitializing || isLoadingGallery) {
+                console.log('Already initializing or loading, skipping duplicate call');
+                return;
+            }
+            
+            // Clear any pending initialization
+            if (initTimeout) {
+                clearTimeout(initTimeout);
+                initTimeout = null;
+            }
+            
+            isInitializing = true;
+            
+            // Use requestAnimationFrame to ensure DOM is ready, then add delay
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    initTimeout = setTimeout(() => {
+                        // Double-check we're not already loading before starting
+                        if (!isLoadingGallery) {
+                            loadGalleryImages();
+                        }
+                        isInitializing = false;
+                        initTimeout = null;
+                    }, 150);
+                });
+            });
         }
         
+        // Store handler reference for cleanup (use unique key per page)
+        const pageKey = 'galleryInit_stone_canyon';
+        if (window[pageKey]) {
+            const oldHandler = window[pageKey];
+            document.removeEventListener('DOMContentLoaded', oldHandler);
+            window.removeEventListener('pageContentLoaded', oldHandler);
+        }
+        window[pageKey] = initializePage;
+        
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initializePage);
+            document.addEventListener('DOMContentLoaded', window[pageKey], { once: true });
         } else {
             initializePage();
         }
         
         // Also load when page content is loaded via SPA navigation
-        window.addEventListener('pageContentLoaded', initializePage);
+        window.addEventListener('pageContentLoaded', window[pageKey], { once: false });
     </script>
 </body>
 </html>
