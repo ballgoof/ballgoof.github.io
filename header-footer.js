@@ -4,7 +4,7 @@ const headerHTML = `<!-- Header -->
     <div class="header-container">
         <div class="logo-container">
             <a href="/">
-                <img src="assets/logo.webp" alt="TopCap Construction Logo" class="logo">
+                <img src="/assets/logo.webp" alt="TopCap Construction Logo" class="logo">
             </a>
         </div>
         <div class="hamburger" id="hamburger">
@@ -63,16 +63,22 @@ const headerHTML = `<!-- Header -->
                         </li>
                     </ul>
                 </li>
-                <li><a href="/getting-started/">Getting Started</a></li>
+                <li class="dropdown getting-started-dropdown">
+                    <span class="dropdown-toggle getting-started-toggle">Getting Started</span>
+                    <ul class="dropdown-menu">
+                        <li><a href="/contact/">Pre-Meeting Worksheet</a></li>
+                        <li><a href="/why-choose-us/">Why Choose Us?</a></li>
+                    </ul>
+                </li>
                 <li><a href="/press-awards/">Press & Awards</a></li>
                 <li><a href="/contact/">Contact</a></li>
                 <li class="header-social-media">
-                    <a href="https://nextdoor.com/pages/sacdev-inc-el-dorado-hills-ca/" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Nextdoor"><img src="assets/nextdoor.png" alt="Nextdoor"></a>
-                    <a href="https://www.facebook.com/TopCapConstructionCA" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Facebook"><img src="assets/facebook-logo.png" alt="Facebook"></a>
-                    <a href="https://www.instagram.com/topcapremodels" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Instagram"><img src="assets/instagram.png" alt="Instagram"></a>
-                    <a href="https://www.yelp.com/biz/topcap-construction-el-dorado-hills-3?osq=topcap+construction" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Yelp"><img src="assets/yelp.png" alt="Yelp"></a>
-                    <a href="https://www.houzz.com/pro/topcapconstruction/topcap-construction-inc" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Houzz"><img src="assets/houzz.png" alt="Houzz"></a>
-                    <a href="#" class="header-social-icon" aria-label="YouTube"><img src="assets/youtube.png" alt="YouTube"></a>
+                    <a href="https://nextdoor.com/pages/sacdev-inc-el-dorado-hills-ca/" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Nextdoor"><img src="/assets/nextdoor.png" alt="Nextdoor"></a>
+                    <a href="https://www.facebook.com/TopCapConstructionCA" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Facebook"><img src="/assets/facebook-logo.png" alt="Facebook"></a>
+                    <a href="https://www.instagram.com/topcapremodels" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Instagram"><img src="/assets/instagram.png" alt="Instagram"></a>
+                    <a href="https://www.yelp.com/biz/topcap-construction-el-dorado-hills-3?osq=topcap+construction" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Yelp"><img src="/assets/yelp.png" alt="Yelp"></a>
+                    <a href="https://www.houzz.com/pro/topcapconstruction/topcap-construction-inc" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Houzz"><img src="/assets/houzz.png" alt="Houzz"></a>
+                    <a href="#" class="header-social-icon" aria-label="YouTube"><img src="/assets/youtube.png" alt="YouTube"></a>
                 </li>
             </ul>
         </nav>
@@ -93,12 +99,12 @@ const footerHTML = `<!-- Footer -->
         <div class="footer-right">
             <h4>Social Media</h4>
             <div class="social-media">
-                <a href="https://nextdoor.com/pages/sacdev-inc-el-dorado-hills-ca/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Nextdoor"><img src="assets/nextdoor.png" alt="Nextdoor"></a>
-                <a href="https://www.facebook.com/TopCapConstructionCA" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook"><img src="assets/facebook-logo.png" alt="Facebook"></a>
-                <a href="https://www.instagram.com/topcapremodels" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram"><img src="assets/instagram.png" alt="Instagram"></a>
-                <a href="https://www.yelp.com/biz/topcap-construction-el-dorado-hills-3?osq=topcap+construction" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Yelp"><img src="assets/yelp.png" alt="Yelp"></a>
-                <a href="https://www.houzz.com/pro/topcapconstruction/topcap-construction-inc" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Houzz"><img src="assets/houzz.png" alt="Houzz"></a>
-                <a href="#" class="social-icon" aria-label="YouTube"><img src="assets/youtube.png" alt="YouTube"></a>
+                <a href="https://nextdoor.com/pages/sacdev-inc-el-dorado-hills-ca/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Nextdoor"><img src="/assets/nextdoor.png" alt="Nextdoor"></a>
+                <a href="https://www.facebook.com/TopCapConstructionCA" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook"><img src="/assets/facebook-logo.png" alt="Facebook"></a>
+                <a href="https://www.instagram.com/topcapremodels" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram"><img src="/assets/instagram.png" alt="Instagram"></a>
+                <a href="https://www.yelp.com/biz/topcap-construction-el-dorado-hills-3?osq=topcap+construction" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Yelp"><img src="/assets/yelp.png" alt="Yelp"></a>
+                <a href="https://www.houzz.com/pro/topcapconstruction/topcap-construction-inc" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Houzz"><img src="/assets/houzz.png" alt="Houzz"></a>
+                <a href="#" class="social-icon" aria-label="YouTube"><img src="/assets/youtube.png" alt="YouTube"></a>
             </div>
         </div>
     </div>
@@ -156,22 +162,17 @@ function loadHeader(forceReload = false) {
             return;
         }
         
-        const basePath = getBasePath();
+        // Assets are now always root-relative in the template, so no path replacement needed
         let header = headerHTML;
         
-        // For 404 pages or root pages, always use root-relative paths for assets
-        // Check if we're on a 404 page or at root
-        const is404Page = window.location.pathname.includes('404') || document.title.includes('404');
-        const isRoot = window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname.endsWith('/index.html');
-        
-        // ONLY replace asset paths (images) - DON'T TOUCH navigation links at all
-        if (is404Page || isRoot || !basePath) {
-            // Use root-relative paths
-            header = header.replace(/src="assets\//g, 'src="/assets/');
-            header = header.replace(/href="assets\//g, 'href="/assets/');
-        } else {
-            header = header.replace(/src="assets\//g, 'src="' + basePath + 'assets/');
-            header = header.replace(/href="assets\//g, 'href="' + basePath + 'assets/');
+        // For local file system, convert root-relative paths to relative paths
+        if (isLocalFile()) {
+            const basePath = getBasePath();
+            if (basePath) {
+                // Replace /assets/ with relative path
+                header = header.replace(/src="\/assets\//g, 'src="' + basePath + 'assets/');
+                header = header.replace(/href="\/assets\//g, 'href="' + basePath + 'assets/');
+            }
         }
         
         // Navigation links stay exactly as they are - no processing
@@ -190,19 +191,16 @@ function loadHeader(forceReload = false) {
 function loadFooter() {
     const footerPlaceholder = document.getElementById('footer-placeholder');
     if (footerPlaceholder) {
-        const basePath = getBasePath();
+        // Assets are now always root-relative in the template, so no path replacement needed
         let footer = footerHTML;
         
-        // For 404 pages or root pages, always use root-relative paths for assets
-        const is404Page = window.location.pathname.includes('404') || document.title.includes('404');
-        const isRoot = window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname.endsWith('/index.html');
-        
-        // Replace asset paths
-        if (is404Page || isRoot || !basePath) {
-            // Use root-relative paths
-            footer = footer.replace(/src="assets\//g, 'src="/assets/');
-        } else {
-            footer = footer.replace(/src="assets\//g, 'src="' + basePath + 'assets/');
+        // For local file system, convert root-relative paths to relative paths
+        if (isLocalFile()) {
+            const basePath = getBasePath();
+            if (basePath) {
+                // Replace /assets/ with relative path
+                footer = footer.replace(/src="\/assets\//g, 'src="' + basePath + 'assets/');
+            }
         }
         
         footerPlaceholder.innerHTML = footer;
@@ -222,11 +220,13 @@ function initHeaderScripts() {
         });
     }
 
-    // Folder system for mobile - Both About and Projects dropdowns
+    // Folder system for mobile - About, Projects, and Getting Started dropdowns
     const aboutToggle = document.querySelector('.about-toggle');
     const aboutDropdown = document.querySelector('.about-dropdown');
     const projectsToggle = document.querySelector('.projects-toggle');
     const projectsDropdown = document.querySelector('.projects-dropdown');
+    const gettingStartedToggle = document.querySelector('.getting-started-toggle');
+    const gettingStartedDropdown = document.querySelector('.getting-started-dropdown');
     const backButton = document.getElementById('backButton');
 
     function enterFolderView(dropdown) {
@@ -369,6 +369,16 @@ function initHeaderScripts() {
                 e.preventDefault();
                 e.stopPropagation();
                 enterFolderView(projectsDropdown);
+            }
+        });
+    }
+
+    if (gettingStartedToggle && gettingStartedDropdown) {
+        gettingStartedToggle.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                e.stopPropagation();
+                enterFolderView(gettingStartedDropdown);
             }
         });
     }
