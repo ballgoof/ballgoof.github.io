@@ -813,7 +813,7 @@
             width: 100%;
             height: 60vh;
             min-height: 400px;
-            background-image: url('../../assets/Whole House Remodel/18th Ave/1.jpg');
+            background-image: url('./1.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -946,9 +946,8 @@
                 return;
             }
             
-            // Determine base path (../../assets/ for 2 levels deep)
-            const basePath = '../../assets/';
-            const imageBasePath = `${basePath}${projectCategory}/${projectName}/`;
+            // Load images from current directory
+            const imageBasePath = './';
             
             let imageNumber = 2; // Start from 2 (1 is the hero image)
             const loadedImages = [];
