@@ -930,12 +930,24 @@
     <script src="../../header-footer.js"></script>
     
     <script>
+        // Prevent concurrent loading
+        let isLoadingGallery = false;
+        
         // Dynamic Gallery Image Loader
         async function loadGalleryImages() {
-            const galleryGrid = document.getElementById('gallery-grid');
-            if (!galleryGrid) return;
+            // Prevent concurrent executions
+            if (isLoadingGallery) {
+                return;
+            }
+            isLoadingGallery = true;
             
-            // Clear existing gallery items
+            const galleryGrid = document.getElementById('gallery-grid');
+            if (!galleryGrid) {
+                isLoadingGallery = false;
+                return;
+            }
+            
+            // Clear existing gallery items immediately
             galleryGrid.innerHTML = '';
             
             const projectCategory = document.querySelector('.project-category')?.textContent.trim() || '';
@@ -1016,6 +1028,8 @@
             if (loadedImages.length > 0) {
                 initLightbox(loadedImages);
             }
+            
+            isLoadingGallery = false;
         }
         
         // Initialize lightbox functionality
@@ -1092,7 +1106,10 @@
         
         // Load gallery images when page is ready
         function initializePage() {
-            loadGalleryImages();
+            // Add small delay to ensure DOM is ready, especially for SPA navigation
+            setTimeout(() => {
+                loadGalleryImages();
+            }, 50);
         }
         
         if (document.readyState === 'loading') {
