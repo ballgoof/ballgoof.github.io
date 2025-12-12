@@ -32,6 +32,7 @@ const headerHTML = `<!-- Header -->
                             <a href="/custom-homes/">Custom Homes</a>
                             <ul class="submenu">
                                 <li><a href="/custom-homes/ashbury/">Ashbury</a></li>
+                                <li><a href="/custom-homes/sierra-oaks/">Sierra Oaks</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
@@ -40,7 +41,9 @@ const headerHTML = `<!-- Header -->
                                 <li><a href="/whole-house-remodel/18th-ave/">18th Ave</a></li>
                                 <li><a href="/whole-house-remodel/21st-street/">21st Street</a></li>
                                 <li><a href="/whole-house-remodel/coldwater/">Coldwater</a></li>
+                                <li><a href="/whole-house-remodel/eichler/">Eichler</a></li>
                                 <li><a href="/whole-house-remodel/lincoln/">Lincoln</a></li>
+                                <li><a href="/whole-house-remodel/magic-morgan/">Magic Morgan</a></li>
                                 <li><a href="/whole-house-remodel/stone-canyon/">Stone Canyon</a></li>
                             </ul>
                         </li>
@@ -48,7 +51,7 @@ const headerHTML = `<!-- Header -->
                             <a href="/multi-unit/">Multi Unit Projects</a>
                             <ul class="submenu">
                                 <li><a href="/multi-unit/22nd-street/">22nd Street</a></li>
-                                <li><a href="/multi-unit/bartlett-6/">Bartlett 6</a></li>
+                                <li><a href="/multi-unit/bartlett/">Bartlett</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
