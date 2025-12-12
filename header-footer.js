@@ -21,11 +21,13 @@ const headerHTML = `<!-- Header -->
                     <ul class="dropdown-menu">
                         <li><a href="/about/our-team/">Our Team</a></li>
                         <li><a href="/about/testimonials/">Testimonials</a></li>
+                        <li><a href="/careers/">Careers</a></li>
                     </ul>
                 </li>
                 <li class="dropdown projects-dropdown">
                     <a href="/projects/" class="dropdown-toggle projects-toggle">Our Projects</a>
                     <ul class="dropdown-menu">
+                        <li><a href="/projects/">Current Projects</a></li>
                         <li class="dropdown-item-with-submenu">
                             <a href="/custom-homes/">Custom Homes</a>
                             <ul class="submenu">
@@ -33,14 +35,7 @@ const headerHTML = `<!-- Header -->
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="/multi-unit/">Multi Unit</a>
-                            <ul class="submenu">
-                                <li><a href="/multi-unit/22nd-street/">22nd Street</a></li>
-                                <li><a href="/multi-unit/bartlett-6/">Bartlett 6</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-item-with-submenu">
-                            <a href="/whole-house-remodel/">Whole House Remodel</a>
+                            <a href="/whole-house-remodel/">Whole House Remodels</a>
                             <ul class="submenu">
                                 <li><a href="/whole-house-remodel/18th-ave/">18th Ave</a></li>
                                 <li><a href="/whole-house-remodel/21st-street/">21st Street</a></li>
@@ -50,9 +45,26 @@ const headerHTML = `<!-- Header -->
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
-                            <a href="/kitchen-remodel/">Kitchen Remodel</a>
+                            <a href="/multi-unit/">Multi Unit Projects</a>
+                            <ul class="submenu">
+                                <li><a href="/multi-unit/22nd-street/">22nd Street</a></li>
+                                <li><a href="/multi-unit/bartlett-6/">Bartlett 6</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-item-with-submenu">
+                            <a href="/kitchen-remodel/">Kitchen Remodels</a>
                             <ul class="submenu">
                                 <li><a href="/kitchen-remodel/castro-st/">Castro St</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-item-with-submenu">
+                            <a href="/bathroom-remodel/">Bathroom Remodels</a>
+                            <ul class="submenu">
+                            </ul>
+                        </li>
+                        <li class="dropdown-item-with-submenu">
+                            <a href="/living-spaces/">Living Spaces</a>
+                            <ul class="submenu">
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
