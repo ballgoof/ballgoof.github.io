@@ -25,13 +25,13 @@ const headerHTML = `<!-- Header -->
                     </ul>
                 </li>
                 <li class="dropdown projects-dropdown">
-                    <a href="/projects/" class="dropdown-toggle projects-toggle">Our Projects</a>
+                    <a href="/projects/" class="dropdown-toggle projects-toggle">Projects</a>
                     <ul class="dropdown-menu">
                         <li><a href="/projects/">Current Projects</a></li>
                         <li class="dropdown-item-with-submenu">
                             <a href="/custom-homes/">Custom Homes</a>
                             <ul class="submenu">
-                                <li><a href="/custom-homes/ashbury-st/">Ashbury St</a></li>
+                                <li><a href="/custom-homes/ashbury/">Ashbury</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
@@ -39,7 +39,7 @@ const headerHTML = `<!-- Header -->
                             <ul class="submenu">
                                 <li><a href="/whole-house-remodel/18th-ave/">18th Ave</a></li>
                                 <li><a href="/whole-house-remodel/21st-street/">21st Street</a></li>
-                                <li><a href="/whole-house-remodel/coldwater-drive/">Coldwater Drive</a></li>
+                                <li><a href="/whole-house-remodel/coldwater/">Coldwater</a></li>
                                 <li><a href="/whole-house-remodel/lincoln/">Lincoln</a></li>
                                 <li><a href="/whole-house-remodel/stone-canyon/">Stone Canyon</a></li>
                             </ul>
@@ -54,7 +54,7 @@ const headerHTML = `<!-- Header -->
                         <li class="dropdown-item-with-submenu">
                             <a href="/kitchen-remodel/">Kitchen Remodels</a>
                             <ul class="submenu">
-                                <li><a href="/kitchen-remodel/castro-st/">Castro St</a></li>
+                                <li><a href="/kitchen-remodel/castro/">Castro</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-item-with-submenu">
