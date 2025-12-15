@@ -15,7 +15,6 @@ const headerHTML = `<!-- Header -->
         <nav id="nav">
             <div class="back-button" id="backButton" style="display: none;"><span class="back-arrow"></span> Back</div>
             <ul>
-                <li><a href="/">Home</a></li>
                 <li class="dropdown about-dropdown">
                     <a href="/about" class="dropdown-toggle about-toggle">About</a>
                     <ul class="dropdown-menu">
@@ -78,14 +77,6 @@ const headerHTML = `<!-- Header -->
                         </li>
                     </ul>
                 </li>
-                <li class="dropdown getting-started-dropdown">
-                    <span class="dropdown-toggle getting-started-toggle">Getting Started</span>
-                    <ul class="dropdown-menu">
-                        <li><a href="/contact/">Pre-Meeting Worksheet</a></li>
-                        <li><a href="/why-choose-us/">Why Choose Us?</a></li>
-                    </ul>
-                </li>
-                <li><a href="/press-awards/">Press & Awards</a></li>
                 <li><a href="/contact/">Contact</a></li>
                 <li class="header-social-media">
                     <a href="https://nextdoor.com/pages/sacdev-inc-el-dorado-hills-ca/" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Nextdoor"><img src="/assets/nextdoor.png" alt="Nextdoor"></a>
@@ -235,13 +226,11 @@ function initHeaderScripts() {
         });
     }
 
-    // Folder system for mobile - About, Projects, and Getting Started dropdowns
+    // Folder system for mobile - About and Projects dropdowns
     const aboutToggle = document.querySelector('.about-toggle');
     const aboutDropdown = document.querySelector('.about-dropdown');
     const projectsToggle = document.querySelector('.projects-toggle');
     const projectsDropdown = document.querySelector('.projects-dropdown');
-    const gettingStartedToggle = document.querySelector('.getting-started-toggle');
-    const gettingStartedDropdown = document.querySelector('.getting-started-dropdown');
     const backButton = document.getElementById('backButton');
 
     function enterFolderView(dropdown) {
@@ -384,16 +373,6 @@ function initHeaderScripts() {
                 e.preventDefault();
                 e.stopPropagation();
                 enterFolderView(projectsDropdown);
-            }
-        });
-    }
-
-    if (gettingStartedToggle && gettingStartedDropdown) {
-        gettingStartedToggle.addEventListener('click', (e) => {
-            if (window.innerWidth <= 768) {
-                e.preventDefault();
-                e.stopPropagation();
-                enterFolderView(gettingStartedDropdown);
             }
         });
     }

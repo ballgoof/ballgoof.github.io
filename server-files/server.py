@@ -27,6 +27,14 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         parent_dir = os.path.dirname(script_dir)
         super().__init__(*args, directory=parent_dir, **kwargs)
     
+    def end_headers(self):
+        """Add no-cache headers for development"""
+        # Disable caching for all files during development
+        self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+        self.send_header('Pragma', 'no-cache')
+        self.send_header('Expires', '0')
+        super().end_headers()
+    
     def do_GET(self):
         # Parse the path
         path = self.path.split('?')[0]  # Remove query string
