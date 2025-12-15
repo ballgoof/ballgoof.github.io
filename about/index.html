@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Team - TopCap Construction</title>
+    <link rel="icon" type="image/png" href="/assets/icon.png">
     <style>
         * {
             margin: 0;
@@ -126,8 +127,11 @@
             transition: none !important;
         }
         
-        /* Prevent flash on Houzz icon specifically */
+        /* Houzz icon is already black, so remove filter */
         .header-social-icon[aria-label="Houzz"] img {
+            filter: none;
+            -webkit-filter: none;
+            mix-blend-mode: normal;
             opacity: 1 !important;
             visibility: visible !important;
             transition: none !important;
@@ -728,7 +732,7 @@
             transition: none !important;
         }
         
-        /* Prevent flash on Houzz icon specifically */
+        /* Houzz icon is already black, so remove filter */
         .social-icon[aria-label="Houzz"] img {
             opacity: 1 !important;
             visibility: visible !important;
