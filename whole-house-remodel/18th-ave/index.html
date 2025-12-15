@@ -1042,6 +1042,17 @@
                 img.src = result.element.src;
                 img.alt = projectName;
                 img.dataset.imageNumber = imageNumber; // Track image number
+                
+                // Wait for image to actually load before adding to array
+                await new Promise((resolve) => {
+                    if (img.complete) {
+                        resolve();
+                    } else {
+                        img.onload = resolve;
+                        img.onerror = resolve; // Continue even if image fails to load
+                    }
+                });
+                
                 galleryItem.appendChild(img);
                 galleryGrid.appendChild(galleryItem);
                 
@@ -1049,8 +1060,10 @@
                 imageNumber++;
             }
             
-            // Initialize lightbox after images are loaded
+            // Initialize lightbox after all images are loaded and in DOM
             if (loadedImages.length > 0) {
+                // Wait a bit more to ensure DOM is fully updated
+                await new Promise(resolve => setTimeout(resolve, 100));
                 initLightbox(loadedImages);
             }
             
@@ -1107,15 +1120,46 @@
                     return;
                 }
                 
-                // Use event delegation on document for gallery image clicks
+                // Attach click handlers directly to each image element
+                // This ensures they work immediately after images are loaded
+                galleryItems.forEach((img, index) => {
+                    // Check if image is actually in the DOM
+                    if (!img.parentNode || !document.body.contains(img)) {
+                        console.warn(`Image at index ${index} not in DOM, skipping handler attachment`);
+                        return;
+                    }
+                    
+                    // Remove any existing event listeners by replacing the element
+                    const galleryItem = img.parentNode;
+                    if (galleryItem && galleryItem.classList.contains('gallery-item')) {
+                        const newImg = img.cloneNode(true);
+                        galleryItem.replaceChild(newImg, img);
+                        allGalleryImages[index] = newImg;
+                        
+                        // Attach click handler directly to the new image
+                        newImg.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            currentImageIndex = index;
+                            updateLightboxImage();
+                            if (lightbox) {
+                                lightbox.classList.add('active');
+                                document.body.style.overflow = 'hidden';
+                            }
+                        });
+                        
+                        // Make sure image is clickable
+                        newImg.style.cursor = 'pointer';
+                    }
+                });
+                
+                // Also use event delegation as a fallback for any dynamically added images
                 const galleryClickHandler = (e) => {
                     const clickedImg = e.target.closest('#gallery-grid .gallery-item img');
-                    if (clickedImg && allGalleryImages.length > 0) {
-                        const imageSrc = clickedImg.src;
+                    if (clickedImg && allGalleryImages.length > 0 && !lightbox.classList.contains('active')) {
+                        // Find index by matching the actual DOM element or src
                         const index = allGalleryImages.findIndex(img => {
-                            const imgSrc = img.src || img.getAttribute('src');
-                            return imgSrc === imageSrc || 
-                                   imgSrc.split('/').pop() === imageSrc.split('/').pop() ||
+                            return img === clickedImg || 
+                                   img.src === clickedImg.src ||
                                    (img.dataset && img.dataset.imageNumber && clickedImg.dataset && clickedImg.dataset.imageNumber && img.dataset.imageNumber === clickedImg.dataset.imageNumber);
                         });
                         if (index !== -1) {
