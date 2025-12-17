@@ -29,7 +29,7 @@
             color: #000;
             background: #f8f9fa;
             overflow-x: hidden;
-            padding-top: 120px; /* Account for fixed header */
+            padding-top: 108px; /* Account for fixed header */
         }
 
         body, body *, a, p, h1, h2, h3, h4, h5, h6, li, td, th, input, textarea, select, button {
@@ -49,7 +49,7 @@
         .header-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem 2rem;
+            padding: 0.9rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -72,7 +72,7 @@
         }
 
         .logo {
-            height: 120px;
+            height: 108px;
             width: auto;
             display: block;
         }
@@ -401,12 +401,12 @@
             flex-direction: column;
             cursor: pointer;
             gap: 5px;
-            margin-right: 1rem;
+            
             position: relative;
             width: 30px;
             height: 24px;
             padding: 8px;
-            margin: -8px 1rem -8px 0;
+            margin: -8px 0;
         }
 
         .hamburger span {
@@ -550,15 +550,15 @@
             display: none;
         }
 
-                /* Mobile Responsive */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
             .header-container {
-                padding-right: 2.5rem;
+                padding-right: 2.3rem;
             }
-        }
 
             .hamburger {
                 display: flex;
+                margin-right: 0;
             }
 
             nav {
@@ -772,53 +772,52 @@
                 transition: max-height 0.3s ease, opacity 0.3s ease;
             }
 
-
             .dropdown-menu li a {
                 padding-left: 2.5rem;
                 white-space: normal;
                 word-wrap: break-word;
             }
 
-            .hero-text {
-                font-size: 1.5rem;
-                bottom: 60px;
-                right: 20px;
-            }
-
-
-            .carousel-arrow {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-            }
-
-            .carousel-container:hover .carousel-arrow.prev {
-                left: 15px;
-            }
-
-            .carousel-container:hover .carousel-arrow.next {
-                right: 15px;
-            }
-
             .logo {
                 height: 90px;
             }
 
-            .about-content,
-            .contact-content {
-                grid-template-columns: 1fr;
+            .project-layout {
+                padding: 1rem;
             }
 
-            .services-grid {
+            .project-top-section {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
-            .quick-links-grid {
-                grid-template-columns: 1fr;
+            .project-first-image {
+                height: auto;
             }
 
-            .quick-link-card {
-                height: 300px;
+            .project-first-image img {
+                object-fit: contain;
+            }
+
+            .project-content-section {
+                display: flex !important;
+                flex-direction: column;
+                grid-template-columns: none;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                grid-auto-rows: auto;
+            }
+
+            .gallery-item {
+                grid-column: span 1 !important;
+                grid-row: span 1 !important;
+            }
+
+            .gallery-item img {
+                height: auto;
+                object-fit: contain;
             }
 
             .footer-container {
@@ -887,7 +886,7 @@
 
         .project-first-image {
             width: 100%;
-            height: 600px;
+            height: 690px;
             overflow: hidden;
         }
 
@@ -919,6 +918,14 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .project-content-section {
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+            }
         }
 
         .project-content-block h3 {
@@ -966,7 +973,8 @@
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
+            grid-auto-rows: min-content;
+            gap: 1.5rem;
             width: 100%;
         }
 
@@ -980,6 +988,39 @@
             width: 100%;
             height: auto;
             display: block;
+        }
+
+        /* Art wall layout - maximum 2 images per row */
+        /* Some images full width, some single column */
+        /* Pattern: full width, single, single, full width, single, single, etc. */
+        .gallery-item:nth-child(3n+1) {
+            grid-column: span 2;
+        }
+
+        .gallery-item:nth-child(3n+2) {
+            grid-column: span 1;
+            aspect-ratio: 1 / 1;
+            min-height: 550px;
+        }
+
+        .gallery-item:nth-child(3n+2) img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .gallery-item:nth-child(3n+3) {
+            grid-column: span 1;
+            aspect-ratio: 1 / 1;
+            min-height: 550px;
+        }
+
+        .gallery-item:nth-child(3n+3) img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
         }
 
         @media (max-width: 768px) {
@@ -1101,6 +1142,14 @@
             const firstImageContainer = document.getElementById('first-image-container');
             const secondImageContainer = document.getElementById('second-image-container');
             const descriptionContainer = document.getElementById('project-description');
+            
+            // Clear containers before loading to prevent duplicates
+            if (firstImageContainer) {
+                firstImageContainer.innerHTML = '';
+            }
+            if (secondImageContainer) {
+                secondImageContainer.innerHTML = '';
+            }
             
             const loadedImages = [];
             const extensions = ['.jpg', '.jpeg']; // Try both extensions
