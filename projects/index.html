@@ -6,6 +6,17 @@
     <title>Our Projects - TopCap Construction</title>
     <link rel="icon" type="image/png" href="/assets/icon.png">
     <style>
+        @font-face {
+            font-family: 'Vectora';
+            src: local('Vectora'), local('Vectora-Regular');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        #footer-placeholder:empty {
+            display: none;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -16,8 +27,12 @@
             height: 100%;
         }
 
+        body, body *, a, p, h1, h2, h3, h4, h5, h6, li, td, th, input, textarea, select, button {
+            font-family: 'Vectora', 'Arial', sans-serif;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Vectora', 'Arial', sans-serif;
             line-height: 1.6;
             color: #000;
             background: #f8f9fa;
@@ -158,7 +173,17 @@
         @media (max-width: 768px) {
             .header-social-media {
                 display: none;
+            
+            .footer-container {
+                flex-direction: column;
+                gap: 2rem;
+                align-items: flex-start;
             }
+
+            .footer-section {
+                width: 100%;
+            }
+}
         }
 
         /* Dropdown Menu */
@@ -410,22 +435,31 @@
 
         /* Project Info */
         .project-info {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 3rem 2rem 1rem;
-            text-align: center;
+            padding: 3rem 2rem 1rem 2rem;
+            text-align: left;
         }
 
         .project-info h1 {
-            font-size: 2.5rem;
+            font-size: 3.25rem;
             font-weight: 700;
             color: #000;
-            margin-bottom: 1rem;
+            margin: 0 0 1rem 0;
+            padding: 0;
+        }
+
+        .project-info p {
+            font-size: 1.1rem;
+            color: #000;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
         }
 
         /* Projects Grid */
         .projects-grid {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 2rem 4rem;
             display: grid;
@@ -435,24 +469,25 @@
         }
 
         .project-card {
-            position: relative;
-            height: 400px;
-            overflow: hidden;
-            border-radius: 10px;
             text-decoration: none;
-            display: block;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
             transition: transform 0.3s ease;
         }
 
         .project-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
         }
 
         .project-card img {
             width: 100%;
-            height: 100%;
+            height: 280px;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            object-position: center;
+            border-radius: 0;
+            transition: transform 0.75s ease;
+            display: block;
         }
 
         .project-card:hover img {
@@ -460,32 +495,23 @@
         }
 
         .project-card-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            padding: 2rem;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+            margin-top: 1rem;
+            text-align: left;
         }
 
         .project-card-overlay h2 {
-            font-size: 1.8rem;
+            font-size: 1.1rem;
             margin: 0;
-            color: #fff;
-            font-weight: 600;
+            color: #000;
+            font-weight: 400;
         }
 
+        
         /* Footer */
         footer {
             background: #000;
             color: #fff;
             padding: 2rem 2rem 1.5rem;
-            margin-top: auto;
         }
 
         .footer-container {
@@ -493,50 +519,48 @@
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             flex-wrap: wrap;
-            gap: 2rem;
+            gap: 3rem;
         }
 
-        .footer-left {
-            flex: 1;
-            min-width: 250px;
-        }
-
-        .footer-left h3 {
-            color: #fff;
-            font-size: 0.966rem;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            font-style: italic;
-        }
-
-        .footer-left p {
-            color: #fff;
-            margin: 0.3rem 0;
-            font-size: 0.725rem;
-            line-height: 1.5;
-        }
-
-        .footer-left .copyright {
-            margin-top: 1rem;
-            font-size: 0.684rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .footer-right {
+        .footer-section {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            align-items: flex-start;
         }
 
-        .footer-right h4 {
+        .footer-section h4 {
             color: #fff;
-            font-size: 0.966rem;
+            font-size: 1rem;
             margin-bottom: 0.75rem;
             font-weight: 500;
             font-style: italic;
+        }
+
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.85);
+            margin: 0.3rem 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .nkba-logo {
+            margin-top: 1rem;
+            max-width: 60px;
+            height: auto;
+            display: block;
+        }
+
+        .footer-copyright {
+            width: 100%;
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .footer-copyright .copyright {
+            font-size: 0.821rem;
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .social-media {
@@ -545,8 +569,8 @@
         }
 
         .social-icon {
-            width: 40px;
-            height: 40px;
+            width: 34px;
+            height: 34px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -569,6 +593,26 @@
             transition: none !important;
         }
         
+        /* Houzz icon is already black, so remove filter */
+        .social-icon[aria-label="Houzz"] img {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transition: none !important;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-2px);
+            opacity: 0.8;
+        }
+        
+        .social-icon:hover img {
+            transition: none !important;
+        }
+
+        #footer-placeholder:empty {
+            display: none;
+        }
+
         /* Houzz icon is already black, so remove filter */
         .social-icon[aria-label="Houzz"] img {
             opacity: 1 !important;
@@ -821,8 +865,8 @@
                 gap: 1.5rem;
             }
 
-            .project-card {
-                height: 300px;
+            .project-card img {
+                height: 240px;
             }
 
             .footer-container {
@@ -843,48 +887,113 @@
 
     <!-- Project Info -->
     <div class="project-info">
-        <h1>Our Projects</h1>
+        <h1>Every home tells a story.</h1>
+        <p>Our projects showcase our dedication to crafting beautiful, inviting spaces that truly feel like home.</p>
     </div>
 
     <!-- Projects Grid -->
     <div class="projects-grid">
-        <!-- Custom Homes -->
-        <a href="/custom-homes/" class="project-card">
-            <img src="../custom-homes/ashbury/1.jpg" alt="Custom Homes">
+        <!-- Ashbury Custom Home -->
+        <a href="/projects/ashbury-custom-home/" class="project-card">
+            <img src="ashbury-custom-home/1.jpg" alt="Ashbury Custom Home">
             <div class="project-card-overlay">
-                <h2>Custom Homes</h2>
+                <h2>Ashbury Custom Home</h2>
             </div>
         </a>
 
-        <!-- Multi Unit -->
-        <a href="/multi-unit/" class="project-card">
-            <img src="../multi-unit/22nd-street/1.jpg" alt="Multi Unit">
+        <!-- Sierra Oaks Custom Home -->
+        <a href="/projects/sierra-oaks-custom-home/" class="project-card">
+            <img src="sierra-oaks-custom-home/1.jpg" alt="Sierra Oaks Custom Home">
             <div class="project-card-overlay">
-                <h2>Multi Unit</h2>
+                <h2>Sierra Oaks Custom Home</h2>
             </div>
         </a>
 
-        <!-- Whole House Remodel -->
-        <a href="/whole-house-remodel/" class="project-card">
-            <img src="../whole-house-remodel/21st-street/1.jpg" alt="Whole House Remodel">
+        <!-- 22nd Street Multi Unit -->
+        <a href="/projects/22nd-street-multi-unit/" class="project-card">
+            <img src="22nd-street-multi-unit/1.jpg" alt="22nd Street Multi Unit">
             <div class="project-card-overlay">
-                <h2>Whole House Remodel</h2>
+                <h2>22nd Street Multi Unit</h2>
             </div>
         </a>
 
-        <!-- Kitchen Remodel -->
-        <a href="/kitchen-remodel/" class="project-card">
-            <img src="../kitchen-remodel/castro/1.jpg" alt="Kitchen Remodel">
+        <!-- Bartlett Multi Unit -->
+        <a href="/projects/bartlett-multi-unit/" class="project-card">
+            <img src="bartlett-multi-unit/1.jpg" alt="Bartlett Multi Unit">
             <div class="project-card-overlay">
-                <h2>Kitchen Remodel</h2>
+                <h2>Bartlett Multi Unit</h2>
             </div>
         </a>
 
-        <!-- Commercial -->
-        <a href="/commercial/" class="project-card">
-            <img src="../commercial/davids-tea/1.jpg" alt="Commercial">
+        <!-- 18th Ave Whole House Remodel -->
+        <a href="/projects/18th-ave-whole-house-remodel/" class="project-card">
+            <img src="18th-ave-whole-house-remodel/1.jpg" alt="18th Ave Whole House Remodel">
             <div class="project-card-overlay">
-                <h2>Commercial</h2>
+                <h2>18th Ave Whole House Remodel</h2>
+            </div>
+        </a>
+
+        <!-- 21st Street Whole House Remodel -->
+        <a href="/projects/21st-street-whole-house-remodel/" class="project-card">
+            <img src="21st-street-whole-house-remodel/1.jpg" alt="21st Street Whole House Remodel">
+            <div class="project-card-overlay">
+                <h2>21st Street Whole House Remodel</h2>
+            </div>
+        </a>
+
+        <!-- Coldwater Whole House Remodel -->
+        <a href="/projects/coldwater-whole-house-remodel/" class="project-card">
+            <img src="coldwater-whole-house-remodel/1.jpg" alt="Coldwater Whole House Remodel">
+            <div class="project-card-overlay">
+                <h2>Coldwater Whole House Remodel</h2>
+            </div>
+        </a>
+
+        <!-- Eichler Whole House Remodel -->
+        <a href="/projects/eichler-whole-house-remodel/" class="project-card">
+            <img src="eichler-whole-house-remodel/1.jpg" alt="Eichler Whole House Remodel">
+            <div class="project-card-overlay">
+                <h2>Eichler Whole House Remodel</h2>
+            </div>
+        </a>
+
+        <!-- Lincoln Whole House Remodel -->
+        <a href="/projects/lincoln-whole-house-remodel/" class="project-card">
+            <img src="lincoln-whole-house-remodel/1.jpg" alt="Lincoln Whole House Remodel">
+            <div class="project-card-overlay">
+                <h2>Lincoln Whole House Remodel</h2>
+            </div>
+        </a>
+
+        <!-- Magic Morgan Whole House Remodel -->
+        <a href="/projects/magic-morgan-whole-house-remodel/" class="project-card">
+            <img src="magic-morgan-whole-house-remodel/1.jpg" alt="Magic Morgan Whole House Remodel">
+            <div class="project-card-overlay">
+                <h2>Magic Morgan Whole House Remodel</h2>
+            </div>
+        </a>
+
+        <!-- Stone Canyon Whole House Remodel -->
+        <a href="/projects/stone-canyon-whole-house-remodel/" class="project-card">
+            <img src="stone-canyon-whole-house-remodel/1.jpg" alt="Stone Canyon Whole House Remodel">
+            <div class="project-card-overlay">
+                <h2>Stone Canyon Whole House Remodel</h2>
+            </div>
+        </a>
+
+        <!-- Castro Kitchen Remodel -->
+        <a href="/projects/castro-kitchen-remodel/" class="project-card">
+            <img src="castro-kitchen-remodel/1.jpg" alt="Castro Kitchen Remodel">
+            <div class="project-card-overlay">
+                <h2>Castro Kitchen Remodel</h2>
+            </div>
+        </a>
+
+        <!-- David's Tea Commercial -->
+        <a href="/projects/davids-tea-commercial/" class="project-card">
+            <img src="davids-tea-commercial/1.jpg" alt="David's Tea Commercial">
+            <div class="project-card-overlay">
+                <h2>David's Tea Commercial</h2>
             </div>
         </a>
     </div>

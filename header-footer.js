@@ -1,5 +1,8 @@
 // Header HTML Template - All paths are root-relative (start with /)
 const headerHTML = `<!-- Header -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
 <header>
     <div class="header-container">
         <div class="logo-container">
@@ -14,78 +17,105 @@ const headerHTML = `<!-- Header -->
         </div>
         <nav id="nav">
             <div class="back-button" id="backButton" style="display: none;"><span class="back-arrow"></span> Back</div>
+            <style>
+                nav ul li a,
+                nav ul li .dropdown-toggle {
+                    text-transform: uppercase;
+                    font-family: 'Roboto', sans-serif;
+                    font-weight: 400;
+                }
+                
+                /* Make dropdown toggles look like links but not be clickable */
+                nav ul li .dropdown-toggle {
+                    cursor: pointer;
+                    text-decoration: none;
+                    color: #000;
+                    font-weight: 400;
+                    font-size: 0.966rem;
+                    transition: color 0.3s;
+                    display: block;
+                    padding: 0.5rem 0;
+                }
+                
+                /* Projects, Services, and About hover to black */
+                nav ul li a:hover,
+                nav ul li .dropdown-toggle:hover {
+                    color: #000;
+                }
+                
+                /* No color change on hover for Services and About dropdown items */
+                nav ul li.services-dropdown .dropdown-menu li a:hover,
+                nav ul li.about-dropdown .dropdown-menu li a:hover {
+                    color: #000;
+                    background: transparent;
+                }
+                
+                /* Center Projects, Services, and About, push CONTACT US to the right */
+                nav ul {
+                    justify-content: center;
+                    position: relative;
+                    width: 100%;
+                    margin-right: 120px; /* Shift left to better center */
+                }
+                
+                /* Push CONTACT US to the right and underline it */
+                nav ul li.contact-nav-item {
+                    position: absolute;
+                    right: -150px;
+                }
+                
+                nav ul li.contact-nav-item a {
+                    text-decoration: underline;
+                }
+                
+                /* Make Services dropdown wider for long text */
+                nav ul li.services-dropdown .dropdown-menu {
+                    min-width: 320px;
+                }
+                
+                /* Make About dropdown narrower (35% reduction from default 200px) */
+                nav ul li.about-dropdown .dropdown-menu {
+                    min-width: 130px;
+                }
+                
+                /* On mobile, reset the positioning */
+                @media (max-width: 768px) {
+                    nav ul {
+                        justify-content: flex-start;
+                        position: static;
+                        margin-right: 0;
+                    }
+                    
+                    nav ul li.contact-nav-item {
+                        position: static;
+                    }
+                    
+                    nav ul li.services-dropdown .dropdown-menu {
+                        min-width: 200px;
+                    }
+                }
+            </style>
             <ul>
+                <li><a href="/projects/">Projects</a></li>
+                <li class="dropdown services-dropdown">
+                    <span class="dropdown-toggle services-toggle">Services</span>
+                    <ul class="dropdown-menu">
+                        <li><a href="/services/kitchen-remodels/">Kitchen Remodels</a></li>
+                        <li><a href="/services/bathroom-remodels/">Bathroom Remodels</a></li>
+                        <li><a href="/services/custom-historic-home-renovation/">Custom & Historic Home Renovation</a></li>
+                        <li><a href="/services/additions-adus/">Additions & ADUs</a></li>
+                        <li><a href="/services/design-build-services/">Design + Build Services</a></li>
+                    </ul>
+                </li>
                 <li class="dropdown about-dropdown">
-                    <a href="/about" class="dropdown-toggle about-toggle">About</a>
+                    <span class="dropdown-toggle about-toggle">About</span>
                     <ul class="dropdown-menu">
                         <li><a href="/about/our-team/">Our Team</a></li>
                         <li><a href="/about/testimonials/">Testimonials</a></li>
                         <li><a href="/careers/">Careers</a></li>
                     </ul>
                 </li>
-                <li class="dropdown projects-dropdown">
-                    <a href="/projects/" class="dropdown-toggle projects-toggle">Projects</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/projects/">Current Projects</a></li>
-                        <li class="dropdown-item-with-submenu">
-                            <a href="/custom-homes/">Custom Homes</a>
-                            <ul class="submenu">
-                                <li><a href="/custom-homes/ashbury/">Ashbury</a></li>
-                                <li><a href="/custom-homes/sierra-oaks/">Sierra Oaks</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-item-with-submenu">
-                            <a href="/whole-house-remodel/">Whole House Remodels</a>
-                            <ul class="submenu">
-                                <li><a href="/whole-house-remodel/18th-ave/">18th Ave</a></li>
-                                <li><a href="/whole-house-remodel/21st-street/">21st Street</a></li>
-                                <li><a href="/whole-house-remodel/coldwater/">Coldwater</a></li>
-                                <li><a href="/whole-house-remodel/eichler/">Eichler</a></li>
-                                <li><a href="/whole-house-remodel/lincoln/">Lincoln</a></li>
-                                <li><a href="/whole-house-remodel/magic-morgan/">Magic Morgan</a></li>
-                                <li><a href="/whole-house-remodel/stone-canyon/">Stone Canyon</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-item-with-submenu">
-                            <a href="/multi-unit/">Multi Unit Projects</a>
-                            <ul class="submenu">
-                                <li><a href="/multi-unit/22nd-street/">22nd Street</a></li>
-                                <li><a href="/multi-unit/bartlett/">Bartlett</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-item-with-submenu">
-                            <a href="/kitchen-remodel/">Kitchen Remodels</a>
-                            <ul class="submenu">
-                                <li><a href="/kitchen-remodel/castro/">Castro</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-item-with-submenu">
-                            <a href="/bathroom-remodel/">Bathroom Remodels</a>
-                            <ul class="submenu">
-                            </ul>
-                        </li>
-                        <li class="dropdown-item-with-submenu">
-                            <a href="/living-spaces/">Living Spaces</a>
-                            <ul class="submenu">
-                            </ul>
-                        </li>
-                        <li class="dropdown-item-with-submenu">
-                            <a href="/commercial/">Commercial</a>
-                            <ul class="submenu">
-                                <li><a href="/commercial/davids-tea/">David's Tea</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="/contact/">Contact</a></li>
-                <li class="header-social-media">
-                    <a href="https://nextdoor.com/pages/sacdev-inc-el-dorado-hills-ca/" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Nextdoor"><img src="/assets/nextdoor.png" alt="Nextdoor"></a>
-                    <a href="https://www.facebook.com/TopCapConstructionCA" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Facebook"><img src="/assets/facebook-logo.png" alt="Facebook"></a>
-                    <a href="https://www.instagram.com/topcapremodels" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Instagram"><img src="/assets/instagram.png" alt="Instagram"></a>
-                    <a href="https://www.yelp.com/biz/topcap-construction-el-dorado-hills-3?osq=topcap+construction" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Yelp"><img src="/assets/yelp.png" alt="Yelp"></a>
-                    <a href="https://www.houzz.com/pro/topcapconstruction/topcap-construction-inc" target="_blank" rel="noopener noreferrer" class="header-social-icon" aria-label="Houzz"><img src="/assets/houzz.png" alt="Houzz"></a>
-                    <a href="#" class="header-social-icon" aria-label="YouTube"><img src="/assets/youtube.png" alt="YouTube"></a>
-                </li>
+                <li class="contact-nav-item"><a href="/contact/">CONTACT US</a></li>
             </ul>
         </nav>
     </div>
@@ -95,15 +125,17 @@ const headerHTML = `<!-- Header -->
 const footerHTML = `<!-- Footer -->
 <footer>
     <div class="footer-container">
-        <div class="footer-left">
-            <h3>TopCap Construction</h3>
+        <div class="footer-section">
+            <h4>Office</h4>
             <p>3075 Alhambra Dr Suite 106</p>
             <p>Cameron Park, CA 95682</p>
-            <p>Phone: (530) 556-6667</p>
-            <p class="copyright">© TopCap Construction</p>
         </div>
-        <div class="footer-right">
-            <h4>Social Media</h4>
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <p>(530) 556-6667</p>
+        </div>
+        <div class="footer-section">
+            <h4>Follow Us</h4>
             <div class="social-media">
                 <a href="https://nextdoor.com/pages/sacdev-inc-el-dorado-hills-ca/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Nextdoor"><img src="/assets/nextdoor.png" alt="Nextdoor"></a>
                 <a href="https://www.facebook.com/TopCapConstructionCA" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook"><img src="/assets/facebook-logo.png" alt="Facebook"></a>
@@ -112,6 +144,10 @@ const footerHTML = `<!-- Footer -->
                 <a href="https://www.houzz.com/pro/topcapconstruction/topcap-construction-inc" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Houzz"><img src="/assets/houzz.png" alt="Houzz"></a>
                 <a href="#" class="social-icon" aria-label="YouTube"><img src="/assets/youtube.png" alt="YouTube"></a>
             </div>
+            <img src="/assets/nkba.png" alt="NKBA" class="nkba-logo">
+        </div>
+        <div class="footer-copyright">
+            <p class="copyright">© TopCap Construction</p>
         </div>
     </div>
 </footer>`;
@@ -226,11 +262,11 @@ function initHeaderScripts() {
         });
     }
 
-    // Folder system for mobile - About and Projects dropdowns
+    // Folder system for mobile - About and Services dropdowns
     const aboutToggle = document.querySelector('.about-toggle');
     const aboutDropdown = document.querySelector('.about-dropdown');
-    const projectsToggle = document.querySelector('.projects-toggle');
-    const projectsDropdown = document.querySelector('.projects-dropdown');
+    const servicesToggle = document.querySelector('.services-toggle');
+    const servicesDropdown = document.querySelector('.services-dropdown');
     const backButton = document.getElementById('backButton');
 
     function enterFolderView(dropdown) {
@@ -367,12 +403,12 @@ function initHeaderScripts() {
         });
     }
 
-    if (projectsToggle && projectsDropdown) {
-        projectsToggle.addEventListener('click', (e) => {
+    if (servicesToggle && servicesDropdown) {
+        servicesToggle.addEventListener('click', (e) => {
             if (window.innerWidth <= 768) {
                 e.preventDefault();
                 e.stopPropagation();
-                enterFolderView(projectsDropdown);
+                enterFolderView(servicesDropdown);
             }
         });
     }
