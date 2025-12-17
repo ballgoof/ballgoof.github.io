@@ -170,10 +170,26 @@
             .header-social-media {
                 display: none;
             
-            .footer-container {
+                        .footer-container {
                 flex-direction: column;
-                gap: 2rem;
-                align-items: flex-start;
+                text-align: left;
+            }
+
+            /* Order footer sections on mobile: Office, Contact, Follow Us, Copyright */
+            .footer-section:nth-child(1) {
+                order: 1; /* Office */
+            }
+
+            .footer-section:nth-child(2) {
+                order: 2; /* Contact */
+            }
+
+            .footer-section:nth-child(3) {
+                order: 3; /* Follow Us */
+            }
+
+            .footer-copyright {
+                order: 4; /* Copyright */
             }
 
             .footer-section {
