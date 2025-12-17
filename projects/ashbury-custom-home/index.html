@@ -36,14 +36,7 @@
             font-family: 'Vectora', 'Arial', sans-serif;
         }
 
-        .gallery-item {
-            width: 100%;
-            aspect-ratio: 4/3;
-            overflow: hidden;
-            border-radius: 4px;
-        }
-
-/* Header Styles */
+        /* Header Styles */
         header {
             background: #fff;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -559,7 +552,276 @@
 
                 /* Mobile Responsive */
         @media (max-width: 768px) {
-                        .footer-container {
+            .header-container {
+                padding-right: 2.5rem;
+            }
+        }
+
+            .hamburger {
+                display: flex;
+            }
+
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #fff;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+                flex: none;
+                justify-content: flex-start;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+            }
+
+            nav.active {
+                max-height: 100vh;
+                overflow-y: auto;
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 1rem 2rem;
+                gap: 0;
+                align-items: stretch;
+            }
+
+            nav ul li {
+                width: 100%;
+            }
+
+            /* Folder system for mobile - hide main menu when showing submenu */
+            nav.folder-view ul > li:not(.folder-active) {
+                display: none;
+            }
+
+            nav.folder-view ul > li.folder-active {
+                display: block;
+            }
+
+            nav.folder-view ul > li.folder-active .dropdown-menu {
+                display: block !important;
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                max-height: none;
+                padding: 0.5rem 0;
+                margin: 0;
+                background: transparent;
+                box-shadow: none;
+                transform: none;
+            }
+
+            nav.folder-view ul > li.folder-active .dropdown-toggle {
+                display: none;
+            }
+
+            nav.folder-view ul > li.folder-active .dropdown-menu li {
+                display: block;
+            }
+
+            nav.folder-view ul > li.folder-active .dropdown-menu li a {
+                padding: 0.5rem 2.5rem;
+                display: block;
+                text-decoration: none;
+            }
+
+            nav.folder-view ul {
+                order: 2; /* After back button and title */
+            }
+
+            /* Submenu folder view for mobile */
+            nav.submenu-view .dropdown-menu {
+                display: none !important;
+            }
+
+            nav.submenu-view .dropdown-item-with-submenu:not(.submenu-active) {
+                display: none !important;
+            }
+
+            nav.submenu-view .dropdown-item-with-submenu.submenu-active {
+                display: block;
+            }
+
+            nav.submenu-view .dropdown-item-with-submenu.submenu-active .submenu {
+                display: block !important;
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                max-height: none;
+                padding: 0.5rem 0;
+                margin: 0;
+                background: transparent;
+                box-shadow: none;
+                transform: none;
+            }
+
+            nav.submenu-view .dropdown-item-with-submenu.submenu-active > a {
+                display: none !important; /* Hide the link, title is shown in folder-title */
+            }
+
+            nav.submenu-view .dropdown-item-with-submenu.submenu-active .submenu li {
+                display: block;
+            }
+
+            nav.submenu-view .dropdown-item-with-submenu.submenu-active .submenu li a {
+                padding: 0.5rem 2.5rem;
+                display: block;
+            }
+
+            /* About dropdown items should be regular links, not titles */
+            nav.folder-view .about-dropdown .dropdown-menu > li > a {
+                padding: 0.5rem 2.5rem;
+                display: block;
+                text-decoration: none;
+                color: #000;
+            }
+
+            nav.folder-view .about-dropdown .dropdown-menu > li > a:hover {
+                background: #f8f9fa;
+                color: #FFD700;
+            }
+            
+            /* Disable hover effects on mobile - prevent sticky hover states */
+            nav ul li a:hover,
+            .dropdown-menu li a:hover,
+            .submenu li a:hover,
+            nav.folder-view .about-dropdown .dropdown-menu > li > a:hover,
+            nav.folder-view .back-button:hover {
+                background: transparent !important;
+                color: inherit !important;
+            }
+            
+            /* Additional fix: prevent hover states from persisting */
+            body.mobile-nav-active nav ul li a:hover,
+            body.mobile-nav-active .dropdown-menu li a:hover,
+            body.mobile-nav-active .submenu li a:hover,
+            body.mobile-nav-active nav.folder-view .about-dropdown .dropdown-menu > li > a:hover,
+            body.mobile-nav-active nav.folder-view .back-button:hover {
+                background: transparent !important;
+                color: inherit !important;
+            }
+
+            /* Back button in folder view */
+            .back-button {
+                display: none;
+            }
+            
+            .back-button .back-arrow {
+                display: inline-block;
+                width: 0;
+                height: 0;
+                border-right: 6px solid #000;
+                border-top: 4px solid transparent;
+                border-bottom: 4px solid transparent;
+                margin-right: 0.5rem;
+                vertical-align: middle;
+            }
+
+            nav.folder-view .back-button {
+                display: block;
+                padding: 1rem 2rem;
+                background: #f8f9fa;
+                border-bottom: 1px solid #ddd;
+                cursor: pointer;
+                font-weight: 500;
+                color: #000;
+                margin: 0;
+                width: 100%;
+                box-sizing: border-box;
+                order: 0; /* First */
+            }
+
+            nav.folder-view .back-button:hover {
+                background: #e9ecef;
+            }
+
+            /* Title for folder view */
+            nav.folder-view .folder-title {
+                display: block;
+                padding: 0.75rem 2rem;
+                background: #f8f9fa;
+                border-bottom: 1px solid #ddd;
+                font-size: 1.3rem;
+                font-weight: 600;
+                color: #000;
+                pointer-events: none;
+                cursor: default;
+                text-decoration: none;
+                margin: 0;
+                width: 100%;
+                box-sizing: border-box;
+                order: 1; /* After back button */
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 0;
+                visibility: hidden;
+                max-height: 0;
+                overflow: hidden;
+                transform: none;
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+                transition: max-height 0.3s ease, opacity 0.3s ease;
+            }
+
+
+            .dropdown-menu li a {
+                padding-left: 2.5rem;
+                white-space: normal;
+                word-wrap: break-word;
+            }
+
+            .hero-text {
+                font-size: 1.5rem;
+                bottom: 60px;
+                right: 20px;
+            }
+
+
+            .carousel-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .carousel-container:hover .carousel-arrow.prev {
+                left: 15px;
+            }
+
+            .carousel-container:hover .carousel-arrow.next {
+                right: 15px;
+            }
+
+            .logo {
+                height: 90px;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-links-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-link-card {
+                height: 300px;
+            }
+
+            .footer-container {
                 flex-direction: column;
                 text-align: left;
             }
@@ -581,50 +843,124 @@
                 order: 4; /* Copyright */
             }
 
-            
+            .footer-right {
+                margin-bottom: 1.5rem;
+                align-items: flex-start;
+            }
         }
 
-        /* Hero Image Section */
-        .project-hero {
-            width: 100%;
-            height: 60vh;
-            min-height: 400px;
-            background-image: url('./1.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        /* Project Info Section */
-        .project-info {
-            padding: 3rem 2rem 1rem;
-            max-width: 1200px;
+        /* Project Layout */
+        .project-layout {
+            max-width: 1400px;
             margin: 0 auto;
-            text-align: center;
+            padding: 4rem 2rem 2rem;
         }
 
-        .project-category {
-            font-size: 1.2rem;
-            color: #FFD700;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        /* Top Section - Two Column Layout */
+        .project-top-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
         }
 
-        .project-name {
-            font-size: 3.5rem;
+        .project-left-column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-title {
+            font-size: 3.25rem;
             font-weight: 600;
-            font-style: italic;
             color: #000;
             margin-bottom: 1rem;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Vectora', 'Arial', sans-serif;
         }
 
-        /* Image Grid */
+        .project-subtitle {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 2rem;
+            font-style: normal;
+            line-height: 1.6;
+        }
+
+        .project-first-image {
+            width: 100%;
+            height: 600px;
+            overflow: hidden;
+        }
+
+        .project-first-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .project-right-column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-second-image {
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .project-second-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .project-content-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .project-content-block h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .project-description {
+            font-size: 0.935rem;
+            line-height: 1.8;
+            color: #333;
+            text-align: left;
+        }
+
+        .project-details {
+            text-align: left;
+        }
+
+        .project-details-row {
+            margin-bottom: 1.5rem;
+        }
+
+        .project-details-label {
+            font-size: 0.935rem;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 0.3rem;
+        }
+
+        .project-details-value {
+            font-size: 0.935rem;
+            color: #666;
+        }
+
+        /* Image Grid - Remaining Images */
         .project-gallery {
-            max-width: 95%;
+            max-width: 100%;
             margin: 0 auto;
-            padding: 0 1rem 4rem;
+            padding: 0 0 4rem;
         }
 
         .gallery-grid {
@@ -636,35 +972,33 @@
 
         .gallery-item {
             width: 100%;
-            aspect-ratio: 4/3;
             overflow: hidden;
             border-radius: 4px;
         }
 
         .gallery-item img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.05);
+            height: auto;
+            display: block;
         }
 
         @media (max-width: 768px) {
-            .project-hero {
-                height: 40vh;
-                min-height: 300px;
+            .project-layout {
+                padding: 1rem;
             }
 
-            .project-name {
-                font-size: 2.5rem;
+            .project-top-section {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .project-title {
+                font-size: 2rem;
             }
 
             .gallery-grid {
                 grid-template-columns: 1fr;
-                gap: 1rem;
+                gap: 1.5rem;
             }
         
             .footer-container {
@@ -676,28 +1010,55 @@
             .footer-section {
                 width: 100%;
             }
-}
+        }
     </style>
 </head>
 <body>
     <!-- Header will be loaded here -->
     <div id="header-placeholder"></div>
 
-    <!-- Hero Image -->
-    <section class="project-hero"></section>
+    <!-- Project Layout -->
+    <div class="project-layout">
+        <!-- Top Section -->
+        <div class="project-top-section">
+            <!-- Left Column -->
+            <div class="project-left-column">
+                <h1 class="project-title">Ashbury</h1>
+                <p class="project-subtitle">A stunning custom home that exemplifies modern luxury and thoughtful design.</p>
+                <div class="project-first-image" id="first-image-container">
+                    <!-- First image will be loaded here -->
+                </div>
+            </div>
 
-    <!-- Project Info -->
-    <section class="project-info">
-        <h2 class="project-category">Custom Homes</h2>
-        <h1 class="project-name">Ashbury</h1>
-    </section>
-
-    <!-- Image Gallery -->
-    <section class="project-gallery">
-        <div class="gallery-grid" id="gallery-grid">
-            <!-- Images will be loaded dynamically -->
+            <!-- Right Column -->
+            <div class="project-right-column">
+                <div class="project-second-image" id="second-image-container">
+                    <!-- Second image will be loaded here -->
+                </div>
+                <div class="project-content-section">
+                    <div class="project-content-block">
+                        <h3>About</h3>
+                        <div class="project-description" id="project-description">
+                            <!-- Description will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="project-content-block">
+                        <h3>Project details</h3>
+                        <div class="project-details" id="project-details">
+                            <!-- Project details will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
+
+        <!-- Image Gallery - Remaining Images -->
+        <section class="project-gallery">
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Remaining images will be loaded dynamically -->
+            </div>
+        </section>
+    </div>
 
     <!-- Footer will be loaded here -->
     <div id="footer-placeholder"></div>
@@ -732,18 +1093,15 @@
             galleryGrid.innerHTML = '';
             loadedImageNumbers.clear();
             
-            const projectCategory = document.querySelector('.project-category')?.textContent.trim() || '';
-            const projectName = document.querySelector('.project-name')?.textContent.trim() || '';
-            
-            if (!projectCategory || !projectName) {
-                console.error('Could not find project category or name');
-                return;
-            }
+            const projectName = 'Ashbury';
             
             // Load images from current directory
             const imageBasePath = './';
             
-            let imageNumber = 2; // Start from 2 (1 is the hero image)
+            const firstImageContainer = document.getElementById('first-image-container');
+            const secondImageContainer = document.getElementById('second-image-container');
+            const descriptionContainer = document.getElementById('project-description');
+            
             const loadedImages = [];
             const extensions = ['.jpg', '.jpeg']; // Try both extensions
             
@@ -776,8 +1134,56 @@
                 });
             }
             
-            // Load images sequentially, skipping missing ones
-            // Try up to image 100, or stop after 10 consecutive failures
+            // Load first image
+            const firstImageResult = await tryLoadImage(1);
+            if (firstImageResult && firstImageContainer) {
+                const img = document.createElement('img');
+                img.src = firstImageResult.element.src;
+                img.alt = projectName;
+                firstImageContainer.appendChild(img);
+                loadedImageNumbers.add(1);
+            }
+            
+            // Load second image
+            const secondImageResult = await tryLoadImage(2);
+            if (secondImageResult && secondImageContainer) {
+                const img = document.createElement('img');
+                img.src = secondImageResult.element.src;
+                img.alt = projectName;
+                secondImageContainer.appendChild(img);
+                loadedImageNumbers.add(2);
+            }
+            
+            // Add description text (half length)
+            if (descriptionContainer) {
+                descriptionContainer.innerHTML = '<p>This custom home showcases our commitment to creating beautiful, comfortable spaces that truly feel like home. Every detail has been carefully crafted to reflect the unique vision of our clients, from the elegant architectural lines to the carefully selected finishes throughout. The open floor plan seamlessly connects the living, dining, and kitchen areas, creating an inviting atmosphere perfect for both daily living and entertaining.</p>';
+            }
+            
+            // Add project details
+            const projectDetailsContainer = document.getElementById('project-details');
+            if (projectDetailsContainer) {
+                projectDetailsContainer.innerHTML = `
+                    <div class="project-details-row">
+                        <div class="project-details-label">Project type</div>
+                        <div class="project-details-value">Whole House</div>
+                    </div>
+                    <div class="project-details-row">
+                        <div class="project-details-label">Location</div>
+                        <div class="project-details-value">xx</div>
+                    </div>
+                    <div class="project-details-row">
+                        <div class="project-details-label">Architect</div>
+                        <div class="project-details-value">xx</div>
+                    </div>
+                    <div class="project-details-row">
+                        <div class="project-details-label">Photographer</div>
+                        <div class="project-details-value">xx</div>
+                    </div>
+                `;
+            }
+            
+            // Load remaining images (starting from 3) into the grid
+            let imageNumber = 3;
             let consecutiveFailures = 0;
             const maxImageNumber = 100;
             const maxConsecutiveFailures = 10;

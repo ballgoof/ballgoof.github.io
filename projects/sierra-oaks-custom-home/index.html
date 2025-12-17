@@ -559,10 +559,304 @@
 
                 /* Mobile Responsive */
         @media (max-width: 768px) {
-                        .footer-container {
+            .header-container {
+                padding-right: 2.5rem;
+            }
+        }
+
+            .hamburger {
+                display: flex;
+            }
+
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #fff;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+                flex: none;
+                justify-content: flex-start;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+            }
+
+            nav.active {
+                max-height: 100vh;
+                overflow-y: auto;
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 1rem 2rem;
+                gap: 0;
+                align-items: stretch;
+            }
+
+            nav ul li {
+                width: 100%;
+            }
+
+            /* Folder system for mobile - hide main menu when showing submenu */
+            nav.folder-view ul > li:not(.folder-active) {
+                display: none;
+            }
+
+            nav.folder-view ul > li.folder-active {
+                display: block;
+            }
+
+            nav.folder-view ul > li.folder-active .dropdown-menu {
+                display: block !important;
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                max-height: none;
+                padding: 0.5rem 0;
+                margin: 0;
+                background: transparent;
+                box-shadow: none;
+                transform: none;
+            }
+
+            nav.folder-view ul > li.folder-active .dropdown-toggle {
+                display: none;
+            }
+
+            nav.folder-view ul > li.folder-active .dropdown-menu li {
+                display: block;
+            }
+
+            nav.folder-view ul > li.folder-active .dropdown-menu li a {
+                padding: 0.5rem 2.5rem;
+                display: block;
+                text-decoration: none;
+            }
+
+            nav.folder-view ul {
+                order: 2; /* After back button and title */
+            }
+
+            /* Submenu folder view for mobile */
+            nav.submenu-view .dropdown-menu {
+                display: none !important;
+            }
+
+            nav.submenu-view .dropdown-item-with-submenu:not(.submenu-active) {
+                display: none !important;
+            }
+
+            nav.submenu-view .dropdown-item-with-submenu.submenu-active {
+                display: block;
+            }
+
+            nav.submenu-view .dropdown-item-with-submenu.submenu-active .submenu {
+                display: block !important;
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                max-height: none;
+                padding: 0.5rem 0;
+                margin: 0;
+                background: transparent;
+                box-shadow: none;
+                transform: none;
+            }
+
+            nav.submenu-view .dropdown-item-with-submenu.submenu-active > a {
+                display: none !important; /* Hide the link, title is shown in folder-title */
+            }
+
+            nav.submenu-view .dropdown-item-with-submenu.submenu-active .submenu li {
+                display: block;
+            }
+
+            nav.submenu-view .dropdown-item-with-submenu.submenu-active .submenu li a {
+                padding: 0.5rem 2.5rem;
+                display: block;
+            }
+
+            /* About dropdown items should be regular links, not titles */
+            nav.folder-view .about-dropdown .dropdown-menu > li > a {
+                padding: 0.5rem 2.5rem;
+                display: block;
+                text-decoration: none;
+                color: #000;
+            }
+
+            nav.folder-view .about-dropdown .dropdown-menu > li > a:hover {
+                background: #f8f9fa;
+                color: #FFD700;
+            }
+            
+            /* Disable hover effects on mobile - prevent sticky hover states */
+            nav ul li a:hover,
+            .dropdown-menu li a:hover,
+            .submenu li a:hover,
+            nav.folder-view .about-dropdown .dropdown-menu > li > a:hover,
+            nav.folder-view .back-button:hover {
+                background: transparent !important;
+                color: inherit !important;
+            }
+            
+            /* Additional fix: prevent hover states from persisting */
+            body.mobile-nav-active nav ul li a:hover,
+            body.mobile-nav-active .dropdown-menu li a:hover,
+            body.mobile-nav-active .submenu li a:hover,
+            body.mobile-nav-active nav.folder-view .about-dropdown .dropdown-menu > li > a:hover,
+            body.mobile-nav-active nav.folder-view .back-button:hover {
+                background: transparent !important;
+                color: inherit !important;
+            }
+
+            /* Back button in folder view */
+            .back-button {
+                display: none;
+            }
+            
+            .back-button .back-arrow {
+                display: inline-block;
+                width: 0;
+                height: 0;
+                border-right: 6px solid #000;
+                border-top: 4px solid transparent;
+                border-bottom: 4px solid transparent;
+                margin-right: 0.5rem;
+                vertical-align: middle;
+            }
+
+            nav.folder-view .back-button {
+                display: block;
+                padding: 1rem 2rem;
+                background: #f8f9fa;
+                border-bottom: 1px solid #ddd;
+                cursor: pointer;
+                font-weight: 500;
+                color: #000;
+                margin: 0;
+                width: 100%;
+                box-sizing: border-box;
+                order: 0; /* First */
+            }
+
+            nav.folder-view .back-button:hover {
+                background: #e9ecef;
+            }
+
+            /* Title for folder view */
+            nav.folder-view .folder-title {
+                display: block;
+                padding: 0.75rem 2rem;
+                background: #f8f9fa;
+                border-bottom: 1px solid #ddd;
+                font-size: 1.3rem;
+                font-weight: 600;
+                color: #000;
+                pointer-events: none;
+                cursor: default;
+                text-decoration: none;
+                margin: 0;
+                width: 100%;
+                box-sizing: border-box;
+                order: 1; /* After back button */
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 0;
+                visibility: hidden;
+                max-height: 0;
+                overflow: hidden;
+                transform: none;
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+                transition: max-height 0.3s ease, opacity 0.3s ease;
+            }
+
+
+            .dropdown-menu li a {
+                padding-left: 2.5rem;
+                white-space: normal;
+                word-wrap: break-word;
+            }
+
+            .hero-text {
+                font-size: 1.5rem;
+                bottom: 60px;
+                right: 20px;
+            }
+
+
+            .carousel-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .carousel-container:hover .carousel-arrow.prev {
+                left: 15px;
+            }
+
+            .carousel-container:hover .carousel-arrow.next {
+                right: 15px;
+            }
+
+            .logo {
+                height: 90px;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-links-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-link-card {
+                height: 300px;
+            }
+
+            .footer-container {
                 flex-direction: column;
                 text-align: left;
             }
+
+            /* Order footer sections on mobile: Office, Contact, Follow Us, Copyright */
+            .footer-section:nth-child(1) {
+                order: 1; /* Office */
+            }
+
+            .footer-section:nth-child(2) {
+                order: 2; /* Contact */
+            }
+
+            .footer-section:nth-child(3) {
+                order: 3; /* Follow Us */
+            }
+
+            .footer-copyright {
+                order: 4; /* Copyright */
+            }
+
+            .footer-right {
+                margin-bottom: 1.5rem;
+                align-items: flex-start;
+            }
+        }
+        }
+        }
 
             /* Order footer sections on mobile: Office, Contact, Follow Us, Copyright */
             .footer-section:nth-child(1) {
