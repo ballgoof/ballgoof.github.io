@@ -36,7 +36,7 @@
             font-family: 'Vectora', 'Arial', sans-serif;
         }
 
-        /* Header Styles */
+        /* Header Styles - Same as other pages */
         header {
             background: #fff;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -193,6 +193,7 @@
             transform: rotate(180deg);
         }
 
+        /* Mobile: triangles point right */
         @media (max-width: 768px) {
             .dropdown-toggle::after {
                 border-top: 4px solid transparent;
@@ -250,43 +251,207 @@
             top: 16px;
         }
 
-        /* Contact Page Styles */
+        /* Contact Page Layout */
         .contact-page {
-            min-height: calc(100vh - 120px);
-            padding: 2rem 0;
-        }
-
-        .contact-intro {
-            background: #f8f9fa;
-            padding: 3rem 0;
-            margin-bottom: 2rem;
-        }
-
-        .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 4rem 2rem;
         }
 
-        .contact-intro .container {
-            text-align: center;
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
         }
 
-        .contact-intro h1 {
+        /* Left Section - Contact Form */
+        .contact-form-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-form-section h1 {
             font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-weight: 600;
             color: #000;
-        }
-
-        .contact-intro p {
-            font-size: 1.1rem;
-            color: #666;
             margin-bottom: 0.5rem;
         }
 
-        .form-container {
-            max-width: 800px;
-            margin: 0 auto;
+        .contact-form-section .subtitle {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .contact-form-section .description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info {
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-info-item {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .contact-info-item a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .contact-info-item a:hover {
+            color: #FFD700;
+        }
+
+        /* Form Styles */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group label {
+            font-size: 0.95rem;
+            color: #000;
+            font-weight: 500;
+        }
+
+        .form-group label .required {
+            color: #d32f2f;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: 'Vectora', 'Arial', sans-serif;
+            color: #000;
+            background: #fff;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #FFD700;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .form-submit-btn {
+            padding: 1rem 2rem;
+            background: #000;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+            align-self: flex-start;
+        }
+
+        .form-submit-btn:hover {
+            background: #333;
+        }
+
+        /* Right Section - Office Info */
+        .office-info-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .office-info-section h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 1.5rem;
+        }
+
+        .office-info-block {
+            margin-bottom: 2.5rem;
+        }
+
+        .office-info-block h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 0.75rem;
+        }
+
+        .office-info-block p {
+            font-size: 1rem;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-areas {
+            margin-top: 2rem;
+        }
+
+        .service-areas h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 1rem;
+        }
+
+        .service-areas-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-area-item {
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        .service-areas-subtitle {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+            margin-top: 1rem;
         }
 
         /* Footer */
@@ -375,7 +540,6 @@
             transition: none !important;
         }
         
-        /* Houzz icon is already black, so remove filter */
         .social-icon[aria-label="Houzz"] img {
             opacity: 1 !important;
             visibility: visible !important;
@@ -473,7 +637,7 @@
             }
 
             nav.folder-view ul {
-                order: 2; /* After back button and title */
+                order: 2;
             }
 
             /* Submenu folder view for mobile */
@@ -503,7 +667,7 @@
             }
 
             nav.submenu-view .dropdown-item-with-submenu.submenu-active > a {
-                display: none !important; /* Hide the link, title is shown in folder-title */
+                display: none !important;
             }
 
             nav.submenu-view .dropdown-item-with-submenu.submenu-active .submenu li {
@@ -528,7 +692,7 @@
                 color: #FFD700;
             }
             
-            /* Disable hover effects on mobile - prevent sticky hover states */
+            /* Disable hover effects on mobile */
             nav ul li a:hover,
             .dropdown-menu li a:hover,
             .submenu li a:hover,
@@ -538,7 +702,6 @@
                 color: inherit !important;
             }
             
-            /* Additional fix: prevent hover states from persisting */
             body.mobile-nav-active nav ul li a:hover,
             body.mobile-nav-active .dropdown-menu li a:hover,
             body.mobile-nav-active .submenu li a:hover,
@@ -575,7 +738,7 @@
                 margin: 0;
                 width: 100%;
                 box-sizing: border-box;
-                order: 0; /* First */
+                order: 0;
             }
 
             nav.folder-view .back-button:hover {
@@ -597,7 +760,7 @@
                 margin: 0;
                 width: 100%;
                 box-sizing: border-box;
-                order: 1; /* After back button */
+                order: 1;
             }
 
             .dropdown-menu {
@@ -613,109 +776,59 @@
                 transition: max-height 0.3s ease, opacity 0.3s ease;
             }
 
-
             .dropdown-menu li a {
                 padding-left: 2.5rem;
                 white-space: normal;
                 word-wrap: break-word;
             }
 
-            .hero-text {
-                font-size: 1.5rem;
-                bottom: 60px;
-                right: 20px;
-            }
-
-
-            .carousel-arrow {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-            }
-
-            .carousel-container:hover .carousel-arrow.prev {
-                left: 15px;
-            }
-
-            .carousel-container:hover .carousel-arrow.next {
-                right: 15px;
-            }
-
             .logo {
                 height: 90px;
             }
 
-            .about-content,
-            .contact-content {
-                grid-template-columns: 1fr;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .quick-links-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .quick-link-card {
-                height: 300px;
-            }
-
-            body {
-                padding-top: 90px; /* Account for smaller header on mobile */
-            }
-
             .contact-page {
-                padding: 1rem 0;
+                padding: 2rem 1rem;
             }
 
-            .contact-intro {
-                padding: 2rem 0;
-                margin-bottom: 1.5rem;
+            .contact-layout {
+                grid-template-columns: 1fr;
+                gap: 3rem;
             }
 
-            .container {
-                padding: 0 1rem;
+            .contact-form-section h1 {
+                font-size: 2rem;
             }
 
-            .contact-intro h1 {
-                font-size: 1.75rem;
+            .form-row {
+                grid-template-columns: 1fr;
             }
 
-            .contact-intro p {
-                font-size: 1rem;
+            .service-areas-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
 
-                        .footer-container {
+            .footer-container {
                 flex-direction: column;
                 text-align: left;
             }
 
-            /* Order footer sections on mobile: Office, Contact, Follow Us, Copyright */
             .footer-section:nth-child(1) {
-                order: 1; /* Office */
+                order: 1;
             }
 
             .footer-section:nth-child(2) {
-                order: 2; /* Contact */
+                order: 2;
             }
 
             .footer-section:nth-child(3) {
-                order: 3; /* Follow Us */
+                order: 3;
             }
 
             .footer-copyright {
-                order: 4; /* Copyright */
+                order: 4;
             }
-
-            .footer-right {
-                margin-bottom: 1.5rem;
-                align-items: flex-start;
-            }
-}
+        }
     </style>
-    <style>.jtwf .mx-auto{margin-left:auto;margin-right:auto}.jtwf .block{display:block}.jtwf .flex{display:flex}.jtwf .max-h-24{max-height:6rem}.jtwf .w-full{width:100%}.jtwf .min-w-0{min-width:0}.jtwf .max-w-full{max-width:100%}.jtwf .max-w-sm{max-width:24rem}.jtwf .shrink-0{flex-shrink:0}.jtwf .grow{flex-grow:1}.jtwf .cursor-pointer{cursor:pointer}.jtwf .appearance-none{-webkit-appearance:none;-moz-appearance:none;appearance:none}.jtwf .items-center{align-items:center}.jtwf .gap-2{gap:.5rem}.jtwf .space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-bottom:calc(.5rem*var(--tw-space-y-reverse));margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)))}.jtwf .divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-bottom-width:calc(1px*var(--tw-divide-y-reverse));border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)))}.jtwf .overflow-hidden{overflow:hidden}.jtwf .rounded{border-radius:.25rem}.jtwf .border{border-width:1px}.jtwf .bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity))}.jtwf .p-2{padding:.5rem}.jtwf .p-4{padding:1rem}.jtwf .px-4{padding-left:1rem;padding-right:1rem}.jtwf .py-2{padding-bottom:.5rem;padding-top:.5rem}.jtwf .text-center{text-align:center}.jtwf .text-right{text-align:right}.jtwf .text-xl{font-size:1.25rem;line-height:1.75rem}.jtwf .font-bold{font-weight:700}.jtwf .font-normal{font-weight:400}.jtwf .text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128/var(--tw-text-opacity))}.jtwf .text-red-500{--tw-text-opacity:1;color:rgb(239 68 68/var(--tw-text-opacity))}.jtwf .shadow{--tw-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color),0 1px 2px -1px var(--tw-shadow-color)}.jtwf .shadow,.jtwf .shadow-sm{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.jtwf .shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.jtwf .transition{transition-duration:.25s;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1)}.jtwf *{border:0 solid #e5e7eb;box-sizing:border-box}.jtwf button,.jtwf input,.jtwf optgroup,.jtwf select,.jtwf textarea{color:inherit;font-family:inherit;font-size:100%;font-weight:inherit;line-height:inherit;margin:0;padding:0}.jtwf .focus-within\:border-blue-500:focus-within{--tw-border-opacity:1;border-color:rgb(59 130 246/var(--tw-border-opacity))}.jtwf .focus-within\:bg-white:focus-within{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity))}.jtwf .focus-within\:shadow:focus-within{--tw-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color),0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.jtwf .focus-within\:ring:focus-within{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.jtwf .hover\:bg-gray-50:hover{--tw-bg-opacity:1;background-color:rgb(249 250 251/var(--tw-bg-opacity))}.jtwf .hover\:brightness-95:hover{--tw-brightness:brightness(.95);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.jtwf .\[\&\:\:-webkit-date-and-time-value\]\:h-5::-webkit-date-and-time-value{height:1.25rem}.jtwf .hover\:\[\&\:not\(\:focus-within\)\]\:border-gray-300:not(:focus-within):hover{--tw-border-opacity:1;border-color:rgb(209 213 219/var(--tw-border-opacity))}.jtwf .hover\:\[\&\:not\(\:focus-within\)\]\:bg-gray-50:not(:focus-within):hover{--tw-bg-opacity:1;background-color:rgb(249 250 251/var(--tw-bg-opacity))}</style>
 </head>
 <body>
     <!-- Header will be loaded here -->
@@ -723,18 +836,127 @@
 
     <!-- Contact Page Content -->
     <section class="contact-page">
-        <div class="contact-intro">
-        <div class="container">
-                <h1>TopCap Construction project inquiry form</h1>
-                <p>One of the fastest ways to get back to you efficiently is to obtain specific details about your project.</p>
-                <p>Please complete the Web Form below. We review all forms received.</p>
-                <p>We do not follow up with SPAM/Vendor submissions.</p>
+        <div class="contact-layout">
+            <!-- Left Section - Contact Form -->
+            <div class="contact-form-section">
+                <h1>Get in Touch</h1>
+                <p class="subtitle">Let's Create Your Dream Space Together.</p>
+                <p class="description">We're here to listen, plan, and craft a home that truly feels like yours. Share a bit about your project with us, and we'll be in touch to explore how we can bring your vision to life, with care and expertise at every step.</p>
+                
+                <div class="contact-info">
+                    <div class="contact-info-item">
+                        <a href="mailto:info@topcapconstruction.com">info@topcapconstruction.com</a>
+                    </div>
+                    <div class="contact-info-item">
+                        <a href="tel:5305566667">(530) 556-6667</a>
+                    </div>
+                </div>
+
+                <form class="contact-form" onsubmit="event.preventDefault(); return false;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>First Name <span class="required">(required)</span></label>
+                            <input type="text" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" name="lastName">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email <span class="required">(required)</span></label>
+                        <input type="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="newsletter" name="newsletter">
+                            <label for="newsletter" style="font-weight: normal; margin: 0;">Sign up for news and updates</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone Number <span class="required">(required)</span></label>
+                        <input type="tel" name="phone" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>What time of day is most convenient for a call?</label>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: -0.5rem; margin-bottom: 0.5rem;">Please let us know your preferred times, and we'll reach out when it's best for you.</p>
+                        <select name="callTime">
+                            <option value="">Select a time</option>
+                            <option value="morning">Morning (8am - 12pm)</option>
+                            <option value="afternoon">Afternoon (12pm - 5pm)</option>
+                            <option value="evening">Evening (5pm - 8pm)</option>
+                            <option value="flexible">Flexible</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Project Address</label>
+                        <input type="text" name="address">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Project Details</label>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: -0.5rem; margin-bottom: 0.5rem;">Please provide a few details about your project, such as: whole home remodel, multi-space remodel, single space remodel, new build, desired start date, and desired completion date</p>
+                        <textarea name="projectDetails"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Additional Questions or Comments</label>
+                        <textarea name="comments"></textarea>
+                    </div>
+
+                    <button type="submit" class="form-submit-btn">Submit</button>
+                </form>
             </div>
-            </div>
-            
-        <div class="container">
-            <div class="form-container">
-                <form class="jtwf" data-jobtread-web-form="true" data-key="22SKtxjj9wN3NHVWikUcd942FvNSs9ESGM" data-success-message="Thank you for submitting your customer intake form for your project. We will either submit a bid for the project of reach out to get additional information from you or schedule a site visit. Our typical turn around time is 1-3 Days. Thank you, TopCap Construction"><div class="mx-auto min-w-0 max-w-sm rounded shadow bg-white"><div class="p-4 shadow-line-bottom"><img class="block max-w-full max-h-24 mx-auto" src="https://cdn.jobtread.com/G28AYBwHuWnlOo6V9iSk3Xn9u2k1a9nxOpTXyQOlRDmkDktfisS86eT0oPgf35IAMcDYAo9hORy3aI_lKxiXO_sHqSTqRZmcCHtjoh4LdjtIFDOH9nSnLguJhOMv07iFrRFgYA.RUrlnf157BB5sC4Niiw9CPrAihH9YhJRpDdkmUZhBkQ"/></div><div class="p-4 space-y-2"><label class="cursor-pointer block"><div class="font-bold">Name<span class="font-normal text-red-500">*</span></div><input class="rounded border p-2 w-full bg-white appearance-none transition hover:[&amp;:not(:focus-within)]:bg-gray-50 hover:[&amp;:not(:focus-within)]:border-gray-300 focus-within:bg-white focus-within:shadow focus-within:border-blue-500 focus-within:ring [&amp;::-webkit-date-and-time-value]:h-5" name="contact.name" type="text" required=""/></label><label class="cursor-pointer block"><div class="font-bold">Mobile<span class="font-normal text-red-500">*</span></div><input class="rounded border p-2 w-full bg-white appearance-none transition hover:[&amp;:not(:focus-within)]:bg-gray-50 hover:[&amp;:not(:focus-within)]:border-gray-300 focus-within:bg-white focus-within:shadow focus-within:border-blue-500 focus-within:ring [&amp;::-webkit-date-and-time-value]:h-5" name="contact.custom.22NZ5kPZiWig" type="tel" required=""/></label><label class="cursor-pointer block"><div class="font-bold">Email<span class="font-normal text-red-500">*</span></div><input class="rounded border p-2 w-full bg-white appearance-none transition hover:[&amp;:not(:focus-within)]:bg-gray-50 hover:[&amp;:not(:focus-within)]:border-gray-300 focus-within:bg-white focus-within:shadow focus-within:border-blue-500 focus-within:ring [&amp;::-webkit-date-and-time-value]:h-5" name="contact.custom.22NZ4JinZM3K" type="email" required=""/></label><label class="cursor-pointer block"><div class="font-bold">Address<span class="font-normal text-red-500">*</span></div><textarea class="rounded border p-2 w-full bg-white appearance-none transition hover:[&amp;:not(:focus-within)]:bg-gray-50 hover:[&amp;:not(:focus-within)]:border-gray-300 focus-within:bg-white focus-within:shadow focus-within:border-blue-500 focus-within:ring [&amp;::-webkit-date-and-time-value]:h-5" name="location.address" required=""></textarea></label><label class="cursor-pointer block"><div class="font-bold">Files &amp; Photos</div><input class="rounded border p-2 w-full bg-white appearance-none transition hover:[&amp;:not(:focus-within)]:bg-gray-50 hover:[&amp;:not(:focus-within)]:border-gray-300 focus-within:bg-white focus-within:shadow focus-within:border-blue-500 focus-within:ring [&amp;::-webkit-date-and-time-value]:h-5" name="account.files" type="file" multiple=""/></label><div class="block"><div class="font-bold">Project Type<span class="font-normal text-red-500">*</span></div><div class="rounded border divide-y overflow-hidden"><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="New Build"/><div class="grow min-w-0">New Build</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Full Remodel"/><div class="grow min-w-0">Full Remodel</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Kitchen Remodel"/><div class="grow min-w-0">Kitchen Remodel</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Bathroom Remodel"/><div class="grow min-w-0">Bathroom Remodel</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Addition"/><div class="grow min-w-0">Addition</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Exterior"/><div class="grow min-w-0">Exterior</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Interior"/><div class="grow min-w-0">Interior</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Roof"/><div class="grow min-w-0">Roof</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Deck"/><div class="grow min-w-0">Deck</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Fencing"/><div class="grow min-w-0">Fencing</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Shed"/><div class="grow min-w-0">Shed</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Patio Cover/Gazebo"/><div class="grow min-w-0">Patio Cover/Gazebo</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Plumbing"/><div class="grow min-w-0">Plumbing</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Concrete"/><div class="grow min-w-0">Concrete</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Flooring"/><div class="grow min-w-0">Flooring</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Painting"/><div class="grow min-w-0">Painting</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Cabinet Order"/><div class="grow min-w-0">Cabinet Order</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Electrical"/><div class="grow min-w-0">Electrical</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="HVAC"/><div class="grow min-w-0">HVAC</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Drywall"/><div class="grow min-w-0">Drywall</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Demolition"/><div class="grow min-w-0">Demolition</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Landscaping"/><div class="grow min-w-0">Landscaping</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Drainage"/><div class="grow min-w-0">Drainage</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Tile"/><div class="grow min-w-0">Tile</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Countertops"/><div class="grow min-w-0">Countertops</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NZ5kR4UpQH" value="Home Repairs"/><div class="grow min-w-0">Home Repairs</div></label></div></div><label class="cursor-pointer block"><div class="font-bold">Scope/Description of Work - include any Make/Model/SKUs<span class="font-normal text-red-500">*</span></div><textarea class="rounded border p-2 w-full bg-white appearance-none transition hover:[&amp;:not(:focus-within)]:bg-gray-50 hover:[&amp;:not(:focus-within)]:border-gray-300 focus-within:bg-white focus-within:shadow focus-within:border-blue-500 focus-within:ring [&amp;::-webkit-date-and-time-value]:h-5" name="account.custom.22NazydVis29" required=""></textarea></label><label class="cursor-pointer block"><div class="font-bold">Estimated Project Dimensions Length/Width/Square Feet</div><textarea class="rounded border p-2 w-full bg-white appearance-none transition hover:[&amp;:not(:focus-within)]:bg-gray-50 hover:[&amp;:not(:focus-within)]:border-gray-300 focus-within:bg-white focus-within:shadow focus-within:border-blue-500 focus-within:ring [&amp;::-webkit-date-and-time-value]:h-5" name="account.custom.22NazyhtYdmU"></textarea></label><label class="cursor-pointer block"><div class="font-bold">Notes</div><textarea class="rounded border p-2 w-full bg-white appearance-none transition hover:[&amp;:not(:focus-within)]:bg-gray-50 hover:[&amp;:not(:focus-within)]:border-gray-300 focus-within:bg-white focus-within:shadow focus-within:border-blue-500 focus-within:ring [&amp;::-webkit-date-and-time-value]:h-5" name="contact.custom.22NZ5kPzN8rp"></textarea></label><div class="block"><div class="font-bold">Contact with Information Via:<span class="font-normal text-red-500">*</span></div><div class="rounded border divide-y overflow-hidden"><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NazzLfFu2A" value="Text Message (fastest)"/><div class="grow min-w-0">Text Message (fastest)</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NazzLfFu2A" value="Email"/><div class="grow min-w-0">Email</div></label><label class="flex gap-2 items-center p-2 hover:bg-gray-50 cursor-pointer block"><input class="shrink-0" type="checkbox" name="account.custom.22NazzLfFu2A" value="Phone Call"/><div class="grow min-w-0">Phone Call</div></label></div></div><div class="text-right"><button class="text-right px-4 py-2 rounded shadow-sm cursor-pointer hover:brightness-95" data-submit-button="true" style="background-color:#ff5600;color:#ffeee6">Submit</button></div></div></div></form>
+
+            <!-- Right Section - Office Info -->
+            <div class="office-info-section">
+                <h2>Office</h2>
+                
+                <div class="office-info-block">
+                    <p>251 Auburn Ravine Rd # 204</p>
+                    <p>Auburn, CA 95603</p>
+                </div>
+
+                <div class="office-info-block">
+                    <h3>Hours</h3>
+                    <p>Monday - Friday: 8am - 5pm</p>
+                    <p>Saturday & Sunday: Closed</p>
+                </div>
+
+                <div class="service-areas">
+                    <h3>Service Areas</h3>
+                    <div class="service-areas-grid">
+                        <div class="service-area-item">Antelope</div>
+                        <div class="service-area-item">Fair Oaks</div>
+                        <div class="service-area-item">Meadow Vista</div>
+                        <div class="service-area-item">Auburn</div>
+                        <div class="service-area-item">Folsom</div>
+                        <div class="service-area-item">Midtown</div>
+                        <div class="service-area-item">Cameron Park</div>
+                        <div class="service-area-item">Granite Bay</div>
+                        <div class="service-area-item">Nevada City</div>
+                        <div class="service-area-item">Carmichael</div>
+                        <div class="service-area-item">Grass Valley</div>
+                        <div class="service-area-item">Newcastle</div>
+                        <div class="service-area-item">Citrus Heights</div>
+                        <div class="service-area-item">Lake of the Pines</div>
+                        <div class="service-area-item">Rocklin</div>
+                        <div class="service-area-item">Colfax</div>
+                        <div class="service-area-item">Land Park</div>
+                        <div class="service-area-item">Rosemont</div>
+                        <div class="service-area-item">East Sacramento</div>
+                        <div class="service-area-item">Lincoln</div>
+                        <div class="service-area-item">Roseville</div>
+                        <div class="service-area-item">El Dorado Hills</div>
+                        <div class="service-area-item">Loomis</div>
+                    </div>
+                    <p class="service-areas-subtitle">Serving the Greater Sacramento Area</p>
+                </div>
             </div>
         </div>
     </section>
@@ -742,9 +964,7 @@
     <!-- Footer will be loaded here -->
     <div id="footer-placeholder"></div>
 
-    <script async src='https://app.jobtread.com/web-form.js'></script>
     <!-- Load Header and Footer -->
     <script src="../header-footer.js"></script>
 </body>
 </html>
-
