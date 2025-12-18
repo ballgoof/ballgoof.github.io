@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - TopCap Construction</title>
     <link rel="icon" type="image/png" href="/assets/icon.png">
-    <title>Contact Us - TopCap Construction</title>
     <style>
         @font-face {
             font-family: 'Vectora';
@@ -23,20 +23,27 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Vectora', 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #000;
-            background: #fff;
-            overflow-x: hidden;
-            padding-top: 108px; /* Account for fixed header */
+        html, body {
+            height: 100%;
         }
 
         body, body *, a, p, h1, h2, h3, h4, h5, h6, li, td, th, input, textarea, select, button {
             font-family: 'Vectora', 'Arial', sans-serif;
         }
 
-        /* Header Styles - Same as other pages */
+        body {
+            font-family: 'Vectora', 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #000;
+            background: #f8f9fa;
+            overflow-x: hidden;
+            padding-top: 108px; /* Account for fixed header */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
         header {
             background: #fff;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -189,11 +196,6 @@
             transition: transform 0.3s;
         }
 
-        .dropdown.active .dropdown-toggle::after {
-            transform: rotate(180deg);
-        }
-
-        /* Mobile: triangles point right */
         @media (max-width: 768px) {
             .dropdown-toggle::after {
                 border-top: 4px solid transparent;
@@ -201,6 +203,10 @@
                 border-left: 5px solid #000;
                 border-right: none;
             }
+        }
+
+        .dropdown.active .dropdown-toggle::after {
+            transform: rotate(180deg);
         }
 
         /* Hamburger Menu */
@@ -251,207 +257,86 @@
             top: 16px;
         }
 
-        /* Contact Page Layout */
-        .contact-page {
+        /* Services Info Section */
+        .services-info {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        .contact-layout {
+            padding: 3rem 2rem 2.5rem 2rem;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: start;
         }
 
-        /* Left Section - Contact Form */
-        .contact-form-section {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .contact-form-section h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
+        .services-info h1 {
+            font-size: 3.25rem;
+            font-weight: 700;
             color: #000;
-            margin-bottom: 0.5rem;
-        }
-
-        .contact-form-section .subtitle {
-            font-size: 1.2rem;
-            color: #333;
-            margin-bottom: 1.5rem;
-            font-weight: 400;
-        }
-
-        .contact-form-section .description {
-            font-size: 1rem;
-            color: #666;
-            line-height: 1.8;
-            margin-bottom: 2rem;
-        }
-
-        .contact-info {
-            margin-bottom: 2.5rem;
-        }
-
-        .contact-info-item {
-            margin-bottom: 1rem;
-            font-size: 1rem;
-            color: #333;
-        }
-
-        .contact-info-item a {
-            color: #333;
-            text-decoration: none;
-        }
-
-        .contact-info-item a:hover {
-            color: #FFD700;
-        }
-
-        /* Form Styles */
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .form-group label {
-            font-size: 0.95rem;
-            color: #000;
-            font-weight: 500;
-        }
-
-        .form-group label .required {
-            color: #d32f2f;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-            font-family: 'Vectora', 'Arial', sans-serif;
-            color: #000;
-            background: #fff;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #FFD700;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: auto;
             margin: 0;
+            padding: 0;
         }
 
-        .form-submit-btn {
-            padding: 1rem 2rem;
-            background: #000;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.3s;
-            align-self: flex-start;
+        .services-info p {
+            font-size: 1.1rem;
+            color: #000;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
         }
 
-        .form-submit-btn:hover {
-            background: #333;
+        /* Services Grid */
+        .services-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
         }
 
-        /* Right Section - Office Info */
-        .office-info-section {
+        .service-card {
+            text-decoration: none;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
+            transition: transform 0.3s ease;
         }
 
-        .office-info-section h2 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #000;
-            margin-bottom: 1.5rem;
+        .service-card:hover {
+            transform: translateY(-8px);
         }
 
-        .office-info-block {
-            margin-bottom: 2.5rem;
+        .service-card img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 0;
+            transition: transform 0.75s ease;
         }
 
-        .office-info-block h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #000;
-            margin-bottom: 0.75rem;
+        .service-card:hover img {
+            transform: scale(1.03);
         }
 
-        .office-info-block p {
-            font-size: 1rem;
-            color: #333;
-            line-height: 1.8;
-            margin-bottom: 0.5rem;
-        }
-
-        .service-areas {
-            margin-top: 2rem;
-        }
-
-        .service-areas h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #000;
-            margin-bottom: 1rem;
-        }
-
-        .service-areas-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .service-area-item {
-            font-size: 0.95rem;
-            color: #333;
-        }
-
-        .service-areas-subtitle {
-            font-size: 0.9rem;
-            color: #666;
-            font-style: italic;
+        .service-card-content {
             margin-top: 1rem;
+            text-align: left;
+        }
+
+        .service-card-content h2 {
+            font-size: 1.1rem;
+            margin: 0 0 0.75rem 0;
+            color: #000;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .service-card-content p {
+            font-size: 1.14rem;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
         }
 
         /* Footer */
@@ -459,6 +344,7 @@
             background: #000;
             color: #fff;
             padding: 2rem 2rem 1.5rem;
+            margin-top: auto;
         }
 
         .footer-container {
@@ -540,6 +426,7 @@
             transition: none !important;
         }
         
+        /* Houzz icon is already black, so remove filter */
         .social-icon[aria-label="Houzz"] img {
             opacity: 1 !important;
             visibility: visible !important;
@@ -557,6 +444,10 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            body {
+                padding-top: 90px;
+            }
+
             .header-container {
                 padding-right: 2.3rem;
             }
@@ -637,46 +528,7 @@
             }
 
             nav.folder-view ul {
-                order: 2;
-            }
-
-            /* Submenu folder view for mobile */
-            nav.submenu-view .dropdown-menu {
-                display: none !important;
-            }
-
-            nav.submenu-view .dropdown-item-with-submenu:not(.submenu-active) {
-                display: none !important;
-            }
-
-            nav.submenu-view .dropdown-item-with-submenu.submenu-active {
-                display: block;
-            }
-
-            nav.submenu-view .dropdown-item-with-submenu.submenu-active .submenu {
-                display: block !important;
-                position: static;
-                opacity: 1;
-                visibility: visible;
-                max-height: none;
-                padding: 0.5rem 0;
-                margin: 0;
-                background: transparent;
-                box-shadow: none;
-                transform: none;
-            }
-
-            nav.submenu-view .dropdown-item-with-submenu.submenu-active > a {
-                display: none !important;
-            }
-
-            nav.submenu-view .dropdown-item-with-submenu.submenu-active .submenu li {
-                display: block;
-            }
-
-            nav.submenu-view .dropdown-item-with-submenu.submenu-active .submenu li a {
-                padding: 0.5rem 2.5rem;
-                display: block;
+                order: 2; /* After back button and title */
             }
 
             /* About dropdown items should be regular links, not titles */
@@ -692,19 +544,18 @@
                 color: #FFD700;
             }
             
-            /* Disable hover effects on mobile */
+            /* Disable hover effects on mobile - prevent sticky hover states */
             nav ul li a:hover,
             .dropdown-menu li a:hover,
-            .submenu li a:hover,
             nav.folder-view .about-dropdown .dropdown-menu > li > a:hover,
             nav.folder-view .back-button:hover {
                 background: transparent !important;
                 color: inherit !important;
             }
             
+            /* Additional fix: prevent hover states from persisting */
             body.mobile-nav-active nav ul li a:hover,
             body.mobile-nav-active .dropdown-menu li a:hover,
-            body.mobile-nav-active .submenu li a:hover,
             body.mobile-nav-active nav.folder-view .about-dropdown .dropdown-menu > li > a:hover,
             body.mobile-nav-active nav.folder-view .back-button:hover {
                 background: transparent !important;
@@ -738,7 +589,7 @@
                 margin: 0;
                 width: 100%;
                 box-sizing: border-box;
-                order: 0;
+                order: 0; /* First */
             }
 
             nav.folder-view .back-button:hover {
@@ -760,7 +611,7 @@
                 margin: 0;
                 width: 100%;
                 box-sizing: border-box;
-                order: 1;
+                order: 1; /* After back button */
             }
 
             .dropdown-menu {
@@ -786,185 +637,124 @@
                 height: 90px;
             }
 
-            .contact-page {
-                padding: 2rem 1rem;
-            }
-
-            .contact-layout {
+            .services-info {
                 grid-template-columns: 1fr;
-                gap: 3rem;
+                gap: 2rem;
             }
 
-            .contact-form-section h1 {
+            .services-info h1 {
                 font-size: 2rem;
             }
 
-            .form-row {
+            .services-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
 
-            .service-areas-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .service-card img {
+                height: 240px;
             }
 
-                        .footer-container {
-                flex-direction: column;
+            .footer-container {
+                flex-direction: column-reverse;
                 text-align: left;
             }
 
+            .footer-right {
+                margin-bottom: 1.5rem;
+                align-items: flex-start;
+            }
+
+            /* Order footer sections on mobile: Office, Contact, Follow Us, Copyright */
             .footer-section:nth-child(1) {
-                order: 1;
+                order: 1; /* Office */
             }
 
             .footer-section:nth-child(2) {
-                order: 2;
+                order: 2; /* Contact */
             }
 
             .footer-section:nth-child(3) {
-                order: 3;
+                order: 3; /* Follow Us */
             }
 
             .footer-copyright {
-                order: 4;
+                order: 4; /* Copyright */
             }
-}
+        }
     </style>
+    <script src="/header-footer.js"></script>
 </head>
 <body>
     <!-- Header will be loaded here -->
     <div id="header-placeholder"></div>
 
-    <!-- Contact Page Content -->
-    <section class="contact-page">
-        <div class="contact-layout">
-            <!-- Left Section - Contact Form -->
-            <div class="contact-form-section">
-                <h1>Get in Touch</h1>
-                <p class="subtitle">Let's Create Your Dream Space Together.</p>
-                <p class="description">We're here to listen, plan, and craft a home that truly feels like yours. Share a bit about your project with us, and we'll be in touch to explore how we can bring your vision to life, with care and expertise at every step.</p>
-                
-                <div class="contact-info">
-                    <div class="contact-info-item">
-                        <a href="mailto:info@topcapconstruction.com">info@topcapconstruction.com</a>
-                    </div>
-                    <div class="contact-info-item">
-                        <a href="tel:5305566667">(530) 556-6667</a>
-                    </div>
-                </div>
+    <!-- Services Info -->
+    <div class="services-info">
+        <h1>Our Services</h1>
+        <p>Every exceptional renovation starts with a clear vision. Whether you're crafting a personal retreat, expanding your home for new possibilities, or bringing a fresh concept to life, your story guides every step of our process. We believe in creating spaces that reflect who you are. In a world of endless choices, it's your unique vision that makes your project truly stand out.</p>
+    </div>
 
-                <form class="contact-form" onsubmit="event.preventDefault(); return false;">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>First Name <span class="required">(required)</span></label>
-                            <input type="text" name="firstName" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Last Name</label>
-                            <input type="text" name="lastName">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Email <span class="required">(required)</span></label>
-                        <input type="email" name="email" required>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="newsletter" name="newsletter">
-                            <label for="newsletter" style="font-weight: normal; margin: 0;">Sign up for news and updates</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Phone Number <span class="required">(required)</span></label>
-                        <input type="tel" name="phone" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>What time of day is most convenient for a call?</label>
-                        <p style="font-size: 0.9rem; color: #666; margin-top: -0.5rem; margin-bottom: 0.5rem;">Please let us know your preferred times, and we'll reach out when it's best for you.</p>
-                        <select name="callTime">
-                            <option value="">Select a time</option>
-                            <option value="morning">Morning (8am - 12pm)</option>
-                            <option value="afternoon">Afternoon (12pm - 5pm)</option>
-                            <option value="evening">Evening (5pm - 8pm)</option>
-                            <option value="flexible">Flexible</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Project Address</label>
-                        <input type="text" name="address">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Project Details</label>
-                        <p style="font-size: 0.9rem; color: #666; margin-top: -0.5rem; margin-bottom: 0.5rem;">Please provide a few details about your project, such as: whole home remodel, multi-space remodel, single space remodel, new build, desired start date, and desired completion date</p>
-                        <textarea name="projectDetails"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Additional Questions or Comments</label>
-                        <textarea name="comments"></textarea>
-                    </div>
-
-                    <button type="submit" class="form-submit-btn">Submit</button>
-                </form>
+    <!-- Services Grid -->
+    <div class="services-grid">
+        <!-- Kitchen Remodels -->
+        <a href="/services/kitchen-remodels/" class="service-card">
+            <img src="https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Kitchen Remodels">
+            <div class="service-card-content">
+                <h2>Kitchen Remodels</h2>
+                <p>Transform your kitchen into a functional, beautiful space tailored to your lifestyle. From custom cabinetry to innovative layouts, we craft kitchens that combine style with practicality.</p>
             </div>
+        </a>
 
-            <!-- Right Section - Office Info -->
-            <div class="office-info-section">
-                <h2>Office</h2>
-                
-                <div class="office-info-block">
-                    <p>251 Auburn Ravine Rd # 204</p>
-                    <p>Auburn, CA 95603</p>
-                </div>
+        <!-- Bathroom Remodels -->
+        <a href="/services/bathroom-remodels/" class="service-card">
+            <img src="https://images.unsplash.com/photo-1620626011761-996317b8d101?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Bathroom Remodels">
+            <div class="service-card-content">
+                <h2>Bathroom Remodels</h2>
+                <p>Create a spa-like retreat in your own home. Our bathroom renovations focus on both aesthetics and functionality, delivering spaces that are luxurious, efficient, and built to last.</p>
+            </div>
+        </a>
 
-                <div class="office-info-block">
-                    <h3>Hours</h3>
-                    <p>Monday - Friday: 8am - 5pm</p>
-                    <p>Saturday & Sunday: Closed</p>
+        <!-- Custom & Historic Home Renovation -->
+        <a href="/services/custom-historic-home-renovation/" class="service-card">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Custom & Historic Home Renovation">
+            <div class="service-card-content">
+                <h2>Custom & Historic Home Renovation</h2>
+                <p>Preserve the character of your historic home while modernizing it for contemporary living. We specialize in maintaining architectural integrity while integrating modern amenities and energy-efficient solutions.</p>
             </div>
-            
-                <div class="service-areas">
-                    <h3>Service Areas</h3>
-                    <div class="service-areas-grid">
-                        <div class="service-area-item">Antelope</div>
-                        <div class="service-area-item">Fair Oaks</div>
-                        <div class="service-area-item">Meadow Vista</div>
-                        <div class="service-area-item">Auburn</div>
-                        <div class="service-area-item">Folsom</div>
-                        <div class="service-area-item">Midtown</div>
-                        <div class="service-area-item">Cameron Park</div>
-                        <div class="service-area-item">Granite Bay</div>
-                        <div class="service-area-item">Nevada City</div>
-                        <div class="service-area-item">Carmichael</div>
-                        <div class="service-area-item">Grass Valley</div>
-                        <div class="service-area-item">Newcastle</div>
-                        <div class="service-area-item">Citrus Heights</div>
-                        <div class="service-area-item">Lake of the Pines</div>
-                        <div class="service-area-item">Rocklin</div>
-                        <div class="service-area-item">Colfax</div>
-                        <div class="service-area-item">Land Park</div>
-                        <div class="service-area-item">Rosemont</div>
-                        <div class="service-area-item">East Sacramento</div>
-                        <div class="service-area-item">Lincoln</div>
-                        <div class="service-area-item">Roseville</div>
-                        <div class="service-area-item">El Dorado Hills</div>
-                        <div class="service-area-item">Loomis</div>
-                    </div>
-                    <p class="service-areas-subtitle">Serving the Greater Sacramento Area</p>
-                </div>
+        </a>
+
+        <!-- Additions & ADUs -->
+        <a href="/services/additions-adus/" class="service-card">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Additions & ADUs">
+            <div class="service-card-content">
+                <h2>Additions & ADUs</h2>
+                <p>Expand your living space with thoughtfully designed additions or accessory dwelling units. Whether you need extra room for family, a home office, or rental income, we create seamless extensions that enhance your property.</p>
             </div>
-        </div>
-    </section>
+        </a>
+
+        <!-- Design + Build Services -->
+        <a href="/services/design-build-services/" class="service-card">
+            <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Design + Build Services">
+            <div class="service-card-content">
+                <h2>Design + Build Services</h2>
+                <p>From concept to completion, our integrated design-build approach ensures seamless coordination between design and construction. We handle every detail, delivering cohesive projects that stay on time and within budget.</p>
+            </div>
+        </a>
+    </div>
 
     <!-- Footer will be loaded here -->
     <div id="footer-placeholder"></div>
 
-    <!-- Load Header and Footer -->
-    <script src="../header-footer.js"></script>
+    <script>
+        // Load header and footer
+        if (typeof loadHeader === 'function') {
+            loadHeader();
+        }
+        if (typeof loadFooter === 'function') {
+            loadFooter();
+        }
+    </script>
 </body>
 </html>
+

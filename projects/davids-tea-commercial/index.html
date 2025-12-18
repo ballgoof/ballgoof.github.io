@@ -791,14 +791,22 @@
                 gap: 2rem;
             }
 
+            /* Hide desktop first image on mobile */
             .project-first-image {
+                display: none;
+            }
+            
+            /* Mobile-only first image - simple, full width, shows full image */
+            .project-first-image-mobile {
+                display: block !important;
+                width: 100%;
+            }
+
+            .project-first-image-mobile img {
+                width: 100%;
                 height: auto;
+                display: block;
             }
-
-            .project-first-image img {
-                object-fit: contain;
-            }
-
             .project-content-section {
                 display: flex !important;
                 flex-direction: column;
@@ -888,6 +896,11 @@
             width: 100%;
             height: 690px;
             overflow: hidden;
+        }
+        
+        /* Hide mobile first image on desktop */
+        .project-first-image-mobile {
+            display: none;
         }
 
         .project-first-image img {
@@ -1083,6 +1096,9 @@
                 <div class="project-first-image" id="first-image-container">
                     <!-- First image will be loaded here -->
                 </div>
+                <div class="project-first-image-mobile" id="first-image-container-mobile">
+                    <!-- First image will be loaded here for mobile -->
+                </div>
             </div>
 
             <!-- Right Column -->
@@ -1154,6 +1170,7 @@
             const imageBasePath = './';
             
             const firstImageContainer = document.getElementById('first-image-container');
+            const firstImageContainerMobile = document.getElementById('first-image-container-mobile');
             const secondImageContainer = document.getElementById('second-image-container');
             const descriptionContainer = document.getElementById('project-description');
             
@@ -1199,11 +1216,20 @@
             
             // Load first image
             const firstImageResult = await tryLoadImage(1);
-            if (firstImageResult && firstImageContainer) {
-                const img = document.createElement('img');
-                img.src = firstImageResult.element.src;
-                img.alt = projectName;
-                firstImageContainer.appendChild(img);
+            if (firstImageResult) {
+                if (firstImageContainer) {
+                    const img = document.createElement('img');
+                    img.src = firstImageResult.element.src;
+                    img.alt = projectName;
+                    firstImageContainer.appendChild(img);
+                }
+                // Also load into mobile container
+                if (firstImageContainerMobile) {
+                    const imgMobile = document.createElement('img');
+                    imgMobile.src = firstImageResult.element.src;
+                    imgMobile.alt = projectName;
+                    firstImageContainerMobile.appendChild(imgMobile);
+                }
                 loadedImageNumbers.add(1);
             }
             
@@ -1228,7 +1254,7 @@
                 projectDetailsContainer.innerHTML = `
                     <div class="project-details-row">
                         <div class="project-details-label">Project type</div>
-                        <div class="project-details-value">Commercial</div>
+                        <div class="project-details-value">TI</div>
                     </div>
                     <div class="project-details-row">
                         <div class="project-details-label">Location</div>

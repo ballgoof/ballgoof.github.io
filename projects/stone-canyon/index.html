@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/assets/icon.png">
-    <title>21st Street - TopCap Construction</title>
+    <title>Stone Canyon - TopCap Construction</title>
     <style>
         @font-face {
             font-family: 'Vectora';
@@ -791,14 +791,22 @@
                 gap: 2rem;
             }
 
+            /* Hide desktop first image on mobile */
             .project-first-image {
+                display: none;
+            }
+            
+            /* Mobile-only first image - simple, full width, shows full image */
+            .project-first-image-mobile {
+                display: block !important;
+                width: 100%;
+            }
+
+            .project-first-image-mobile img {
+                width: 100%;
                 height: auto;
+                display: block;
             }
-
-            .project-first-image img {
-                object-fit: contain;
-            }
-
             .project-content-section {
                 display: flex !important;
                 flex-direction: column;
@@ -888,6 +896,11 @@
             width: 100%;
             height: 690px;
             overflow: hidden;
+        }
+        
+        /* Hide mobile first image on desktop */
+        .project-first-image-mobile {
+            display: none;
         }
 
         .project-first-image img {
@@ -1078,10 +1091,13 @@
         <div class="project-top-section">
             <!-- Left Column -->
             <div class="project-left-column">
-                <h1 class="project-title">21st Street</h1>
-                <p class="project-subtitle">A complete whole house transformation that redefines modern living.</p>
+                <h1 class="project-title">Stone Canyon</h1>
+                <p class="project-subtitle">A comprehensive whole house remodel that transforms every space.</p>
                 <div class="project-first-image" id="first-image-container">
                     <!-- First image will be loaded here -->
+                </div>
+                <div class="project-first-image-mobile" id="first-image-container-mobile">
+                    <!-- First image will be loaded here for mobile -->
                 </div>
             </div>
 
@@ -1148,12 +1164,13 @@
             galleryGrid.innerHTML = '';
             loadedImageNumbers.clear();
             
-            const projectName = '21st Street';
+            const projectName = 'Stone Canyon';
             
             // Load images from current directory
             const imageBasePath = './';
             
             const firstImageContainer = document.getElementById('first-image-container');
+            const firstImageContainerMobile = document.getElementById('first-image-container-mobile');
             const secondImageContainer = document.getElementById('second-image-container');
             const descriptionContainer = document.getElementById('project-description');
             
@@ -1199,11 +1216,20 @@
             
             // Load first image
             const firstImageResult = await tryLoadImage(1);
-            if (firstImageResult && firstImageContainer) {
-                const img = document.createElement('img');
-                img.src = firstImageResult.element.src;
-                img.alt = projectName;
-                firstImageContainer.appendChild(img);
+            if (firstImageResult) {
+                if (firstImageContainer) {
+                    const img = document.createElement('img');
+                    img.src = firstImageResult.element.src;
+                    img.alt = projectName;
+                    firstImageContainer.appendChild(img);
+                }
+                // Also load into mobile container
+                if (firstImageContainerMobile) {
+                    const imgMobile = document.createElement('img');
+                    imgMobile.src = firstImageResult.element.src;
+                    imgMobile.alt = projectName;
+                    firstImageContainerMobile.appendChild(imgMobile);
+                }
                 loadedImageNumbers.add(1);
             }
             
@@ -1219,7 +1245,7 @@
             
             // Add description text (half length)
             if (descriptionContainer) {
-                descriptionContainer.innerHTML = '<p>This whole house remodel completely transforms the living experience with a modern, open design. We redesigned the layout to create better flow and functionality, incorporating contemporary finishes and smart design solutions that make every space more usable and beautiful.</p>';
+                descriptionContainer.innerHTML = '<p>This whole house remodel represents a complete transformation of the living space. We carefully redesigned each room to maximize both functionality and aesthetic appeal, creating a cohesive design that flows seamlessly throughout the home. The renovation includes updated finishes, improved layouts, and modern amenities that enhance daily living.</p>';
             }
             
             // Add project details
@@ -1347,7 +1373,7 @@
         }
         
         // Store handler reference for cleanup (use unique key per page)
-        const pageKey = 'galleryInit_21st_street';
+        const pageKey = 'galleryInit_stone_canyon';
         if (window[pageKey]) {
             const oldHandler = window[pageKey];
             document.removeEventListener('DOMContentLoaded', oldHandler);

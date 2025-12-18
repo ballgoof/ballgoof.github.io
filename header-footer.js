@@ -50,6 +50,29 @@ const headerHTML = `<!-- Header -->
                     background: transparent;
                 }
                 
+                /* Make dropdown menu items uppercase and use Roboto font */
+                nav ul li .dropdown-menu li a {
+                    text-transform: uppercase;
+                    font-family: 'Roboto', sans-serif;
+                    font-weight: 400;
+                }
+                
+                /* Make folder title uppercase and use Roboto font on mobile */
+                .folder-title {
+                    text-transform: uppercase;
+                    font-family: 'Roboto', sans-serif;
+                    font-weight: 400;
+                }
+                
+                /* Ensure mobile dropdown items are uppercase */
+                @media (max-width: 768px) {
+                    nav.folder-view .dropdown-menu li a {
+                        text-transform: uppercase !important;
+                        font-family: 'Roboto', sans-serif !important;
+                        font-weight: 400 !important;
+                    }
+                }
+                
                 /* Center Projects, Services, and About, push CONTACT US to the right */
                 nav ul {
                     justify-content: center;
@@ -295,7 +318,7 @@ function initHeaderScripts() {
             title.className = 'folder-title';
             const toggle = dropdown.querySelector('.dropdown-toggle');
             if (toggle) {
-                title.textContent = toggle.textContent.trim();
+                title.textContent = toggle.textContent.trim().toUpperCase();
                 // Insert title after back button but before ul
                 const ul = nav.querySelector('ul');
                 if (ul) {
