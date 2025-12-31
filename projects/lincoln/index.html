@@ -802,10 +802,16 @@
                 width: 100%;
             }
 
+            .project-first-image-mobile {
+                background: #f0f0f0;
+                position: relative;
+            }
+            
             .project-first-image-mobile img {
                 width: 100%;
                 height: auto;
                 display: block;
+                opacity: 1;
             }
             .project-content-section {
                 display: flex !important;
@@ -903,12 +909,26 @@
             display: none;
         }
 
+        .project-first-image {
+            width: 100%;
+            height: 690px;
+            overflow: hidden;
+            background: #f0f0f0;
+            position: relative;
+        }
+        
+        /* Hide mobile first image on desktop */
+        .project-first-image-mobile {
+            display: none;
+        }
+
         .project-first-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: center;
             display: block;
+            opacity: 1;
         }
 
         .project-right-column {
@@ -920,16 +940,20 @@
             width: 100%;
             margin-bottom: 2rem;
             max-height: 500px;
+            min-height: 500px;
             overflow: hidden;
+            background: #f0f0f0;
+            position: relative;
         }
 
         .project-second-image img {
             width: 100%;
-            height: auto;
+            height: 100%;
             max-height: 500px;
             object-fit: cover;
             object-position: center;
             display: block;
+            opacity: 1;
         }
 
         .project-content-section {
@@ -1002,10 +1026,19 @@
             border-radius: 4px;
         }
 
+        .gallery-item {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 4px;
+            background: #f0f0f0;
+            position: relative;
+        }
+
         .gallery-item img {
             width: 100%;
-            height: auto;
+            height: 100%;
             display: block;
+            opacity: 1;
         }
 
         /* Art wall layout - maximum 2 images per row */
@@ -1093,30 +1126,45 @@
             <div class="project-left-column">
                 <h1 class="project-title">Lincoln</h1>
                 <p class="project-subtitle">A complete whole house renovation that revitalizes every corner.</p>
-                <div class="project-first-image" id="first-image-container">
-                    <!-- First image will be loaded here -->
+                <div class="project-first-image">
+                    <img src="1.jpg" alt="Lincoln" loading="eager" class="loaded">
                 </div>
-                <div class="project-first-image-mobile" id="first-image-container-mobile">
-                    <!-- First image will be loaded here for mobile -->
+                <div class="project-first-image-mobile">
+                    <img src="1.jpg" alt="Lincoln" loading="eager" class="loaded">
                 </div>
             </div>
 
             <!-- Right Column -->
             <div class="project-right-column">
-                <div class="project-second-image" id="second-image-container">
-                    <!-- Second image will be loaded here -->
+                <div class="project-second-image">
+                    <img src="2.jpg" alt="Lincoln" loading="eager" class="loaded">
                 </div>
                 <div class="project-content-section">
                     <div class="project-content-block">
                         <h3>About</h3>
-                        <div class="project-description" id="project-description">
-                            <!-- Description will be loaded here -->
+                        <div class="project-description">
+                            <p>This comprehensive whole house remodel brings new life to every space in the home. We reimagined the layout to improve flow and functionality while maintaining the character of the original structure. The renovation features updated finishes, modern amenities, and thoughtful design touches throughout.</p>
                         </div>
                     </div>
                     <div class="project-content-block">
                         <h3>Project details</h3>
-                        <div class="project-details" id="project-details">
-                            <!-- Project details will be loaded here -->
+                        <div class="project-details">
+                            <div class="project-details-row">
+                                <div class="project-details-label">Project type</div>
+                                <div class="project-details-value">Whole House Remodel</div>
+                            </div>
+                            <div class="project-details-row">
+                                <div class="project-details-label">Location</div>
+                                <div class="project-details-value">xx</div>
+                            </div>
+                            <div class="project-details-row">
+                                <div class="project-details-label">Architect</div>
+                                <div class="project-details-value">xx</div>
+                            </div>
+                            <div class="project-details-row">
+                                <div class="project-details-label">Photographer</div>
+                                <div class="project-details-value">xx</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1125,8 +1173,19 @@
 
         <!-- Image Gallery - Remaining Images -->
         <section class="project-gallery">
-            <div class="gallery-grid" id="gallery-grid">
-                <!-- Remaining images will be loaded dynamically -->
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="3.jpg" alt="Lincoln" loading="lazy" class="loaded">
+                </div>
+                <div class="gallery-item">
+                    <img src="4.jpg" alt="Lincoln" loading="lazy" class="loaded">
+                </div>
+                <div class="gallery-item">
+                    <img src="5.jpg" alt="Lincoln" loading="lazy" class="loaded">
+                </div>
+                <div class="gallery-item">
+                    <img src="6.jpg" alt="Lincoln" loading="lazy" class="loaded">
+                </div>
             </div>
         </section>
     </div>
@@ -1136,260 +1195,6 @@
 
     <!-- Load Header and Footer -->
     <script src="../../header-footer.js"></script>
-    
-    <script>
-        // Prevent concurrent loading and track loaded images
-        let isLoadingGallery = false;
-        let loadedImageNumbers = new Set();
-        
-        // Dynamic Gallery Image Loader
-        async function loadGalleryImages() {
-            // Prevent concurrent executions
-            if (isLoadingGallery) {
-                console.log('Gallery already loading, skipping duplicate call');
-                return;
-            }
-            isLoadingGallery = true;
-            
-            const galleryGrid = document.getElementById('gallery-grid');
-            if (!galleryGrid) {
-                isLoadingGallery = false;
-                return;
-            }
-            
-            // Aggressively clear existing gallery items - remove all children
-            while (galleryGrid.firstChild) {
-                galleryGrid.removeChild(galleryGrid.firstChild);
-            }
-            galleryGrid.innerHTML = '';
-            loadedImageNumbers.clear();
-            
-            const projectName = 'Lincoln';
-            
-            // Load images from current directory
-            const imageBasePath = './';
-            
-            const firstImageContainer = document.getElementById('first-image-container');
-            const firstImageContainerMobile = document.getElementById('first-image-container-mobile');
-            const secondImageContainer = document.getElementById('second-image-container');
-            const descriptionContainer = document.getElementById('project-description');
-            
-            // Clear containers before loading to prevent duplicates
-            if (firstImageContainer) {
-                firstImageContainer.innerHTML = '';
-            }
-            if (secondImageContainer) {
-                secondImageContainer.innerHTML = '';
-            }
-            
-            const loadedImages = [];
-            const extensions = ['.jpg', '.jpeg']; // Try both extensions
-            
-            // Function to try loading an image
-            function tryLoadImage(num) {
-                return new Promise((resolve) => {
-                    const img = new Image();
-                    let triedExtensions = 0;
-                    
-                    function tryNextExtension() {
-                        if (triedExtensions >= extensions.length) {
-                            resolve(null); // No more extensions to try
-                            return;
-                        }
-                        
-                        const ext = extensions[triedExtensions];
-                        img.src = `${imageBasePath}${num}${ext}`;
-                        
-                        img.onload = () => {
-                            resolve({ number: num, extension: ext, element: img });
-                        };
-                        
-                        img.onerror = () => {
-                            triedExtensions++;
-                            tryNextExtension();
-                        };
-                    }
-                    
-                    tryNextExtension();
-                });
-            }
-            
-            // Load first image
-            const firstImageResult = await tryLoadImage(1);
-            if (firstImageResult) {
-                if (firstImageContainer) {
-                    const img = document.createElement('img');
-                    img.src = firstImageResult.element.src;
-                    img.alt = projectName;
-                    firstImageContainer.appendChild(img);
-                }
-                // Also load into mobile container
-                if (firstImageContainerMobile) {
-                    const imgMobile = document.createElement('img');
-                    imgMobile.src = firstImageResult.element.src;
-                    imgMobile.alt = projectName;
-                    firstImageContainerMobile.appendChild(imgMobile);
-                }
-                loadedImageNumbers.add(1);
-            }
-            
-            // Load second image
-            const secondImageResult = await tryLoadImage(2);
-            if (secondImageResult && secondImageContainer) {
-                const img = document.createElement('img');
-                img.src = secondImageResult.element.src;
-                img.alt = projectName;
-                secondImageContainer.appendChild(img);
-                loadedImageNumbers.add(2);
-            }
-            
-            // Add description text (half length)
-            if (descriptionContainer) {
-                descriptionContainer.innerHTML = '<p>This comprehensive whole house remodel brings new life to every space in the home. We reimagined the layout to improve flow and functionality while maintaining the character of the original structure. The renovation features updated finishes, modern amenities, and thoughtful design touches throughout.</p>';
-            }
-            
-            // Add project details
-            const projectDetailsContainer = document.getElementById('project-details');
-            if (projectDetailsContainer) {
-                projectDetailsContainer.innerHTML = `
-                    <div class="project-details-row">
-                        <div class="project-details-label">Project type</div>
-                        <div class="project-details-value">Whole House Remodel</div>
-                    </div>
-                    <div class="project-details-row">
-                        <div class="project-details-label">Location</div>
-                        <div class="project-details-value">xx</div>
-                    </div>
-                    <div class="project-details-row">
-                        <div class="project-details-label">Architect</div>
-                        <div class="project-details-value">xx</div>
-                    </div>
-                    <div class="project-details-row">
-                        <div class="project-details-label">Photographer</div>
-                        <div class="project-details-value">xx</div>
-                    </div>
-                `;
-            }
-            
-            // Load remaining images (starting from 3) into the grid
-            let imageNumber = 3;
-            let consecutiveFailures = 0;
-            const maxImageNumber = 100;
-            const maxConsecutiveFailures = 10;
-            
-            while (imageNumber <= maxImageNumber && consecutiveFailures < maxConsecutiveFailures) {
-                const result = await tryLoadImage(imageNumber);
-                if (!result) {
-                    consecutiveFailures++;
-                    imageNumber++;
-                    continue; // Skip missing image and continue
-                }
-                
-                // Reset consecutive failures counter when we find an image
-                consecutiveFailures = 0;
-                
-                // Check if we've already loaded this image number (prevent duplicates)
-                if (loadedImageNumbers.has(imageNumber)) {
-                    console.log(`Skipping duplicate image ${imageNumber}`);
-                    imageNumber++;
-                    continue;
-                }
-                
-                // Mark this image number as loaded
-                loadedImageNumbers.add(imageNumber);
-                
-                // Double-check: verify this image isn't already in the DOM
-                const existingImg = galleryGrid.querySelector(`img[data-image-number="${imageNumber}"]`);
-                if (existingImg) {
-                    console.log(`Image ${imageNumber} already exists in DOM, skipping`);
-                    imageNumber++;
-                    continue;
-                }
-                
-                // Create gallery item
-                const galleryItem = document.createElement('div');
-                galleryItem.className = 'gallery-item';
-                const img = document.createElement('img');
-                img.src = result.element.src;
-                img.alt = projectName;
-                img.dataset.imageNumber = imageNumber; // Track image number
-                
-                // Wait for image to actually load before adding to array
-                await new Promise((resolve) => {
-                    if (img.complete) {
-                        resolve();
-                    } else {
-                        img.onload = resolve;
-                        img.onerror = resolve; // Continue even if image fails to load
-                    }
-                });
-                
-                galleryItem.appendChild(img);
-                galleryGrid.appendChild(galleryItem);
-                
-                loadedImages.push(img);
-                imageNumber++;
-            }
-            
-            
-            
-            isLoadingGallery = false;
-        }
-        
-        // Load gallery images when page is ready - with debouncing
-        let initTimeout = null;
-        let isInitializing = false;
-        
-        function initializePage() {
-            // Reset for SPA navigation
-            
-            // Prevent multiple simultaneous initializations
-            if (isInitializing || isLoadingGallery) {
-                console.log('Already initializing or loading, skipping duplicate call');
-                return;
-            }
-            
-            // Clear any pending initialization
-            if (initTimeout) {
-                clearTimeout(initTimeout);
-                initTimeout = null;
-            }
-            
-            isInitializing = true;
-            
-            // Use requestAnimationFrame to ensure DOM is ready, then add delay
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    initTimeout = setTimeout(() => {
-                        // Double-check we're not already loading before starting
-                        if (!isLoadingGallery) {
-                            loadGalleryImages();
-                        }
-                        isInitializing = false;
-                        initTimeout = null;
-                    }, 150);
-                });
-            });
-        }
-        
-        // Store handler reference for cleanup (use unique key per page)
-        const pageKey = 'galleryInit_lincoln';
-        if (window[pageKey]) {
-            const oldHandler = window[pageKey];
-            document.removeEventListener('DOMContentLoaded', oldHandler);
-            window.removeEventListener('pageContentLoaded', oldHandler);
-        }
-        window[pageKey] = initializePage;
-        
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', window[pageKey], { once: true });
-        } else {
-            initializePage();
-        }
-        
-        // Also load when page content is loaded via SPA navigation
-        window.addEventListener('pageContentLoaded', window[pageKey], { once: false });
-    </script>
 </body>
 </html>
 
